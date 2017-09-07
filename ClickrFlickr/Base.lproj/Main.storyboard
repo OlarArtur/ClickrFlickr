@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ClickrFlickr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -21,6 +26,40 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="38" y="36"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="ia4-l8-PkT">
+            <objects>
+                <viewController storyboardIdentifier="WebViewController" id="NI5-Oc-xQh" customClass="WebViewController" customModule="ClickrFlickr" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qjC-BA-BSP"/>
+                        <viewControllerLayoutGuide type="bottom" id="Kxq-DK-JhS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aPx-b4-Xhd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="24C-7Y-sXM">
+                                <rect key="frame" x="16" y="40" width="343" height="627"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.86200947920000004" green="0.89544203369999997" blue="0.05677132201" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="24C-7Y-sXM" secondAttribute="trailing" id="98k-Z9-0DP"/>
+                            <constraint firstItem="Kxq-DK-JhS" firstAttribute="top" secondItem="24C-7Y-sXM" secondAttribute="bottom" id="YJC-Nk-AfR"/>
+                            <constraint firstItem="24C-7Y-sXM" firstAttribute="leading" secondItem="aPx-b4-Xhd" secondAttribute="leadingMargin" id="cxF-Rn-wUB"/>
+                            <constraint firstItem="24C-7Y-sXM" firstAttribute="top" secondItem="qjC-BA-BSP" secondAttribute="bottom" constant="20" id="pCP-cM-BjL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="userAuthWebView" destination="24C-7Y-sXM" id="bK6-2w-4Fw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y1c-bn-P5P" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="943" y="36"/>
         </scene>
     </scenes>
 </document>

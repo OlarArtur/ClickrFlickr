@@ -49,8 +49,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func configureDataAPI() {
+        
         self.userAuthentication = UserAuthentication(apiKey: "aa5429991e03dbf3bfec3efb37376dd2", apiSecretKey: "4ea83e9cc51ce4ee", callback: "clickrflickr%3A%2F%2F")
     }
+    
+    
+    func goToUserAuth() {
+        
+        let mainStoryboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let initialViewController: UIViewController = mainStoryboard.instantiateViewController(withIdentifier: "WebViewController") as! WebViewController
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = initialViewController
+        
+        self.window?.makeKeyAndVisible()
+        
+
+    }
+    
+
+    
 
     // MARK: - Core Data stack
 

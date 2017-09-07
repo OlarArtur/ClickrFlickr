@@ -201,6 +201,9 @@ class  UserAuthentication {
         let urlUserAuthorization = concatenateUrlString(urlString: Constants.authorizeUrl, parameters: [oauthToken!], isBaseString: false)
         print(urlUserAuthorization)
         
+        let appdelegate = AppDelegate()
+        appdelegate.goToUserAuth()
+        
     }
     
     private func exchangeRequestTokenForAccessToken() {
@@ -263,9 +266,13 @@ class  UserAuthentication {
     
     private func separateResponce(stringToSplit: String) -> [String: String] {
         
+//        If "?"
+        
+        
+        
         var result = [String:String]()
-        let separators = CharacterSet(charactersIn: "?&")
-        let array = stringToSplit.components(separatedBy: separators)
+//        let separators = CharacterSet(charactersIn: "?&")
+        let array = stringToSplit.components(separatedBy: "&")
         for element in array {
             let array = element.components(separatedBy: "=")
             result[array[0]] = array[1]
