@@ -14,7 +14,6 @@
 		B22D383B1F604AA300FCC371 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B22D383A1F604AA300FCC371 /* Assets.xcassets */; };
 		B22D383E1F604AA300FCC371 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22D383C1F604AA300FCC371 /* LaunchScreen.storyboard */; };
 		B22D38461F604ACB00FCC371 /* UserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D38451F604ACB00FCC371 /* UserAuthentication.swift */; };
-		B2396CEC1F6131A6008D4467 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2396CEB1F6131A6008D4467 /* WebViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +27,6 @@
 		B22D383F1F604AA300FCC371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B22D38451F604ACB00FCC371 /* UserAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAuthentication.swift; sourceTree = "<group>"; };
 		B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ClickrFlickr-Bridging-Header.h"; sourceTree = "<group>"; };
-		B2396CEB1F6131A6008D4467 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +62,6 @@
 				B22D38301F604AA300FCC371 /* AppDelegate.swift */,
 				B22D38321F604AA300FCC371 /* ViewController.swift */,
 				B22D38451F604ACB00FCC371 /* UserAuthentication.swift */,
-				B2396CEB1F6131A6008D4467 /* WebViewController.swift */,
 				B22D38341F604AA300FCC371 /* Main.storyboard */,
 				B22D383A1F604AA300FCC371 /* Assets.xcassets */,
 				B22D383C1F604AA300FCC371 /* LaunchScreen.storyboard */,
@@ -151,7 +148,6 @@
 				B22D38331F604AA300FCC371 /* ViewController.swift in Sources */,
 				B22D38311F604AA300FCC371 /* AppDelegate.swift in Sources */,
 				B22D38461F604ACB00FCC371 /* UserAuthentication.swift in Sources */,
-				B2396CEC1F6131A6008D4467 /* WebViewController.swift in Sources */,
 				B22D38391F604AA300FCC371 /* ClickrFlickr.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
