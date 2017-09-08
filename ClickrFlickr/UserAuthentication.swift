@@ -68,13 +68,28 @@ class Encryption {
 }
 
 
-
 struct Constants {
+    
     static let signatureMethod: String = "HMAC-SHA1"
     static let version: String = "1.0"
-    static let requestTokenUrl = "https://www.flickr.com/services/oauth/request_token?"
-    static let authorizeUrl = "https://www.flickr.com/services/oauth/authorize?"
-    static let accessTokenUrl = "https://www.flickr.com/services/oauth/access_token?"
+    static let requestTokenUrl: String = "https://www.flickr.com/services/oauth/request_token?"
+    static let authorizeUrl: String = "https://www.flickr.com/services/oauth/authorize?"
+    static let accessTokenUrl: String = "https://www.flickr.com/services/oauth/access_token?"
+}
+
+
+struct ParametersConstants {
+    
+    static let oauthNonce: String = "oauth_nonce="
+    static let oauthTimestamp: String = "oauth_timestamp="
+    static let oauthConsumerKey: String = "oauth_consumer_key="
+    static let oauthSignatureMethod: String = "oauth_signature_method="
+    static let oauthVersion: String = "oauth_version="
+    static let oauthCallback: String = "oauth_callback="
+    static let oauthSignature: String = "oauth_signature="
+    static let oauthToken: String = "oauth_token="
+    static let oauthVerifier: String = "oauth_verifier="
+    static let oauthTokenSecret: String = "oauth_token_secret="
 }
 
 
@@ -85,11 +100,9 @@ class  UserAuthentication {
     private var callback: String
     
     private var signature: String?
-    
     private var token: String?
     private var verifier: String?
     private var tokenSecret: String?
-    
     
     init(apiKey: String, apiSecretKey: String, callback: String) {
         self.apiKey = apiKey
@@ -101,61 +114,18 @@ class  UserAuthentication {
         return apiKey
     }
     
-    private var oauthNonce: String {
-        return "oauth_nonce=\(arc4random_uniform(99999999) + 10000000)"
-    }
-    
-    //    private func getNonce() -> String {
-    //        let nonce = String(arc4random_uniform(99999999) + 10000000)
-    //        return nonce
-    //    }
-    
-    private var oauthTimestamp: String {
-        return "oauth_timestamp=\(String(Int(NSDate().timeIntervalSince1970)))"
-    }
-    
-    private var oauthConsumerKey: String {
-        return "oauth_consumer_key=\(consumerKey)"
-    }
-    
-    private var oauthSignatureMethod: String {
-        return "oauth_signature_method=\(Constants.signatureMethod)"
-    }
-    
-    private var oauthVersion: String {
-        return "oauth_version=\(Constants.version)"
-    }
-    
-    private var oauthCallback: String {
-        return "oauth_callback=\(callback)"
-    }
-    
-    private var oauthSignature: String? {
-        guard let signature = signature  else {
-            preconditionFailure("signature is empty")
-        }
-        return "oauth_signature=\(signature)"
-    }
-    
-    private var oauthToken: String? {
-        guard let token = token  else {
-            preconditionFailure("oauthToken is empty")
-        }
-        return "oauth_token=\(token)"
-    }
-    
-    private var oauthVerifier: String? {
-        guard let verifier = verifier  else {
-            preconditionFailure("verifier is empty")
-        }
-        return "oauth_verifier=\(verifier)"
-    }
-    
-    private var oauthTokenSecret: String? {
-        guard let tokenSecret = tokenSecret  else {
-            preconditionFailure("tokenSecret is empty")
-        }
-        return "oauth_token_secret=\(tokenSecret)"
+    private var oauthParameters: [String : String] {
+        
+        return [ParametersConstants.oauthNonce : "\(arc4random_uniform(99999999) + 10000000)",
+            ParametersConstants.oauthTimestamp : "\(String(Int(NSDate().timeIntervalSince1970)))",
+            ParametersConstants.oauthConsumerKey : "\(consumerKey)",
+            ParametersConstants.oauthSignatureMethod : "\(Constants.signatureMethod)",
+            ParametersConstants.oauthVersion : "\(Constants.version)",
+            ParametersConstants.oauthCallback : "\(callback)",
+            ParametersConstants.oauthSignature : "\(signature ?? "signature is empty")",
+            ParametersConstants.oauthToken : "\(token ?? "token is empty")",
+            ParametersConstants.oauthVerifier : "\(verifier ?? "verifier is empty")",
+            ParametersConstants.oauthTokenSecret : "\(tokenSecret ?? "tokenSecret is empty")"]
     }
     
     
@@ -163,7 +133,7 @@ class  UserAuthentication {
         
         //        1.Get a Request Token
         //        2.Get the User's Authorization
-        //        2.Exchange the Request Token for an Access Token
+        //        3.Exchange the Request Token for an Access Token
         
         getRequestToken()
         getTheUserAuthorization()
@@ -173,36 +143,71 @@ class  UserAuthentication {
     
     private func getRequestToken() {
         
-        var arrayOfParameters = [oauthNonce, oauthCallback, oauthVersion, oauthSignatureMethod, oauthConsumerKey, oauthTimestamp]
+        var oauthParameters = self.oauthParameters
+        
+        var neededParameters = [ParametersConstants.oauthNonce, ParametersConstants.oauthCallback, ParametersConstants.oauthVersion, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp]
+        
+        var arrayOfParameters = getNeededParametersFromOauthParameters(oauthParam: oauthParameters, neededParam: neededParameters)
         
         let baseString = concatenateUrlString(urlString: Constants.requestTokenUrl, parameters: arrayOfParameters, isBaseString: true)
         
         getSignatureFromStringWithEncodedCharact(string: baseString)
         
-        arrayOfParameters += [oauthSignature!]
+        neededParameters.append(ParametersConstants.oauthSignature)
+        oauthParameters[ParametersConstants.oauthSignature] = self.oauthParameters[ParametersConstants.oauthSignature]
+        
+        arrayOfParameters = getNeededParametersFromOauthParameters(oauthParam: oauthParameters, neededParam: neededParameters)
+        
         let urlRequestToken = concatenateUrlString(urlString: Constants.requestTokenUrl, parameters: arrayOfParameters, isBaseString: false)
+        print(urlRequestToken)
         
         let dataString = getResponseFromUrl(url: urlRequestToken)
+        print(dataString)
         
-        let response = separateResponce(stringToSplit: dataString)
+                let response = separateResponce(stringToSplit: dataString)
         
-        if response.keys.contains("oauth_token_secret") {
-            tokenSecret = response["oauth_token_secret"]
-        }
+                if response.keys.contains("oauth_token_secret") {
+                    tokenSecret = response["oauth_token_secret"]
+                }
         
-        if response.keys.contains("oauth_token") {
-            token = response["oauth_token"]
-        }
+                if response.keys.contains("oauth_token") {
+                    token = response["oauth_token"]
+                }
         
     }
     
-    private func getTheUserAuthorization() {
+    
+    
+    private func getNeededParametersFromOauthParameters(oauthParam: [String:String], neededParam: [String]) -> [String] {
         
-        let urlUserAuthorization = concatenateUrlString(urlString: Constants.authorizeUrl, parameters: [oauthToken!], isBaseString: false)
-        print(urlUserAuthorization)
+        var resultArray = [String]()
         
-        
+        for (key, value) in oauthParam {
+            for fuck in neededParam {
+                if fuck == key {
+                    let stringSum = "\(key)\(value)"
+                    resultArray.append(stringSum)
+                }
+            }
+        }
+        return resultArray
     }
+    
+    
+    
+        private func getTheUserAuthorization() {
+            
+            let oauthParameters = self.oauthParameters
+            
+            let neededParameters = [ParametersConstants.oauthToken]
+            
+            let arrayOfParameters = getNeededParametersFromOauthParameters(oauthParam: oauthParameters, neededParam: neededParameters)
+    
+            let urlUserAuthorization = concatenateUrlString(urlString: Constants.authorizeUrl, parameters: arrayOfParameters, isBaseString: false)
+            print(urlUserAuthorization)
+    
+    
+        }
     
     private func exchangeRequestTokenForAccessToken() {
         
@@ -245,7 +250,7 @@ class  UserAuthentication {
         let customAllowedSet = CharacterSet(charactersIn: "=+/").inverted
         
         signature = string.hmac(algorithm:Encryption.HMACAlgorithm.SHA1, key: key)
-        signature = signature?.addingPercentEncoding(withAllowedCharacters: customAllowedSet)!
+        signature = signature!.addingPercentEncoding(withAllowedCharacters: customAllowedSet)
         
     }
     
@@ -264,12 +269,12 @@ class  UserAuthentication {
     
     private func separateResponce(stringToSplit: String) -> [String: String] {
         
-//        If "?"
+        //        If "?"
         
         
         
         var result = [String:String]()
-//        let separators = CharacterSet(charactersIn: "?&")
+        //        let separators = CharacterSet(charactersIn: "?&")
         let array = stringToSplit.components(separatedBy: "&")
         for element in array {
             let array = element.components(separatedBy: "=")
