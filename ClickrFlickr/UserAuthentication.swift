@@ -201,8 +201,6 @@ class  UserAuthentication {
         let urlUserAuthorization = concatenateUrlString(urlString: Constants.authorizeUrl, parameters: [oauthToken!], isBaseString: false)
         print(urlUserAuthorization)
         
-        let appdelegate = AppDelegate()
-        appdelegate.goToUserAuth()
         
     }
     

@@ -54,18 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    func goToUserAuth() {
-        
-        let mainStoryboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let initialViewController: UIViewController = mainStoryboard.instantiateViewController(withIdentifier: "WebViewController") as! WebViewController
-        
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = initialViewController
-        
-        self.window?.makeKeyAndVisible()
-        
-
-    }
     
 
     
