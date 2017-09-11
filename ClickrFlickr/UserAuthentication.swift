@@ -148,16 +148,16 @@ class  UserAuthentication {
         //        2.Get the User's Authorization
         //        3.Exchange the Request Token for an Access Token
         
-        getRequestToken()
-        getTheUserAuthorization()
+        getRequestToken() { (token, secretToken) in
+            self.getTheUserAuthorization()
+        }
+        
         exchangeRequestTokenForAccessToken()
         
     }
     
     
-    private func getRequestToken() {
-        
-        var oauthParameters = self.oauthParameters
+    private func getRequestToken(completion: @escaping (_ token: String, _ secretToken: String) -> ()) {
         
         var neededParameters = [ParametersConstants.oauthNonce, ParametersConstants.oauthCallback, ParametersConstants.oauthVersion, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp]
         
@@ -168,26 +168,26 @@ class  UserAuthentication {
         getSignatureFromStringWithEncodedCharact(string: baseString)
         
         neededParameters.append(ParametersConstants.oauthSignature)
-        oauthParameters?[ParametersConstants.oauthSignature] = self.oauthParameters?[ParametersConstants.oauthSignature]
         
         arrayOfParameters = getNeededParametersFromOauthParameters(oauthParam: oauthParameters!, neededParam: neededParameters)
         
         let urlRequestToken = concatenateUrlString(urlString: Constants.requestTokenUrl, parameters: arrayOfParameters, isBaseString: false)
-        print(urlRequestToken)
         
-        let dataString = getResponseFromUrl(url: urlRequestToken)
-        print(dataString)
-        
-        let response = separateResponce(stringToSplit: dataString)
-        
-        if response.keys.contains("oauth_token_secret") {
-            oauthTokenSecret = response["oauth_token_secret"]
+        getResponseFromUrl(link: urlRequestToken) { result in
+            
+            let response = self.separateResponce(stringToSplit: result)
+            
+            if response.keys.contains("oauth_token_secret") {
+                self.oauthTokenSecret = response["oauth_token_secret"]
+                print(self.oauthTokenSecret!)
+            }
+            
+            if response.keys.contains("oauth_token") {
+                self.oauthToken = response["oauth_token"]
+                print(self.oauthToken!)
+            }
+            completion(self.oauthTokenSecret!, self.oauthToken!)
         }
-        
-        if response.keys.contains("oauth_token") {
-            oauthToken = response["oauth_token"]
-        }
-        
     }
     
     
@@ -198,8 +198,8 @@ class  UserAuthentication {
         var resultArray = [String]()
         
         for (key, value) in oauthParam {
-            for fuck in neededParam {
-                if fuck == key {
+            for member in neededParam {
+                if member == key {
                     let stringSum = "\(key)\(value)"
                     resultArray.append(stringSum)
                 }
@@ -220,9 +220,9 @@ class  UserAuthentication {
     
         let urlUserAuthorization = concatenateUrlString(urlString: Constants.authorizeUrl, parameters: arrayOfParameters, isBaseString: false)
         print(urlUserAuthorization)
-    
-    
+
     }
+    
     
     private func exchangeRequestTokenForAccessToken() {
         
@@ -270,25 +270,34 @@ class  UserAuthentication {
     }
     
     
-    private func getResponseFromUrl(url: String) -> String {
+    private func getResponseFromUrl(link: String, completion: @escaping (String) -> ()) {
         
-        let url = URL(string: url)!
-        var dataString = ""
-        do {
-            let data = try Data(contentsOf: url)
-            dataString = String(data: data, encoding: String.Encoding.utf8)!
-        } catch {
-            print("errror")
+        var responseString = ""
+        
+        guard let url = URL(string: link) else {
+            print("Error: cannot create URL")
+            return
         }
-        return dataString
+        
+        let session = URLSession.shared
+        session.dataTask(with: url) { data, response, error in
+            
+            if error != nil{
+                print(error!)
+                completion("error in session")
+            }
+            if data != nil {
+                responseString = String(data: data!, encoding: String.Encoding.utf8)!
+                completion(responseString)
+            }
+            
+        }.resume()
     }
     
     
     private func separateResponce(stringToSplit: String) -> [String: String] {
         
         //        If "?"
-        
-        
         
         var result = [String:String]()
         //        let separators = CharacterSet(charactersIn: "?&")
