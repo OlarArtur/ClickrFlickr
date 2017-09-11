@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SafariServices
 
 
 
@@ -191,6 +192,26 @@ class  UserAuthentication {
     }
     
     
+    private func getTheUserAuthorization() {
+        
+        let neededParameters = [ParametersConstants.oauthToken]
+        
+        let arrayOfParameters = getNeededParametersFromOauthParameters(oauthParam: oauthParameters!, neededParam: neededParameters)
+        
+        let urlUserAuthorization = concatenateUrlString(urlString: Constants.authorizeUrl, parameters: arrayOfParameters, isBaseString: false)
+        print(urlUserAuthorization)
+        
+        let safariView = SFSafariViewController(url: URL(string: urlUserAuthorization)!)
+
+        UIApplication.shared.keyWindow?.rootViewController?.present(safariView, animated: true, completion: nil)
+        
+        
+    }
+    
+    
+    private func exchangeRequestTokenForAccessToken() {
+        
+    }
     
     
     private func getNeededParametersFromOauthParameters(oauthParam: [String:String], neededParam: [String]) -> [String] {
@@ -206,26 +227,6 @@ class  UserAuthentication {
             }
         }
         return resultArray
-    }
-    
-    
-    
-    private func getTheUserAuthorization() {
-            
-        let oauthParameters = self.oauthParameters
-            
-        let neededParameters = [ParametersConstants.oauthToken]
-            
-        let arrayOfParameters = getNeededParametersFromOauthParameters(oauthParam: oauthParameters!, neededParam: neededParameters)
-    
-        let urlUserAuthorization = concatenateUrlString(urlString: Constants.authorizeUrl, parameters: arrayOfParameters, isBaseString: false)
-        print(urlUserAuthorization)
-
-    }
-    
-    
-    private func exchangeRequestTokenForAccessToken() {
-        
     }
     
     
