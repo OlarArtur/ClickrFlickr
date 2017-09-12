@@ -147,8 +147,10 @@ class  UserAuthentication {
         let safariView = SFSafariViewController(url: URL(string: urlUserAuthorization)!)
 
         UIApplication.shared.keyWindow?.rootViewController?.present(safariView, animated: true, completion: nil)
-//        
-//        UIApplication.shared.delegate?.application(UIApplication, open: URL, sourceApplication: String, annotation: AnyObject) -> Bool {
+    
+        
+        
+//        UIApplication.shared.delegate.application(UIApplication, open: CFBundle, sourceApplication: String?, annotation: Any) {
 //            
 //            if url.scheme == "clickrflickr"{
 //                let callBackAfterUserAuthorization = url.absoluteString
@@ -157,7 +159,7 @@ class  UserAuthentication {
 //            
 //         return true
 //        }
-//        
+        
         
     }
     
@@ -183,14 +185,6 @@ class  UserAuthentication {
     }
     
     
-    private func getUrlPartWithSortedParameters(arrayOfParameters: [String]) -> String {
-        
-        let sortedArray = arrayOfParameters.sorted()
-        let stringFromArray = sortedArray.joined(separator: "&")
-        return stringFromArray
-    }
-    
-    
     private func concatenateUrlString(urlString: String, parameters: [String], isBaseString: Bool) -> String {
         
         var concatenatedString = ""
@@ -203,6 +197,14 @@ class  UserAuthentication {
             concatenatedString = urlString + getUrlPartWithSortedParameters(arrayOfParameters: parameters)
         }
         return concatenatedString
+    }
+    
+    
+    private func getUrlPartWithSortedParameters(arrayOfParameters: [String]) -> String {
+        
+        let sortedArray = arrayOfParameters.sorted()
+        let stringFromArray = sortedArray.joined(separator: "&")
+        return stringFromArray
     }
     
     
