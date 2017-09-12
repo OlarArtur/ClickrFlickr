@@ -13,13 +13,11 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var userAuthentication: UserAuthentication?
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        configureDataAPI()
+        UserAuthentication.configureDataAPI(apiKey: "aa5429991e03dbf3bfec3efb37376dd2", apiSecretKey: "4ea83e9cc51ce4ee", callback: "clickrflickr%3A%2F%2F")
         
         return true
     }
@@ -48,16 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.saveContext()
     }
     
-    func configureDataAPI() {
-        
-        self.userAuthentication = UserAuthentication(apiKey: "aa5429991e03dbf3bfec3efb37376dd2", apiSecretKey: "4ea83e9cc51ce4ee", callback: "clickrflickr%3A%2F%2F")
-    }
     
-    
-    
-
-    
-
     // MARK: - Core Data stack
 
     lazy var persistentContainer: NSPersistentContainer = {

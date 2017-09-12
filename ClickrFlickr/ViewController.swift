@@ -10,13 +10,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    let userAuthentication = UserAuthentication()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let userAuth = delegate.userAuthentication
-        userAuth?.authorize()
+        userAuthentication.authorize()
+        
         
     }
     
