@@ -16,6 +16,8 @@
 		B22D38461F604ACB00FCC371 /* UserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D38451F604ACB00FCC371 /* UserAuthentication.swift */; };
 		B2523AA21F67B6F5006DFA50 /* Encryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2523AA11F67B6F5006DFA50 /* Encryption.swift */; };
 		B2523AA41F67B766006DFA50 /* String+HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2523AA31F67B766006DFA50 /* String+HMAC.swift */; };
+		B26CF1691F697653006D7EF0 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26CF1681F697653006D7EF0 /* MainNavigationController.swift */; };
+		B26CF16B1F6979C1006D7EF0 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26CF16A1F6979C1006D7EF0 /* TestViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ClickrFlickr-Bridging-Header.h"; sourceTree = "<group>"; };
 		B2523AA11F67B6F5006DFA50 /* Encryption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encryption.swift; sourceTree = "<group>"; };
 		B2523AA31F67B766006DFA50 /* String+HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HMAC.swift"; sourceTree = "<group>"; };
+		B26CF1681F697653006D7EF0 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
+		B26CF16A1F6979C1006D7EF0 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,9 +68,11 @@
 			isa = PBXGroup;
 			children = (
 				B22D38301F604AA300FCC371 /* AppDelegate.swift */,
+				B26CF1681F697653006D7EF0 /* MainNavigationController.swift */,
 				B22D38321F604AA300FCC371 /* ViewController.swift */,
 				B22D38451F604ACB00FCC371 /* UserAuthentication.swift */,
 				B2523AA31F67B766006DFA50 /* String+HMAC.swift */,
+				B26CF16A1F6979C1006D7EF0 /* TestViewController.swift */,
 				B2523AA11F67B6F5006DFA50 /* Encryption.swift */,
 				B22D38341F604AA300FCC371 /* Main.storyboard */,
 				B22D383A1F604AA300FCC371 /* Assets.xcassets */,
@@ -153,8 +159,10 @@
 			files = (
 				B22D38331F604AA300FCC371 /* ViewController.swift in Sources */,
 				B22D38311F604AA300FCC371 /* AppDelegate.swift in Sources */,
+				B26CF16B1F6979C1006D7EF0 /* TestViewController.swift in Sources */,
 				B22D38461F604ACB00FCC371 /* UserAuthentication.swift in Sources */,
 				B2523AA41F67B766006DFA50 /* String+HMAC.swift in Sources */,
+				B26CF1691F697653006D7EF0 /* MainNavigationController.swift in Sources */,
 				B2523AA21F67B6F5006DFA50 /* Encryption.swift in Sources */,
 				B22D38391F604AA300FCC371 /* ClickrFlickr.xcdatamodeld in Sources */,
 			);

@@ -46,6 +46,15 @@ class  UserAuthentication {
     private static var oauthVerifier: String?
     private static var oauthTokenSecret: String?
     
+    private static var isAuthorized: Bool {
+        let nameObject = UserDefaults.standard.object(forKey: "username")
+        if let _ = nameObject {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     private static var oauthParameters: [String : String] {
         
         let oauthNonce: String = String(arc4random_uniform(99999999) + 10000000)
@@ -83,6 +92,7 @@ class  UserAuthentication {
         return dictionary
     }
     
+    
     class func configureDataAPI(apiKey: String, apiSecretKey: String, callback: String){
         
         self.apiKey = apiKey
@@ -95,20 +105,25 @@ class  UserAuthentication {
         if url.scheme == "clickrflickr"{
             
             let callBackAfterUserAuthorization = url.absoluteString
-            
             exchangeRequestTokenForAccessToken(callBackAfterUserAuthorization: callBackAfterUserAuthorization)
             
-            print("User authorized now")
             return true
         } else {
-            print("User was not authorize")
             return false
         }
-        
     }
     
     
-    class func authorize() {
+    class func getIsAuthorized() -> Bool{
+        if isAuthorized{
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    
+    class func authorize(){
         
         //  3 steps User Authentication:
         //        1.Get a Request Token
@@ -140,9 +155,7 @@ class  UserAuthentication {
                 } else {
                     completion("error Token", "error")
                 }
-                
                 completion(oauthTokenSecret!, oauthToken!)
-                
             } else {
                 completion("error", "error secretToken")
             }
@@ -168,16 +181,11 @@ class  UserAuthentication {
         
         let paramAfterUserAuthorization = separateResponce(stringToSplit: callBackAfterUserAuthorization)
         
-        if paramAfterUserAuthorization.keys.contains("oauth_token") {
+        guard paramAfterUserAuthorization.keys.contains("oauth_token") else {return print("error token")}
             oauthToken = paramAfterUserAuthorization["oauth_token"]
-        } else {
-            print("error token")
-        }
-        if paramAfterUserAuthorization.keys.contains("oauth_verifier") {
+       
+        guard paramAfterUserAuthorization.keys.contains("oauth_verifier") else {return print("error verifier")}
             oauthVerifier = paramAfterUserAuthorization["oauth_verifier"]
-        } else {
-            print("error verifier")
-        }
         
         let neededParameters = [ParametersConstants.oauthNonce, ParametersConstants.oauthVerifier, ParametersConstants.oauthVersion, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp, ParametersConstants.oauthToken]
         
@@ -186,21 +194,26 @@ class  UserAuthentication {
         getResponseFromUrl(link: urlRequestAccess) { result in
             
             let response = self.separateResponce(stringToSplit: result)
-            print(response)
             
-            if response.keys.contains("oauth_token_secret") {
+            guard response.keys.contains("oauth_token_secret") else {return print("error AccessSecretToken")}
                 oauthTokenSecret = response["oauth_token_secret"]
                 print(oauthTokenSecret!)
-            } else {
-                print("error AccessSecretToken")
-            }
-            
-            if response.keys.contains("oauth_token") {
+        
+            guard response.keys.contains("oauth_token") else {return print("error AccessToken")}
                 oauthToken = response["oauth_token"]
                 print(oauthToken!)
-            } else {
-                print("error AccessToken")
-            }
+            
+            guard response.keys.contains("username") else {return print("error username")}
+                let userName = response["username"]
+                UserDefaults.standard.set(userName, forKey: "username")
+            
+            guard response.keys.contains("fullname") else {return print("error fullname")}
+                let fullName = response["fullname"]
+                print(fullName!)
+            
+            guard response.keys.contains("user_nsid") else {return print("error user_nsid")}
+                let userNsid = response["user_nsid"]
+                print(userNsid!)
         }
     }
     
@@ -271,7 +284,6 @@ class  UserAuthentication {
         }
         
         let customAllowedSet = CharacterSet(charactersIn: "=+/").inverted
-        
         oauthSignature = string.hmac(algorithm:Encryption.HMACAlgorithm.SHA1, key: key)
         oauthSignature = oauthSignature?.addingPercentEncoding(withAllowedCharacters: customAllowedSet)
     }
