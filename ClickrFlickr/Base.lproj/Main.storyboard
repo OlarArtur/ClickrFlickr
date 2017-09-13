@@ -20,12 +20,42 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ClickrFlickr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hiJ-uq-I9r">
+                                <rect key="frame" x="118.5" y="237" width="137" height="33.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please, authorize" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYs-TR-CsT">
+                                <rect key="frame" x="121" y="323" width="132" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q5w-5f-vEK">
+                                <rect key="frame" x="148.5" y="373" width="78" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Authorize"/>
+                                <connections>
+                                    <action selector="authorize:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NfY-vm-uoP"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="hiJ-uq-I9r" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0Qs-z6-7H1"/>
+                            <constraint firstItem="hiJ-uq-I9r" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-80" id="3Hm-hx-qPB"/>
+                            <constraint firstItem="Q5w-5f-vEK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="937-ZY-wCZ"/>
+                            <constraint firstItem="YYs-TR-CsT" firstAttribute="centerX" secondItem="hiJ-uq-I9r" secondAttribute="centerX" id="ZFn-GO-G8h"/>
+                            <constraint firstItem="Q5w-5f-vEK" firstAttribute="top" secondItem="YYs-TR-CsT" secondAttribute="bottom" constant="29" id="gU4-oB-L2L"/>
+                            <constraint firstItem="YYs-TR-CsT" firstAttribute="top" secondItem="hiJ-uq-I9r" secondAttribute="bottom" constant="52.5" id="tSx-jk-nbE"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="38" y="36"/>
+            <point key="canvasLocation" x="37.600000000000001" y="35.532233883058474"/>
         </scene>
     </scenes>
 </document>

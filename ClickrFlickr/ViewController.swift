@@ -10,13 +10,16 @@ import UIKit
 
 class ViewController: UIViewController {
     
-//    let userAuthentication = UserAuthentication()
+
+    @IBAction func authorize(_ sender: UIButton) {
+        UserAuthentication.authorize()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        UserAuthentication.authorize()
+//        UserAuthentication.authorize()
         
         
     }
