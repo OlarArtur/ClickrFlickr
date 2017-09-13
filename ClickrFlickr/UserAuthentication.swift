@@ -37,30 +37,28 @@ private struct ParametersConstants {
 
 class  UserAuthentication {
     
-    static var apiKey: String = "Set value"
-    static var apiSecretKey: String = "Set value"
-    static var oauthCallback: String = "Set value"
+    private static var apiKey: String?
+    private static var apiSecretKey: String?
+    private static var oauthCallback: String?
     
-    private var oauthNonce: String = String(arc4random_uniform(99999999) + 10000000)
-    private var oauthTimestamp: String = String(Int(NSDate().timeIntervalSince1970))
+    private static var oauthSignature: String?
+    private static var oauthToken: String?
+    private static var oauthVerifier: String?
+    private static var oauthTokenSecret: String?
     
-    private var oauthSignature: String?
-    private var oauthToken: String?
-    private var oauthVerifier: String?
-    private var oauthTokenSecret: String?
-    
-    private var oauthConsumerKey: String {
-        return UserAuthentication.apiKey
-    }
-    
-    private var oauthParameters: [String : String]? {
+    private static var oauthParameters: [String : String] {
         
-        var dictionary = [ParametersConstants.oauthCallback : UserAuthentication.oauthCallback,
-                          ParametersConstants.oauthConsumerKey : oauthConsumerKey,
-                          ParametersConstants.oauthNonce : oauthNonce,
+        let oauthNonce: String = String(arc4random_uniform(99999999) + 10000000)
+        let oauthTimestamp: String = String(Int(NSDate().timeIntervalSince1970))
+        
+        var dictionary = [ParametersConstants.oauthNonce : oauthNonce,
                           ParametersConstants.oauthTimestamp : oauthTimestamp,
                           ParametersConstants.oauthSignatureMethod : Constants.signatureMethod,
                           ParametersConstants.oauthVersion : Constants.version]
+        
+        if let oauthConsumerKey = UserAuthentication.apiKey {
+            dictionary[ParametersConstants.oauthConsumerKey] = oauthConsumerKey
+        }
         
         if let oauthSignature = oauthSignature {
             dictionary[ParametersConstants.oauthSignature] = oauthSignature
@@ -77,6 +75,10 @@ class  UserAuthentication {
         if let oauthVerifier = oauthVerifier {
             dictionary[ParametersConstants.oauthVerifier] = oauthVerifier
         }
+        
+        if let oauthCallback = UserAuthentication.oauthCallback  {
+            dictionary[ParametersConstants.oauthCallback ] = oauthCallback
+        }
     
         return dictionary
     }
@@ -88,88 +90,136 @@ class  UserAuthentication {
         self.oauthCallback = callback
     }
     
-    
-    func authorize() {
+    class func takeURLScheme(url: URL) -> Bool{
         
+        if url.scheme == "clickrflickr"{
+            
+            let callBackAfterUserAuthorization = url.absoluteString
+            
+            exchangeRequestTokenForAccessToken(callBackAfterUserAuthorization: callBackAfterUserAuthorization)
+            
+            print("User authorized now")
+            return true
+        } else {
+            print("User was not authorize")
+            return false
+        }
+        
+    }
+    
+    
+    class func authorize() {
+        
+        //  3 steps User Authentication:
         //        1.Get a Request Token
         //        2.Get the User's Authorization
         //        3.Exchange the Request Token for an Access Token
         
         getRequestToken() { (token, secretToken) in
-            self.getTheUserAuthorization()
+            getTheUserAuthorization()
         }
-        
-//        exchangeRequestTokenForAccessToken()
-        
     }
     
     
-    private func getRequestToken(completion: @escaping (_ token: String, _ secretToken: String) -> ()) {
+    private static func getRequestToken(completion: @escaping (_ token: String, _ secretToken: String) -> ()) {
         
-        var neededParameters = [ParametersConstants.oauthNonce, ParametersConstants.oauthCallback, ParametersConstants.oauthVersion, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp]
-        
-        var arrayOfOauthParameters = getOauthParametersByNeededParameters(oauthParam: oauthParameters!, neededParam: neededParameters)
-        
-        let baseString = concatenateUrlString(urlString: Constants.requestTokenUrl, parameters: arrayOfOauthParameters, isBaseString: true)
-        
-        getSignatureFromStringWithEncodedCharact(string: baseString)
-        
-        neededParameters.append(ParametersConstants.oauthSignature)
-        
-        arrayOfOauthParameters = getOauthParametersByNeededParameters(oauthParam: oauthParameters!, neededParam: neededParameters)
-        
-        let urlRequestToken = concatenateUrlString(urlString: Constants.requestTokenUrl, parameters: arrayOfOauthParameters, isBaseString: false)
+        let neededParameters = [ParametersConstants.oauthNonce, ParametersConstants.oauthCallback, ParametersConstants.oauthVersion, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp]
+
+        let urlRequestToken = getRequestURL(neededOauthParameters: neededParameters, requestURL: Constants.requestTokenUrl)
         
         getResponseFromUrl(link: urlRequestToken) { result in
             
             let response = self.separateResponce(stringToSplit: result)
             
             if response.keys.contains("oauth_token_secret") {
-                self.oauthTokenSecret = response["oauth_token_secret"]
+                
+                oauthTokenSecret = response["oauth_token_secret"]
+                
+                if response.keys.contains("oauth_token") {
+                    oauthToken = response["oauth_token"]
+                } else {
+                    completion("error Token", "error")
+                }
+                
+                completion(oauthTokenSecret!, oauthToken!)
+                
+            } else {
+                completion("error", "error secretToken")
             }
-            
-            if response.keys.contains("oauth_token") {
-                self.oauthToken = response["oauth_token"]
-            }
-            completion(self.oauthTokenSecret!, self.oauthToken!)
         }
     }
     
     
-    private func getTheUserAuthorization() {
+    private static func getTheUserAuthorization() {
         
         let neededParameters = [ParametersConstants.oauthToken]
         
-        let arrayOfOauthParameters = getOauthParametersByNeededParameters(oauthParam: oauthParameters!, neededParam: neededParameters)
+        let arrayOfOauthParameters = getOauthParametersByNeededParameters(oauthParam: oauthParameters, neededParam: neededParameters)
         
         let urlUserAuthorization = concatenateUrlString(urlString: Constants.authorizeUrl, parameters: arrayOfOauthParameters, isBaseString: false)
         
         let safariView = SFSafariViewController(url: URL(string: urlUserAuthorization)!)
 
         UIApplication.shared.keyWindow?.rootViewController?.present(safariView, animated: true, completion: nil)
-    
-        
-        
-//        UIApplication.shared.delegate.application(UIApplication, open: CFBundle, sourceApplication: String?, annotation: Any) {
-//            
-//            if url.scheme == "clickrflickr"{
-//                let callBackAfterUserAuthorization = url.absoluteString
-//            }
-//            
-//            
-//         return true
-//        }
-        
-        
     }
     
     
-    private func exchangeRequestTokenForAccessToken() {
+    private static func exchangeRequestTokenForAccessToken(callBackAfterUserAuthorization: String) {
         
+        let paramAfterUserAuthorization = separateResponce(stringToSplit: callBackAfterUserAuthorization)
+        
+        if paramAfterUserAuthorization.keys.contains("oauth_token") {
+            oauthToken = paramAfterUserAuthorization["oauth_token"]
+        } else {
+            print("error token")
+        }
+        if paramAfterUserAuthorization.keys.contains("oauth_verifier") {
+            oauthVerifier = paramAfterUserAuthorization["oauth_verifier"]
+        } else {
+            print("error verifier")
+        }
+        
+        let neededParameters = [ParametersConstants.oauthNonce, ParametersConstants.oauthVerifier, ParametersConstants.oauthVersion, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp, ParametersConstants.oauthToken]
+        
+        let urlRequestAccess = getRequestURL(neededOauthParameters: neededParameters, requestURL: Constants.accessTokenUrl)
+        
+        getResponseFromUrl(link: urlRequestAccess) { result in
+            
+            let response = self.separateResponce(stringToSplit: result)
+            print(response)
+            
+            if response.keys.contains("oauth_token_secret") {
+                oauthTokenSecret = response["oauth_token_secret"]
+                print(oauthTokenSecret!)
+            } else {
+                print("error AccessSecretToken")
+            }
+            
+            if response.keys.contains("oauth_token") {
+                oauthToken = response["oauth_token"]
+                print(oauthToken!)
+            } else {
+                print("error AccessToken")
+            }
+        }
     }
     
     
-    private func getOauthParametersByNeededParameters(oauthParam: [String:String], neededParam: [String]) -> [String] {
+    private static func getRequestURL(neededOauthParameters: [String], requestURL: String) -> String {
+        
+        var neededParameters = neededOauthParameters
+        var arrayOfOauthParameters = getOauthParametersByNeededParameters(oauthParam: oauthParameters, neededParam: neededParameters)
+        let baseString = concatenateUrlString(urlString: requestURL, parameters: arrayOfOauthParameters, isBaseString: true)
+        getSignatureFromStringWithEncodedCharact(string: baseString)
+        neededParameters = [ParametersConstants.oauthSignature]
+        arrayOfOauthParameters = arrayOfOauthParameters + getOauthParametersByNeededParameters(oauthParam: oauthParameters, neededParam: neededParameters)
+        let urlRequest = concatenateUrlString(urlString: requestURL, parameters: arrayOfOauthParameters, isBaseString: false)
+        
+        return urlRequest
+    }
+    
+    
+    private static func getOauthParametersByNeededParameters(oauthParam: [String:String], neededParam: [String]) -> [String] {
         
         var resultArray = [String]()
         
@@ -185,7 +235,7 @@ class  UserAuthentication {
     }
     
     
-    private func concatenateUrlString(urlString: String, parameters: [String], isBaseString: Bool) -> String {
+    private static func concatenateUrlString(urlString: String, parameters: [String], isBaseString: Bool) -> String {
         
         var concatenatedString = ""
         
@@ -200,7 +250,7 @@ class  UserAuthentication {
     }
     
     
-    private func getUrlPartWithSortedParameters(arrayOfParameters: [String]) -> String {
+    private static func getUrlPartWithSortedParameters(arrayOfParameters: [String]) -> String {
         
         let sortedArray = arrayOfParameters.sorted()
         let stringFromArray = sortedArray.joined(separator: "&")
@@ -208,14 +258,16 @@ class  UserAuthentication {
     }
     
     
-    private func getSignatureFromStringWithEncodedCharact(string: String) {
+    private static func getSignatureFromStringWithEncodedCharact(string: String) {
         
         var key: String
         
+        guard let apiSecretKey = UserAuthentication.apiSecretKey else {return}
+        
         if let oauthTokenSecret = oauthTokenSecret {
-            key = "\(UserAuthentication.apiSecretKey)&\(oauthTokenSecret)"
+            key = "\(apiSecretKey)&\(oauthTokenSecret)"
         } else {
-            key = "\(UserAuthentication.apiSecretKey)&"
+            key = "\(apiSecretKey)&"
         }
         
         let customAllowedSet = CharacterSet(charactersIn: "=+/").inverted
@@ -225,7 +277,7 @@ class  UserAuthentication {
     }
     
     
-    private func getResponseFromUrl(link: String, completion: @escaping (String) -> ()) {
+    private static func getResponseFromUrl(link: String, completion: @escaping (String) -> ()) {
         
         var responseString = ""
         
@@ -246,10 +298,11 @@ class  UserAuthentication {
                 completion(responseString)
             }
         }.resume()
+        
     }
     
     
-    private func separateResponce(stringToSplit: String) -> [String: String] {
+    private static func separateResponce(stringToSplit: String) -> [String: String] {
         
         var result = [String:String]()
         var splitedString = ""
