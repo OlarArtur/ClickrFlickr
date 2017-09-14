@@ -8,14 +8,21 @@
 
 import UIKit
 
-class TestViewController: UIViewController{
+//extension TestViewController: DetailViewControllerDelegate {
+//    func didFinishTask(sender: UserAuthentication) {
+//        // do stuff like updating the UI
+//    }
+//}
+
+class TestViewController: UIViewController, DetailViewControllerDelegate {
     
     
-    var userAuthentication: UserAuthentication?
+//    var userAuthentication: UserAuthentication?
     
 
     @IBAction func logOut(_ sender: UIButton) {
         UserDefaults.standard.removeObject(forKey: "username")
+        URLCache.shared.removeAllCachedResponses()
     }
     
     @IBOutlet weak var userName: UILabel!
@@ -24,9 +31,19 @@ class TestViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UserAuthentication.delegate = self
+        
         let nameObject = UserDefaults.standard.object(forKey: "username")
         if let name = nameObject as? String {
             userName.text = name
+        }
+    }
+    
+    func didFinishTask() {
+        print("hello")
+        DispatchQueue.main.async() {
+            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true, completion: nil)
         }
     }
     

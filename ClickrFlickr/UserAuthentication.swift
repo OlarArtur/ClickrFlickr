@@ -36,8 +36,16 @@ private struct ParametersConstants {
 }
 
 
+protocol DetailViewControllerDelegate: class {
+    func didFinishTask()
+}
+
+
+
 
 class  UserAuthentication {
+    
+    static weak var delegate: DetailViewControllerDelegate?
     
     
     private static var apiKey: String?
@@ -109,12 +117,11 @@ class  UserAuthentication {
         if url.scheme == "clickrflickr"{
             
             let callBackAfterUserAuthorization = url.absoluteString
+            print(callBackAfterUserAuthorization)
             exchangeRequestTokenForAccessToken(callBackAfterUserAuthorization: callBackAfterUserAuthorization) {(token, secretToken, username, fullname, usernsid) in
-                
-
-                
+                delegate?.didFinishTask()
             }
-        
+            
             return true
         } else {
             return false
@@ -153,20 +160,15 @@ class  UserAuthentication {
         getResponseFromUrl(link: urlRequestToken) { result in
             
             let response = self.separateResponce(stringToSplit: result)
+            print(response)
             
-            if response.keys.contains("oauth_token_secret") {
-                
-                oauthTokenSecret = response["oauth_token_secret"]
-                
-                if response.keys.contains("oauth_token") {
-                    oauthToken = response["oauth_token"]
-                } else {
-                    completion("error Token", "error")
-                }
-                completion(oauthTokenSecret!, oauthToken!)
-            } else {
-                completion("error", "error secretToken")
-            }
+            guard response.keys.contains("oauth_token_secret") else {return completion("error", "requestSecretToken is empty")}
+            oauthTokenSecret = response["oauth_token_secret"]
+            
+            guard response.keys.contains("oauth_token") else {return completion("requestToken is empty", "error")}
+            oauthToken = response["oauth_token"]
+            
+            completion(oauthTokenSecret!, oauthToken!)
         }
     }
     
@@ -179,8 +181,10 @@ class  UserAuthentication {
         
         let urlUserAuthorization = concatenateUrlString(urlString: Constants.authorizeUrl, parameters: arrayOfOauthParameters, isBaseString: false)
         
-        let safariView = SFSafariViewController(url: URL(string: urlUserAuthorization)!)
-
+        guard let url = URL(string: urlUserAuthorization) else {return}
+        
+        let safariView = SFSafariViewController(url: url)
+        
         UIApplication.shared.keyWindow?.rootViewController?.present(safariView, animated: true, completion: nil)
     }
     
@@ -229,11 +233,12 @@ class  UserAuthentication {
         var neededParameters = neededOauthParameters
         var arrayOfOauthParameters = getOauthParametersByNeededParameters(oauthParam: oauthParameters, neededParam: neededParameters)
         let baseString = concatenateUrlString(urlString: requestURL, parameters: arrayOfOauthParameters, isBaseString: true)
-        print(baseString)
+//        print(baseString)
         getSignatureFromStringWithEncodedCharact(string: baseString)
         neededParameters = [ParametersConstants.oauthSignature]
         arrayOfOauthParameters = arrayOfOauthParameters + getOauthParametersByNeededParameters(oauthParam: oauthParameters, neededParam: neededParameters)
         let urlRequest = concatenateUrlString(urlString: requestURL, parameters: arrayOfOauthParameters, isBaseString: false)
+//        print(urlRequest)
         
         return urlRequest
     }
@@ -340,8 +345,6 @@ class  UserAuthentication {
         }
         return result
     }
-    
-    
     
 }
 
