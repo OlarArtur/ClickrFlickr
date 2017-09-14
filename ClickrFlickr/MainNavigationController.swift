@@ -9,23 +9,33 @@
 import UIKit
 
 class MainNavigationController: UINavigationController {
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+    isAuthorized()
         
+    }
+    
+    
+    func finishAuth(){
+        performSegue(withIdentifier: "Authorized", sender: self)
+    }
+    
+    
+    func isAuthorized(){
         if UserAuthentication.getIsAuthorized(){
             performSegue(withIdentifier: "Authorized", sender: self)
         } else {
-           performSegue(withIdentifier: "Not authorized", sender: self)
+            performSegue(withIdentifier: "Not authorized", sender: self)
         }
-        
-        // Do any additional setup after loading the view.
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
 }

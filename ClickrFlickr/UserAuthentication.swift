@@ -10,6 +10,7 @@ import Foundation
 import SafariServices
 
 
+
 private struct Constants {
     
     static let signatureMethod: String = "HMAC-SHA1"
@@ -35,7 +36,9 @@ private struct ParametersConstants {
 }
 
 
+
 class  UserAuthentication {
+    
     
     private static var apiKey: String?
     private static var apiSecretKey: String?
@@ -54,6 +57,7 @@ class  UserAuthentication {
             return false
         }
     }
+    
     
     private static var oauthParameters: [String : String] {
         
@@ -105,8 +109,12 @@ class  UserAuthentication {
         if url.scheme == "clickrflickr"{
             
             let callBackAfterUserAuthorization = url.absoluteString
-            exchangeRequestTokenForAccessToken(callBackAfterUserAuthorization: callBackAfterUserAuthorization)
-            
+            exchangeRequestTokenForAccessToken(callBackAfterUserAuthorization: callBackAfterUserAuthorization) {(token, secretToken, username, fullname, usernsid) in
+                
+
+                
+            }
+        
             return true
         } else {
             return false
@@ -177,7 +185,7 @@ class  UserAuthentication {
     }
     
     
-    private static func exchangeRequestTokenForAccessToken(callBackAfterUserAuthorization: String) {
+    private static func exchangeRequestTokenForAccessToken(callBackAfterUserAuthorization: String, completion: @escaping (_ token: String, _ secretToken: String, _ username: String, _ fullname: String, _ usernsid: String) -> ()) {
         
         let paramAfterUserAuthorization = separateResponce(stringToSplit: callBackAfterUserAuthorization)
         
@@ -197,11 +205,9 @@ class  UserAuthentication {
             
             guard response.keys.contains("oauth_token_secret") else {return print("error AccessSecretToken")}
                 oauthTokenSecret = response["oauth_token_secret"]
-                print(oauthTokenSecret!)
         
             guard response.keys.contains("oauth_token") else {return print("error AccessToken")}
                 oauthToken = response["oauth_token"]
-                print(oauthToken!)
             
             guard response.keys.contains("username") else {return print("error username")}
                 let userName = response["username"]
@@ -209,11 +215,11 @@ class  UserAuthentication {
             
             guard response.keys.contains("fullname") else {return print("error fullname")}
                 let fullName = response["fullname"]
-                print(fullName!)
             
             guard response.keys.contains("user_nsid") else {return print("error user_nsid")}
                 let userNsid = response["user_nsid"]
-                print(userNsid!)
+        
+            completion(oauthToken!, oauthTokenSecret!, userName!, fullName!, userNsid!)
         }
     }
     
@@ -223,6 +229,7 @@ class  UserAuthentication {
         var neededParameters = neededOauthParameters
         var arrayOfOauthParameters = getOauthParametersByNeededParameters(oauthParam: oauthParameters, neededParam: neededParameters)
         let baseString = concatenateUrlString(urlString: requestURL, parameters: arrayOfOauthParameters, isBaseString: true)
+        print(baseString)
         getSignatureFromStringWithEncodedCharact(string: baseString)
         neededParameters = [ParametersConstants.oauthSignature]
         arrayOfOauthParameters = arrayOfOauthParameters + getOauthParametersByNeededParameters(oauthParam: oauthParameters, neededParam: neededParameters)
@@ -333,8 +340,6 @@ class  UserAuthentication {
         }
         return result
     }
-    
-    
     
     
     
