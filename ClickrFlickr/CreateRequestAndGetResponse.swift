@@ -77,26 +77,25 @@ class CreateRequestAndGetResponse {
     }
     
     
-    static func getResponseFromUrl(link: String, completion: @escaping (String) -> ()) {
+    static func getResponseFromUrl(link: String, completion: @escaping (Data, String) -> ()) {
         
         guard let url = URL(string: link) else {
             print("Error: cannot create URL")
-            completion("Error: cannot create URL")
             return
         }
         
         urlSessionTask(url: url) { (data, error) in
             
             guard let data = data else {
-                completion("data is nil")
+                print("data is nil")
                 return
             }
             
             guard let responseString = String(data: data, encoding: String.Encoding.utf8) else {
-                completion("Can't convert data to string")
+                completion(data, "Can't convert data to string")
                 return
             }
-            completion(responseString)
+            completion(data, responseString)
         }
     }
     
@@ -136,7 +135,6 @@ class CreateRequestAndGetResponse {
         }
         return separatedResponse
     }
-    
-    
+
     
 }

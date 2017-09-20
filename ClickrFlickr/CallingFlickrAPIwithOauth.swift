@@ -15,8 +15,8 @@ class CallingFlickrAPIwithOauth: CreateRequestAndGetResponse {
     private static var apiSecretKey: String?
     
     private static var oauthSignature: String?
-    private static var oauthVerifier: String?
-    private static var oauthTokenSecret: String?
+    
+    private static var oauthTags: String?
     
     class func configureDataAPI(apiKey: String, apiSecretKey: String){
         self.apiKey = apiKey
@@ -32,9 +32,9 @@ class CallingFlickrAPIwithOauth: CreateRequestAndGetResponse {
                           ParametersConstants.oauthTimestamp : oauthTimestamp,
                           ParametersConstants.oauthSignatureMethod : Constants.signatureMethod,
                           ParametersConstants.oauthVersion : Constants.version,
-                          ParametersConstants.authMethod : "flickr.test.login",
-                          ParametersConstants.authFormat : "json",
-                          ParametersConstants.authNoJsonCallback : "1"]
+                          ParametersConstants.oauthMethod : "flickr.photos.search",
+                          ParametersConstants.oauthFormat : "json",
+                          ParametersConstants.oauthNoJsonCallback : "1"]
         
         if let oauthConsumerKey = CallingFlickrAPIwithOauth.apiKey {
             dictionary[ParametersConstants.oauthConsumerKey] = oauthConsumerKey
@@ -48,21 +48,19 @@ class CallingFlickrAPIwithOauth: CreateRequestAndGetResponse {
             dictionary[ParametersConstants.oauthToken] = oauthToken
         }
         
-        if let oauthTokenSecret = oauthTokenSecret {
-            dictionary[ParametersConstants.oauthTokenSecret] = oauthTokenSecret
-        }
-        
-        if let oauthVerifier = oauthVerifier {
-            dictionary[ParametersConstants.oauthVerifier] = oauthVerifier
+        if let oauthTags = oauthTags {
+            dictionary[ParametersConstants.oauthTags] = oauthTags
         }
         
         return dictionary
     }
     
     
-    class func getJSON() {
+    class func getDataJSON() {
         
-        let neededParameters = [ParametersConstants.authMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp, ParametersConstants.authFormat, ParametersConstants.authNoJsonCallback, ParametersConstants.oauthToken, ParametersConstants.oauthNonce, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthVersion, ParametersConstants.oauthSignature]
+        oauthTags = "Dogs"
+        
+        var neededParameters = [ParametersConstants.oauthMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp, ParametersConstants.oauthFormat, ParametersConstants.oauthNoJsonCallback, ParametersConstants.oauthToken, ParametersConstants.oauthNonce, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthVersion, ParametersConstants.oauthTags]
     
         var oauthParameters = getOauthParametersByNeededParameters(oauthParam: authParameters(), neededParam: neededParameters)
         let baseString = concatenateUrlString(urlString: Constants.apiRequestUrl, parameters: oauthParameters, isBaseString: true)
@@ -73,30 +71,21 @@ class CallingFlickrAPIwithOauth: CreateRequestAndGetResponse {
             print("ERROR CallingFlickrAPIwithOauth: tokenSecret or apiSecretKey is empty ")
         }
         
-        oauthParameters = getOauthParametersByNeededParameters(oauthParam: authParameters(), neededParam: neededParameters)
-        let urlRequest = concatenateUrlString(urlString: Constants.apiRequestUrl, parameters: oauthParameters, isBaseString: false)
-        print(urlRequest)
-        getResponseFromUrl(link: urlRequest) { (result) in
-            print(result)
-        }
+        neededParameters = [ParametersConstants.oauthSignature]
+        oauthParameters = oauthParameters + getOauthParametersByNeededParameters(oauthParam: authParameters(), neededParam: neededParameters)
         
+        let urlRequest = concatenateUrlString(urlString: Constants.apiRequestUrl, parameters: oauthParameters, isBaseString: false)
+       
+        getResponseFromUrl(link: urlRequest) {(data, result) in
+            
+            print(data)
+            
+            if let json = try? JSONSerialization.jsonObject(with: data, options: []){
+                print(json)
+            }
+        }
+      
     }
-
-
-//    private static func getDate() -> String {
-//        
-//        let dateformatter = DateFormatter()
-//    
-//        dateformatter.dateFormat = "yyyy-MM-dd"
-//        
-//        let calendar = Calendar.current
-//        
-//        let yersterday = calendar.date(byAdding: .day, value: -1, to: Date())
-//        
-//        let nowMinusDay = dateformatter.string(from: yersterday!)
-//        
-//        return nowMinusDay
-//    }
     
     
 }

@@ -131,7 +131,7 @@ class  UserAuthentication: CreateRequestAndGetResponse {
 
         let urlRequestToken = getRequestURL(neededOauthParameters: neededParameters, requestURL: Constants.requestTokenUrl)
         
-        getResponseFromUrl(link: urlRequestToken) { result in
+        getResponseFromUrl(link: urlRequestToken) { (data, result) in
             
             let response = self.separateResponce(stringToSplit: result)
             
@@ -189,7 +189,7 @@ class  UserAuthentication: CreateRequestAndGetResponse {
         
         let urlRequestAccess = getRequestURL(neededOauthParameters: neededParameters, requestURL: Constants.accessTokenUrl)
         
-        getResponseFromUrl(link: urlRequestAccess) { (result) in
+        getResponseFromUrl(link: urlRequestAccess) { (data, result) in
             
             let response = self.separateResponce(stringToSplit: result)
             

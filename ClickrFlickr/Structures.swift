@@ -12,25 +12,23 @@ import Foundation
 
 struct Constants {
     
-    static let apiRequestUrl: String = "https://api.flickr.com/services/rest?"
-    
     static let signatureMethod: String = "HMAC-SHA1"
     static let version: String = "1.0"
     static let requestTokenUrl: String = "https://www.flickr.com/services/oauth/request_token?"
     static let authorizeUrl: String = "https://www.flickr.com/services/oauth/authorize?"
     static let accessTokenUrl: String = "https://www.flickr.com/services/oauth/access_token?"
+    static let apiRequestUrl: String = "https://api.flickr.com/services/rest?"
+    static let logOutURL: String = "https://www.flickr.com/logout.gne"
     static let urlScheme = "clickrflickr"
 }
 
 
 struct ParametersConstants {
     
-    static let authApiKey: String = "api_key"
-    static let authApiSig: String = "api_sig"
-    static let authDate: String = "date"
-    static let authMethod: String = "method"
-    static let authFormat: String = "format"
-    static let authNoJsonCallback: String = "nojsoncallback"
+    static let oauthTags: String = "tags"
+    static let oauthMethod: String = "method"
+    static let oauthFormat: String = "format"
+    static let oauthNoJsonCallback: String = "nojsoncallback"
     
     static let oauthNonce: String = "oauth_nonce"
     static let oauthTimestamp: String = "oauth_timestamp"

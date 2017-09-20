@@ -8,22 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		B22D38311F604AA300FCC371 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D38301F604AA300FCC371 /* AppDelegate.swift */; };
-		B22D38331F604AA300FCC371 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D38321F604AA300FCC371 /* ViewController.swift */; };
 		B22D38361F604AA300FCC371 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22D38341F604AA300FCC371 /* Main.storyboard */; };
 		B22D38391F604AA300FCC371 /* ClickrFlickr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B22D38371F604AA300FCC371 /* ClickrFlickr.xcdatamodeld */; };
 		B22D383B1F604AA300FCC371 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B22D383A1F604AA300FCC371 /* Assets.xcassets */; };
 		B22D383E1F604AA300FCC371 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22D383C1F604AA300FCC371 /* LaunchScreen.storyboard */; };
 		B22D38461F604ACB00FCC371 /* UserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D38451F604ACB00FCC371 /* UserAuthentication.swift */; };
+		B241069A1F724BBA006F9E53 /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24106991F724BBA006F9E53 /* Structures.swift */; };
 		B2523AA21F67B6F5006DFA50 /* Encryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2523AA11F67B6F5006DFA50 /* Encryption.swift */; };
 		B2523AA41F67B766006DFA50 /* String+HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2523AA31F67B766006DFA50 /* String+HMAC.swift */; };
 		B26CF1691F697653006D7EF0 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26CF1681F697653006D7EF0 /* MainNavigationController.swift */; };
-		B26CF16B1F6979C1006D7EF0 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26CF16A1F6979C1006D7EF0 /* TestViewController.swift */; };
+		B2754A9C1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2754A9B1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift */; };
+		B28AC6511F7176BD00C52BC2 /* CreateRequestAndGetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28AC6501F7176BD00C52BC2 /* CreateRequestAndGetResponse.swift */; };
+		B29A9FEF1F7276C000567FD5 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29A9FEE1F7276C000567FD5 /* SearchCollectionViewCell.swift */; };
+		B29A9FF11F72778C00567FD5 /* SearchCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29A9FF01F72778C00567FD5 /* SearchCollectionViewController.swift */; };
+		B29A9FF31F72858300567FD5 /* AuthorizedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29A9FF21F72858300567FD5 /* AuthorizedViewController.swift */; };
+		B29A9FF51F72869600567FD5 /* NotAuthorizedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29A9FF41F72869600567FD5 /* NotAuthorizedViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B22D382D1F604AA300FCC371 /* ClickrFlickr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClickrFlickr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22D38301F604AA300FCC371 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B22D38321F604AA300FCC371 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B22D38351F604AA300FCC371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B22D38381F604AA300FCC371 /* ClickrFlickr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ClickrFlickr.xcdatamodel; sourceTree = "<group>"; };
 		B22D383A1F604AA300FCC371 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -31,10 +35,16 @@
 		B22D383F1F604AA300FCC371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B22D38451F604ACB00FCC371 /* UserAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAuthentication.swift; sourceTree = "<group>"; };
 		B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ClickrFlickr-Bridging-Header.h"; sourceTree = "<group>"; };
+		B24106991F724BBA006F9E53 /* Structures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
 		B2523AA11F67B6F5006DFA50 /* Encryption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encryption.swift; sourceTree = "<group>"; };
 		B2523AA31F67B766006DFA50 /* String+HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HMAC.swift"; sourceTree = "<group>"; };
 		B26CF1681F697653006D7EF0 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
-		B26CF16A1F6979C1006D7EF0 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		B2754A9B1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingFlickrAPIwithOauth.swift; sourceTree = "<group>"; };
+		B28AC6501F7176BD00C52BC2 /* CreateRequestAndGetResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateRequestAndGetResponse.swift; sourceTree = "<group>"; };
+		B29A9FEE1F7276C000567FD5 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		B29A9FF01F72778C00567FD5 /* SearchCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewController.swift; sourceTree = "<group>"; };
+		B29A9FF21F72858300567FD5 /* AuthorizedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedViewController.swift; sourceTree = "<group>"; };
+		B29A9FF41F72869600567FD5 /* NotAuthorizedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotAuthorizedViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,19 +79,40 @@
 			children = (
 				B22D38301F604AA300FCC371 /* AppDelegate.swift */,
 				B26CF1681F697653006D7EF0 /* MainNavigationController.swift */,
-				B22D38321F604AA300FCC371 /* ViewController.swift */,
+				B29A9FF41F72869600567FD5 /* NotAuthorizedViewController.swift */,
 				B22D38451F604ACB00FCC371 /* UserAuthentication.swift */,
-				B2523AA31F67B766006DFA50 /* String+HMAC.swift */,
-				B26CF16A1F6979C1006D7EF0 /* TestViewController.swift */,
-				B2523AA11F67B6F5006DFA50 /* Encryption.swift */,
+				B2754A9B1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift */,
+				B24106991F724BBA006F9E53 /* Structures.swift */,
+				B28AC6501F7176BD00C52BC2 /* CreateRequestAndGetResponse.swift */,
+				B29A9FF21F72858300567FD5 /* AuthorizedViewController.swift */,
 				B22D38341F604AA300FCC371 /* Main.storyboard */,
+				B29A9FF01F72778C00567FD5 /* SearchCollectionViewController.swift */,
+				B29A9FEE1F7276C000567FD5 /* SearchCollectionViewCell.swift */,
 				B22D383A1F604AA300FCC371 /* Assets.xcassets */,
 				B22D383C1F604AA300FCC371 /* LaunchScreen.storyboard */,
 				B22D383F1F604AA300FCC371 /* Info.plist */,
 				B22D38371F604AA300FCC371 /* ClickrFlickr.xcdatamodeld */,
-				B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */,
+				B28AC64F1F71763800C52BC2 /* Extensions */,
+				B26223971F6F992F009212EF /* Supporting Files */,
 			);
 			path = ClickrFlickr;
+			sourceTree = "<group>";
+		};
+		B26223971F6F992F009212EF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B2523AA11F67B6F5006DFA50 /* Encryption.swift */,
+				B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B28AC64F1F71763800C52BC2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B2523AA31F67B766006DFA50 /* String+HMAC.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,14 +188,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B22D38331F604AA300FCC371 /* ViewController.swift in Sources */,
 				B22D38311F604AA300FCC371 /* AppDelegate.swift in Sources */,
-				B26CF16B1F6979C1006D7EF0 /* TestViewController.swift in Sources */,
+				B29A9FEF1F7276C000567FD5 /* SearchCollectionViewCell.swift in Sources */,
+				B29A9FF51F72869600567FD5 /* NotAuthorizedViewController.swift in Sources */,
 				B22D38461F604ACB00FCC371 /* UserAuthentication.swift in Sources */,
 				B2523AA41F67B766006DFA50 /* String+HMAC.swift in Sources */,
+				B28AC6511F7176BD00C52BC2 /* CreateRequestAndGetResponse.swift in Sources */,
 				B26CF1691F697653006D7EF0 /* MainNavigationController.swift in Sources */,
+				B241069A1F724BBA006F9E53 /* Structures.swift in Sources */,
 				B2523AA21F67B6F5006DFA50 /* Encryption.swift in Sources */,
+				B29A9FF11F72778C00567FD5 /* SearchCollectionViewController.swift in Sources */,
+				B2754A9C1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift in Sources */,
 				B22D38391F604AA300FCC371 /* ClickrFlickr.xcdatamodeld in Sources */,
+				B29A9FF31F72858300567FD5 /* AuthorizedViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
