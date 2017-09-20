@@ -10,43 +10,15 @@ import Foundation
 import SafariServices
 
 
-
-private struct Constants {
-    
-    static let signatureMethod: String = "HMAC-SHA1"
-    static let version: String = "1.0"
-    static let requestTokenUrl: String = "https://www.flickr.com/services/oauth/request_token?"
-    static let authorizeUrl: String = "https://www.flickr.com/services/oauth/authorize?"
-    static let accessTokenUrl: String = "https://www.flickr.com/services/oauth/access_token?"
+protocol UserAuthenticationDelegate: class {
+    func didFinishAuthorize()
 }
 
 
-private struct ParametersConstants {
+class  UserAuthentication: CreateRequestAndGetResponse {
     
-    static let oauthNonce: String = "oauth_nonce"
-    static let oauthTimestamp: String = "oauth_timestamp"
-    static let oauthConsumerKey: String = "oauth_consumer_key"
-    static let oauthSignatureMethod: String = "oauth_signature_method"
-    static let oauthVersion: String = "oauth_version"
-    static let oauthCallback: String = "oauth_callback"
-    static let oauthSignature: String = "oauth_signature"
-    static let oauthToken: String = "oauth_token"
-    static let oauthVerifier: String = "oauth_verifier"
-    static let oauthTokenSecret: String = "oauth_token_secret"
-}
-
-
-protocol DetailViewControllerDelegate: class {
-    func didFinishTask()
-}
-
-
-
-
-class  UserAuthentication {
     
-    static weak var delegate: DetailViewControllerDelegate?
-    
+    static weak var delegate: UserAuthenticationDelegate?
     
     private static var apiKey: String?
     private static var apiSecretKey: String?
@@ -67,7 +39,7 @@ class  UserAuthentication {
     }
     
     
-    private static var oauthParameters: [String : String] {
+    private class func oauthParameters() -> [String : String] {
         
         let oauthNonce: String = String(arc4random_uniform(99999999) + 10000000)
         let oauthTimestamp: String = String(Int(NSDate().timeIntervalSince1970))
@@ -114,13 +86,13 @@ class  UserAuthentication {
     
     class func takeURLScheme(url: URL) -> Bool{
         
-        if url.scheme == "clickrflickr"{
+        if url.scheme == Constants.urlScheme {
             
             let callBackAfterUserAuthorization = url.absoluteString
-            print(callBackAfterUserAuthorization)
-            exchangeRequestTokenForAccessToken(callBackAfterUserAuthorization: callBackAfterUserAuthorization) {(token, secretToken, username, fullname, usernsid) in
-                delegate?.didFinishTask()
-            }
+        
+            exchangeRequestTokenForAccessToken(callBackAfterUserAuthorization: callBackAfterUserAuthorization, completion: { (token, secretToken, username, fullname, usernsid) in
+                delegate?.didFinishAuthorize()
+            })
             
             return true
         } else {
@@ -139,6 +111,8 @@ class  UserAuthentication {
     
     
     class func authorize(){
+        
+        oauthTokenSecret = nil
         
         //  3 steps User Authentication:
         //        1.Get a Request Token
@@ -160,15 +134,20 @@ class  UserAuthentication {
         getResponseFromUrl(link: urlRequestToken) { result in
             
             let response = self.separateResponce(stringToSplit: result)
-            print(response)
             
-            guard response.keys.contains("oauth_token_secret") else {return completion("error", "requestSecretToken is empty")}
-            oauthTokenSecret = response["oauth_token_secret"]
+            guard let oauthTokenSecret = response["oauth_token_secret"] else {
+                completion("error", "requestSecretToken is empty")
+                return
+            }
+            self.oauthTokenSecret = oauthTokenSecret
             
-            guard response.keys.contains("oauth_token") else {return completion("requestToken is empty", "error")}
-            oauthToken = response["oauth_token"]
+            guard let oauthToken = response["oauth_token"] else {
+                completion("requestToken is empty", "error")
+                return
+            }
+            self.oauthToken = oauthToken
             
-            completion(oauthTokenSecret!, oauthToken!)
+            completion(oauthTokenSecret, oauthToken)
         }
     }
     
@@ -177,14 +156,15 @@ class  UserAuthentication {
         
         let neededParameters = [ParametersConstants.oauthToken]
         
-        let arrayOfOauthParameters = getOauthParametersByNeededParameters(oauthParam: oauthParameters, neededParam: neededParameters)
+        let arrayOfOauthParameters = getOauthParametersByNeededParameters(oauthParam: oauthParameters(), neededParam: neededParameters)
         
         let urlUserAuthorization = concatenateUrlString(urlString: Constants.authorizeUrl, parameters: arrayOfOauthParameters, isBaseString: false)
         
-        guard let url = URL(string: urlUserAuthorization) else {return}
-        
+        guard let url = URL(string: urlUserAuthorization) else {
+            print("Error get URL from urlUserAuthorization")
+            return
+        }
         let safariView = SFSafariViewController(url: url)
-        
         UIApplication.shared.keyWindow?.rootViewController?.present(safariView, animated: true, completion: nil)
     }
     
@@ -193,37 +173,58 @@ class  UserAuthentication {
         
         let paramAfterUserAuthorization = separateResponce(stringToSplit: callBackAfterUserAuthorization)
         
-        guard paramAfterUserAuthorization.keys.contains("oauth_token") else {return print("error token")}
+        guard paramAfterUserAuthorization.keys.contains("oauth_token") else {
+            print("error token after user auththorization")
+            return 
+        }
             oauthToken = paramAfterUserAuthorization["oauth_token"]
        
-        guard paramAfterUserAuthorization.keys.contains("oauth_verifier") else {return print("error verifier")}
+        guard paramAfterUserAuthorization.keys.contains("oauth_verifier") else {
+            print("error verifier after user auththorization")
+            return
+        }
             oauthVerifier = paramAfterUserAuthorization["oauth_verifier"]
         
         let neededParameters = [ParametersConstants.oauthNonce, ParametersConstants.oauthVerifier, ParametersConstants.oauthVersion, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp, ParametersConstants.oauthToken]
         
         let urlRequestAccess = getRequestURL(neededOauthParameters: neededParameters, requestURL: Constants.accessTokenUrl)
         
-        getResponseFromUrl(link: urlRequestAccess) { result in
+        getResponseFromUrl(link: urlRequestAccess) { (result) in
             
             let response = self.separateResponce(stringToSplit: result)
             
-            guard response.keys.contains("oauth_token_secret") else {return print("error AccessSecretToken")}
-                oauthTokenSecret = response["oauth_token_secret"]
+            guard let tokenSecret = response["oauth_token_secret"] else {
+                print("error AccessSecretToken")
+                return
+            }
+                self.oauthTokenSecret = tokenSecret
+                print(tokenSecret)
+                UserDefaults.standard.set(tokenSecret, forKey: "tokensecret")
         
-            guard response.keys.contains("oauth_token") else {return print("error AccessToken")}
-                oauthToken = response["oauth_token"]
+            guard let token = response["oauth_token"] else {
+                print("error AccessToken")
+                return
+            }
+                self.oauthToken = token
+                print(token)
+                UserDefaults.standard.set(token, forKey: "token")
             
-            guard response.keys.contains("username") else {return print("error username")}
-                let userName = response["username"]
+            guard let userName = response["username"] else {
+                print("error access username")
+                return
+            }
                 UserDefaults.standard.set(userName, forKey: "username")
             
-            guard response.keys.contains("fullname") else {return print("error fullname")}
-                let fullName = response["fullname"]
+            guard let fullName = response["fullname"] else {
+                print("error access fullname")
+                return
+            }
             
-            guard response.keys.contains("user_nsid") else {return print("error user_nsid")}
-                let userNsid = response["user_nsid"]
-        
-            completion(oauthToken!, oauthTokenSecret!, userName!, fullName!, userNsid!)
+            guard let userNsid = response["user_nsid"] else {
+                print("error access user_nsid")
+                return
+            }
+            completion(token, tokenSecret, userName, fullName, userNsid)
         }
     }
     
@@ -231,122 +232,22 @@ class  UserAuthentication {
     private static func getRequestURL(neededOauthParameters: [String], requestURL: String) -> String {
         
         var neededParameters = neededOauthParameters
-        var arrayOfOauthParameters = getOauthParametersByNeededParameters(oauthParam: oauthParameters, neededParam: neededParameters)
+        var arrayOfOauthParameters = getOauthParametersByNeededParameters(oauthParam: oauthParameters(), neededParam: neededParameters)
         let baseString = concatenateUrlString(urlString: requestURL, parameters: arrayOfOauthParameters, isBaseString: true)
-//        print(baseString)
-        getSignatureFromStringWithEncodedCharact(string: baseString)
-        neededParameters = [ParametersConstants.oauthSignature]
-        arrayOfOauthParameters = arrayOfOauthParameters + getOauthParametersByNeededParameters(oauthParam: oauthParameters, neededParam: neededParameters)
-        let urlRequest = concatenateUrlString(urlString: requestURL, parameters: arrayOfOauthParameters, isBaseString: false)
-//        print(urlRequest)
+       
+        guard let apiSecretKey = apiSecretKey else {
+            print("ERROR get requestToken: apiSecretKey is empty")
+            return "ERROR get requestToken: apiSecretKey is empty"
+        }
+        oauthSignature = getSignatureFromStringWithEncodedCharact(string: baseString, apiSecretKey: apiSecretKey, tokenSecret: oauthTokenSecret)
         
+        neededParameters = [ParametersConstants.oauthSignature]
+        arrayOfOauthParameters = arrayOfOauthParameters + getOauthParametersByNeededParameters(oauthParam: oauthParameters(), neededParam: neededParameters)
+        let urlRequest = concatenateUrlString(urlString: requestURL, parameters: arrayOfOauthParameters, isBaseString: false)
+    
         return urlRequest
     }
-    
-    
-    private static func getOauthParametersByNeededParameters(oauthParam: [String:String], neededParam: [String]) -> [String] {
+
         
-        var resultArray = [String]()
-        
-        for (key, value) in oauthParam {
-            for member in neededParam {
-                if member == key {
-                    let stringSum = "\(key)=\(value)"
-                    resultArray.append(stringSum)
-                }
-            }
-        }
-        return resultArray
-    }
-    
-    
-    private static func concatenateUrlString(urlString: String, parameters: [String], isBaseString: Bool) -> String {
-        
-        var concatenatedString = ""
-        
-        if isBaseString {
-            concatenatedString = urlString + getUrlPartWithSortedParameters(arrayOfParameters: parameters)
-            let urlCustomAllowedSet = CharacterSet(charactersIn: "/:=&%").inverted
-            concatenatedString = "GET&" + ((concatenatedString.addingPercentEncoding(withAllowedCharacters: urlCustomAllowedSet))!.replacingOccurrences(of: "?", with: "&"))
-        } else {
-            concatenatedString = urlString + getUrlPartWithSortedParameters(arrayOfParameters: parameters)
-        }
-        return concatenatedString
-    }
-    
-    
-    private static func getUrlPartWithSortedParameters(arrayOfParameters: [String]) -> String {
-        
-        let sortedArray = arrayOfParameters.sorted()
-        let stringFromArray = sortedArray.joined(separator: "&")
-        return stringFromArray
-    }
-    
-    
-    private static func getSignatureFromStringWithEncodedCharact(string: String) {
-        
-        var key: String
-        
-        guard let apiSecretKey = UserAuthentication.apiSecretKey else {return}
-        
-        if let oauthTokenSecret = oauthTokenSecret {
-            key = "\(apiSecretKey)&\(oauthTokenSecret)"
-        } else {
-            key = "\(apiSecretKey)&"
-        }
-        
-        let customAllowedSet = CharacterSet(charactersIn: "=+/").inverted
-        oauthSignature = string.hmac(algorithm:Encryption.HMACAlgorithm.SHA1, key: key)
-        oauthSignature = oauthSignature?.addingPercentEncoding(withAllowedCharacters: customAllowedSet)
-    }
-    
-    
-    private static func getResponseFromUrl(link: String, completion: @escaping (String) -> ()) {
-        
-        var responseString = ""
-        
-        guard let url = URL(string: link) else {
-            completion("Error: cannot create URL")
-            return
-        }
-        
-        let session = URLSession.shared
-        session.dataTask(with: url) { data, response, error in
-            
-            if let error = error{
-                print(error)
-                completion("error in session")
-            }
-            if let data = data{
-                responseString = String(data: data, encoding: String.Encoding.utf8)!
-                completion(responseString)
-            }
-        }.resume()
-        
-    }
-    
-    
-    private static func separateResponce(stringToSplit: String) -> [String: String] {
-        
-        var result = [String:String]()
-        var splitedString = ""
-        
-        if stringToSplit.contains("?") {
-            let array = stringToSplit.components(separatedBy: "?")
-            splitedString = array[1]
-        } else {
-            splitedString = stringToSplit
-        }
-        
-        let array = splitedString.components(separatedBy: "&")
-        for element in array {
-            let array = element.components(separatedBy: "=")
-            result[array[0]] = array[1]
-        }
-        return result
-    }
-    
 }
-
-
 

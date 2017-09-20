@@ -7,22 +7,20 @@
 //
 
 import UIKit
+import SafariServices
 
-//extension TestViewController: DetailViewControllerDelegate {
-//    func didFinishTask(sender: UserAuthentication) {
-//        // do stuff like updating the UI
-//    }
-//}
 
-class TestViewController: UIViewController, DetailViewControllerDelegate {
-    
-    
-//    var userAuthentication: UserAuthentication?
+class TestViewController: UIViewController, SFSafariViewControllerDelegate {
     
 
     @IBAction func logOut(_ sender: UIButton) {
+        
         UserDefaults.standard.removeObject(forKey: "username")
-        URLCache.shared.removeAllCachedResponses()
+        UserDefaults.standard.removeObject(forKey: "token")
+        UserDefaults.standard.removeObject(forKey: "tokensecret")
+        let safariView = SFSafariViewController(url: URL(string: "https://www.flickr.com/logout.gne")!, entersReaderIfAvailable: true)
+        present(safariView, animated: true, completion: nil)
+        safariView.delegate = self
     }
     
     @IBOutlet weak var userName: UILabel!
@@ -31,28 +29,16 @@ class TestViewController: UIViewController, DetailViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UserAuthentication.delegate = self
-        
         let nameObject = UserDefaults.standard.object(forKey: "username")
         if let name = nameObject as? String {
             userName.text = name
         }
+        CallingFlickrAPIwithOauth.getJSON()
     }
-    
-    func didFinishTask() {
-        print("hello")
-        DispatchQueue.main.async() {
-            self.navigationController?.popViewController(animated: true)
-            self.dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    
-    
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    deinit {
+        print("TestViewController is dsinit")
     }
     
 }

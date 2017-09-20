@@ -8,19 +8,27 @@
 
 import UIKit
 
-class MainNavigationController: UINavigationController {
+extension MainNavigationController: UserAuthenticationDelegate {
+    
+    func didFinishAuthorize() {
+        print("Hello")
+        DispatchQueue.main.async() {
+            self.isAuthorized()
+            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
+        }
+    }
+}
+
+
+
+class MainNavigationController: UINavigationController{
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-    isAuthorized()
         
-    }
-    
-    
-    func finishAuth(){
-        performSegue(withIdentifier: "Authorized", sender: self)
+        UserAuthentication.delegate = self
+        isAuthorized()
     }
     
     
@@ -28,14 +36,8 @@ class MainNavigationController: UINavigationController {
         if UserAuthentication.getIsAuthorized(){
             performSegue(withIdentifier: "Authorized", sender: self)
         } else {
-            performSegue(withIdentifier: "Not authorized", sender: self)
+            performSegue(withIdentifier: "NotAuthorized", sender: self)
         }
-    }
-    
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 }

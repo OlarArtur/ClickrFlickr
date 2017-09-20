@@ -9,6 +9,14 @@
 import UIKit
 import CoreData
 
+
+private struct dataAPI {
+    static let apiKey: String = "aa5429991e03dbf3bfec3efb37376dd2"
+    static let apiSecretKey: String = "4ea83e9cc51ce4ee"
+    static let callback: String = "clickrflickr%3A%2F%2F"
+}
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -17,7 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        UserAuthentication.configureDataAPI(apiKey: "aa5429991e03dbf3bfec3efb37376dd2", apiSecretKey: "4ea83e9cc51ce4ee", callback: "clickrflickr%3A%2F%2F")
+        UserAuthentication.configureDataAPI(apiKey: dataAPI.apiKey, apiSecretKey: dataAPI.apiSecretKey, callback: dataAPI.callback)
+        CallingFlickrAPIwithOauth.configureDataAPI(apiKey: dataAPI.apiKey, apiSecretKey: dataAPI.apiSecretKey)
         
         return true
     }
