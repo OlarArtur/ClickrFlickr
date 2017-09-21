@@ -9,7 +9,6 @@
 import UIKit
 
 
-
 class NotAuthorizedVieController: UIViewController {
     
     
@@ -21,11 +20,6 @@ class NotAuthorizedVieController: UIViewController {
         super.viewDidLoad()
         
     }
-    
-    deinit {
-        print("ViewController is deinit")
-    }
-    
     
 }
 

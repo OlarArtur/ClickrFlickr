@@ -11,7 +11,7 @@ import UIKit
 extension MainNavigationController: UserAuthenticationDelegate {
     
     func didFinishAuthorize() {
-        print("Hello")
+        
         DispatchQueue.main.async() {
             self.isAuthorized()
             UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)

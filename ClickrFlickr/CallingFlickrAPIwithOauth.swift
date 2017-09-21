@@ -11,6 +11,7 @@ import Foundation
 
 class CallingFlickrAPIwithOauth: CreateRequestAndGetResponse {
     
+    
     private static var apiKey: String?
     private static var apiSecretKey: String?
     
@@ -32,9 +33,9 @@ class CallingFlickrAPIwithOauth: CreateRequestAndGetResponse {
                           ParametersConstants.oauthTimestamp : oauthTimestamp,
                           ParametersConstants.oauthSignatureMethod : Constants.signatureMethod,
                           ParametersConstants.oauthVersion : Constants.version,
-                          ParametersConstants.oauthMethod : "flickr.photos.search",
-                          ParametersConstants.oauthFormat : "json",
-                          ParametersConstants.oauthNoJsonCallback : "1"]
+                          ParametersConstants.oauthMethod : Constants.methodPhotosSearch,
+                          ParametersConstants.oauthFormat : Constants.format,
+                          ParametersConstants.oauthNoJsonCallback : Constants.noJsonCallback]
         
         if let oauthConsumerKey = CallingFlickrAPIwithOauth.apiKey {
             dictionary[ParametersConstants.oauthConsumerKey] = oauthConsumerKey
@@ -56,9 +57,9 @@ class CallingFlickrAPIwithOauth: CreateRequestAndGetResponse {
     }
     
     
-    class func getDataJSON() {
+    class func getDataJSON(oauthTags: String, completion: @escaping (Data) -> ()) {
         
-        oauthTags = "Dogs"
+        self.oauthTags = oauthTags
         
         var neededParameters = [ParametersConstants.oauthMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp, ParametersConstants.oauthFormat, ParametersConstants.oauthNoJsonCallback, ParametersConstants.oauthToken, ParametersConstants.oauthNonce, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthVersion, ParametersConstants.oauthTags]
     
@@ -75,16 +76,12 @@ class CallingFlickrAPIwithOauth: CreateRequestAndGetResponse {
         oauthParameters = oauthParameters + getOauthParametersByNeededParameters(oauthParam: authParameters(), neededParam: neededParameters)
         
         let urlRequest = concatenateUrlString(urlString: Constants.apiRequestUrl, parameters: oauthParameters, isBaseString: false)
-       
+        
         getResponseFromUrl(link: urlRequest) {(data, result) in
             
             print(data)
-            
-            if let json = try? JSONSerialization.jsonObject(with: data, options: []){
-                print(json)
-            }
+            completion(data)
         }
-      
     }
     
     

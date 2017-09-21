@@ -20,6 +20,9 @@ struct Constants {
     static let apiRequestUrl: String = "https://api.flickr.com/services/rest?"
     static let logOutURL: String = "https://www.flickr.com/logout.gne"
     static let urlScheme = "clickrflickr"
+    static let format = "json"
+    static let noJsonCallback = "1"
+    static let methodPhotosSearch = "flickr.photos.search"
 }
 
 

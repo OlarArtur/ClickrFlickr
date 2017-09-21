@@ -11,7 +11,6 @@ import Foundation
 
 class CreateRequestAndGetResponse {
     
-    
      static func getOauthParametersByNeededParameters(oauthParam: [String:String], neededParam: [String]) -> [String] {
         
         var resultArray = [String]()

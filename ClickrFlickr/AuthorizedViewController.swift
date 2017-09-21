@@ -10,7 +10,17 @@ import UIKit
 import SafariServices
 
 
+protocol AuthorizedViewControllerDelegate: class {
+    
+    func fillPhotoData(photoData: Data)
+}
+
+
 class AuthorizedViewController: UIViewController, SFSafariViewControllerDelegate {
+    
+    static weak var delegate: AuthorizedViewControllerDelegate?
+    
+    var arrayPhotosData = [[String : String]]()
     
     @IBOutlet weak var tagsText: UITextField!
     
@@ -20,15 +30,25 @@ class AuthorizedViewController: UIViewController, SFSafariViewControllerDelegate
         UserDefaults.standard.removeObject(forKey: "username")
         UserDefaults.standard.removeObject(forKey: "token")
         UserDefaults.standard.removeObject(forKey: "tokensecret")
+        
         let safariView = SFSafariViewController(url: URL(string: Constants.logOutURL)!, entersReaderIfAvailable: true)
         present(safariView, animated: true, completion: nil)
         safariView.delegate = self
     }
+    
 
     @IBAction func search(_ sender: UIButton) {
         
+        guard let text = tagsText.text else {return }
+        
+        DispatchQueue.global().async {
+            CallingFlickrAPIwithOauth.getDataJSON(oauthTags: text) { (data) in
+                AuthorizedViewController.delegate?.fillPhotoData(photoData: data)
+            }
+        }
     }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,7 +56,6 @@ class AuthorizedViewController: UIViewController, SFSafariViewControllerDelegate
         if let name = nameObject as? String {
             userName.text = name
         }
-        CallingFlickrAPIwithOauth.getDataJSON()
     }
     
     
