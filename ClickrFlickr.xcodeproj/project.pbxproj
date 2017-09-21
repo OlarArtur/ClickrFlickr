@@ -23,7 +23,6 @@
 		B29A9FF11F72778C00567FD5 /* SearchCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29A9FF01F72778C00567FD5 /* SearchCollectionViewController.swift */; };
 		B29A9FF31F72858300567FD5 /* AuthorizedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29A9FF21F72858300567FD5 /* AuthorizedViewController.swift */; };
 		B29A9FF51F72869600567FD5 /* NotAuthorizedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29A9FF41F72869600567FD5 /* NotAuthorizedViewController.swift */; };
-		B2DEAE271F73F4C900FC42FD /* SupportingFiles in Resources */ = {isa = PBXBuildFile; fileRef = B2DEAE261F73F4C900FC42FD /* SupportingFiles */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,7 +45,6 @@
 		B29A9FF01F72778C00567FD5 /* SearchCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewController.swift; sourceTree = "<group>"; };
 		B29A9FF21F72858300567FD5 /* AuthorizedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedViewController.swift; sourceTree = "<group>"; };
 		B29A9FF41F72869600567FD5 /* NotAuthorizedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotAuthorizedViewController.swift; sourceTree = "<group>"; };
-		B2DEAE261F73F4C900FC42FD /* SupportingFiles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SupportingFiles; path = ../../SupportingFiles; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +95,6 @@
 				B2523AA31F67B766006DFA50 /* String+HMAC.swift */,
 				B2523AA11F67B6F5006DFA50 /* Encryption.swift */,
 				B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */,
-				B2DEAE261F73F4C900FC42FD /* SupportingFiles */,
 			);
 			path = ClickrFlickr;
 			sourceTree = "<group>";
@@ -163,7 +160,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B22D383E1F604AA300FCC371 /* LaunchScreen.storyboard in Resources */,
-				B2DEAE271F73F4C900FC42FD /* SupportingFiles in Resources */,
 				B22D383B1F604AA300FCC371 /* Assets.xcassets in Resources */,
 				B22D38361F604AA300FCC371 /* Main.storyboard in Resources */,
 			);

@@ -48,10 +48,13 @@ class SearchCollectionViewController: UICollectionViewController {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SearchCollectionViewCell
         
-         DispatchQueue.global().async{
+         DispatchQueue.global().async {
     
             guard let title = self.arrayPhotosData[indexPath.row]["title"] else {return}
-            cell.titlePhoto.text = title
+            
+            DispatchQueue.main.async {
+                cell.titlePhoto.text = title
+            }
         
             guard let farm = self.arrayPhotosData[indexPath.row]["farm"] else {return}
         
@@ -65,7 +68,9 @@ class SearchCollectionViewController: UICollectionViewController {
             let data = try? Data(contentsOf: url!)
                 
             if let imageData = data {
+                DispatchQueue.main.async {
                     cell.photo.image = UIImage(data: imageData)
+                }
             }
         }
         return cell
