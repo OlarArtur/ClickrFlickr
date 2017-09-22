@@ -9,9 +9,7 @@
 import Foundation
 
 
-
 struct Constants {
-    
     static let signatureMethod: String = "HMAC-SHA1"
     static let version: String = "1.0"
     static let requestTokenUrl: String = "https://www.flickr.com/services/oauth/request_token?"
@@ -27,7 +25,6 @@ struct Constants {
 
 
 struct ParametersConstants {
-    
     static let oauthTags: String = "tags"
     static let oauthMethod: String = "method"
     static let oauthFormat: String = "format"

@@ -11,14 +11,12 @@ import UIKit
 
 class NotAuthorizedVieController: UIViewController {
     
-    
     @IBAction func authorize(_ sender: UIButton) {
         UserAuthentication.authorize()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
 }

@@ -8,13 +8,10 @@
 
 import UIKit
 
+
 class SearchCollectionViewCell: UICollectionViewCell {
-    
-    
+
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var titlePhoto: UILabel!
-    
-    
-    
-    
+
 }

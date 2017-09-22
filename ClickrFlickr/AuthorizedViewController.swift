@@ -15,7 +15,6 @@ protocol AuthorizedViewControllerDelegate: class {
     func fillPhotoData(photoData: Data)
 }
 
-
 class AuthorizedViewController: UIViewController, SFSafariViewControllerDelegate {
     
     static weak var delegate: AuthorizedViewControllerDelegate?
@@ -27,7 +26,7 @@ class AuthorizedViewController: UIViewController, SFSafariViewControllerDelegate
     @IBOutlet weak var userName: UILabel!
     
     @IBAction func logOut(_ sender: UIButton) {
-        UserDefaults.standard.removeObject(forKey: "username")
+        UserDefaults.standard.removeObject(forKey: "fullname")
         UserDefaults.standard.removeObject(forKey: "token")
         UserDefaults.standard.removeObject(forKey: "tokensecret")
         
@@ -48,15 +47,13 @@ class AuthorizedViewController: UIViewController, SFSafariViewControllerDelegate
         }
     }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let nameObject = UserDefaults.standard.object(forKey: "username")
+        let nameObject = UserDefaults.standard.object(forKey: "fullname")
         if let name = nameObject as? String {
-            userName.text = name
+            userName.text = name.removingPercentEncoding
         }
     }
-    
     
 }
