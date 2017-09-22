@@ -61,10 +61,8 @@ class CreateRequestAndGetResponse {
 
         if let tokenSecret = tokenSecret {
             key = "\(apiSecretKey)&\(tokenSecret)"
-            print(key)
         } else {
             key = "\(apiSecretKey)&"
-            print(key)
         }
 
         let customAllowedSet = CharacterSet(charactersIn: "=+/").inverted

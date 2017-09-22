@@ -23,38 +23,6 @@ class CallingFlickrAPIwithOauth: CreateRequestAndGetResponse {
         self.apiSecretKey = apiSecretKey
     }
 
-    private class func authParameters() -> [String: String] {
-
-        let oauthNonce: String = String(arc4random_uniform(99999999) + 10000000)
-        let oauthTimestamp: String = String(Int(NSDate().timeIntervalSince1970))
-
-        var dictionary = [ParametersConstants.oauthNonce: oauthNonce,
-            ParametersConstants.oauthTimestamp: oauthTimestamp,
-            ParametersConstants.oauthSignatureMethod: Constants.signatureMethod,
-            ParametersConstants.oauthVersion: Constants.version,
-            ParametersConstants.oauthMethod: Constants.methodPhotosSearch,
-            ParametersConstants.oauthFormat: Constants.format,
-            ParametersConstants.oauthNoJsonCallback: Constants.noJsonCallback]
-
-        if let oauthConsumerKey = CallingFlickrAPIwithOauth.apiKey {
-            dictionary[ParametersConstants.oauthConsumerKey] = oauthConsumerKey
-        }
-
-        if let oauthSignature = oauthSignature {
-            dictionary[ParametersConstants.oauthSignature] = oauthSignature
-        }
-
-        if let oauthToken = UserDefaults.standard.object(forKey: "token") as? String {
-            dictionary[ParametersConstants.oauthToken] = oauthToken
-        }
-
-        if let oauthTags = oauthTags {
-            dictionary[ParametersConstants.oauthTags] = oauthTags
-        }
-
-        return dictionary
-    }
-
     class func getDataJSON(oauthTags: String, completion: @escaping (Data) -> ()) {
 
         self.oauthTags = oauthTags
@@ -81,10 +49,39 @@ class CallingFlickrAPIwithOauth: CreateRequestAndGetResponse {
         let urlRequest = concatenateRequestUrlString(urlString: Constants.apiRequestUrl, parameters: oauthParameters)
 
         getResponseFromUrl(link: urlRequest) { (data, result) in
-
-            print(data)
             completion(data)
         }
+    }
+    
+    private class func authParameters() -> [String: String] {
+        
+        let oauthNonce: String = String(arc4random_uniform(99999999) + 10000000)
+        let oauthTimestamp: String = String(Int(NSDate().timeIntervalSince1970))
+        
+        var dictionary = [ParametersConstants.oauthNonce: oauthNonce,
+                          ParametersConstants.oauthTimestamp: oauthTimestamp,
+                          ParametersConstants.oauthSignatureMethod: Constants.signatureMethod,
+                          ParametersConstants.oauthVersion: Constants.version,
+                          ParametersConstants.oauthMethod: Constants.methodPhotosSearch,
+                          ParametersConstants.oauthFormat: Constants.format,
+                          ParametersConstants.oauthNoJsonCallback: Constants.noJsonCallback]
+        
+        if let oauthConsumerKey = CallingFlickrAPIwithOauth.apiKey {
+            dictionary[ParametersConstants.oauthConsumerKey] = oauthConsumerKey
+        }
+        
+        if let oauthSignature = oauthSignature {
+            dictionary[ParametersConstants.oauthSignature] = oauthSignature
+        }
+        
+        if let oauthToken = UserDefaults.standard.object(forKey: "token") as? String {
+            dictionary[ParametersConstants.oauthToken] = oauthToken
+        }
+        
+        if let oauthTags = oauthTags {
+            dictionary[ParametersConstants.oauthTags] = oauthTags
+        }
+        return dictionary
     }
 
 }
