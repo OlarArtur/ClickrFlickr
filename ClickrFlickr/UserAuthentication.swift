@@ -27,7 +27,7 @@ class UserAuthentication: CreateRequestAndGetResponse {
     private static var oauthTokenSecret: String?
 
     private static var isAuthorized: Bool {
-        let nameObject = UserDefaults.standard.object(forKey: "username")
+        let nameObject = UserDefaults.standard.object(forKey: "fullname")
         if let _ = nameObject {
             return true
         } else {
@@ -82,6 +82,8 @@ class UserAuthentication: CreateRequestAndGetResponse {
     class func takeURLScheme(url: URL) -> Bool {
 
         if url.scheme == Constants.urlScheme {
+            
+            UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
 
             let callBackAfterUserAuthorization = url.absoluteString
 
