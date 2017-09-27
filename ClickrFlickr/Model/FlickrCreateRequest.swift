@@ -68,7 +68,11 @@ class FlickrCreateRequest {
         let customAllowedSet = CharacterSet(charactersIn: "=+/").inverted
         
         var signature = string.hmac(algorithm: Encryption.HMACAlgorithm.SHA1, key: key)
-        signature = signature.addingPercentEncoding(withAllowedCharacters: customAllowedSet)!
+        guard let persSignature = signature.addingPercentEncoding(withAllowedCharacters: customAllowedSet) else {
+            return signature
+        }
+        signature = persSignature
+        
         return signature
     }
     

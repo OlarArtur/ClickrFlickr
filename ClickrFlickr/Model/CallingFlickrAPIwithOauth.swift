@@ -68,6 +68,7 @@ class CallingFlickrAPIwithOauth {
                           ParametersConstants.oauthVersion: Constants.version,
                           ParametersConstants.oauthMethod: Constants.methodPhotosSearch,
                           ParametersConstants.oauthFormat: Constants.format,
+                          ParametersConstants.oauthSort: Constants.sort,
                           ParametersConstants.oauthNoJsonCallback: Constants.noJsonCallback]
         
         if let oauthConsumerKey = CallingFlickrAPIwithOauth.apiKey {
@@ -83,8 +84,9 @@ class CallingFlickrAPIwithOauth {
         }
         
         if let oauthTags = oauthTags {
-            dictionary[ParametersConstants.oauthTags] = oauthTags
+            dictionary[ParametersConstants.oauthText] = oauthTags
         }
+        
         return dictionary
     }
 

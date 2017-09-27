@@ -18,7 +18,7 @@ class SearchCollectionViewController: UICollectionViewController {
     var arrayPhotosData = [[String: String]]()
     
     @IBAction func searthBarButtomItem(_ sender: UIBarButtonItem) {
-        guard let text = tagsForSeachTextField.text else {
+        guard let text = tagsForSeachTextField.text?.replacingOccurrences(of: " ", with: "+") else {
             tags = ""
             return
         }
