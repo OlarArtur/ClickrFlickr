@@ -44,7 +44,7 @@
 		B22D383A1F604AA300FCC371 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B22D383D1F604AA300FCC371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B22D383F1F604AA300FCC371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ClickrFlickr-Bridging-Header.h"; sourceTree = "<group>"; };
+		B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ClickrFlickr-Bridging-Header.h"; path = "../ClickrFlickr-Bridging-Header.h"; sourceTree = "<group>"; };
 		B23C07821F7B8E7A001CEEF5 /* AuthorizedTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedTabBarController.swift; sourceTree = "<group>"; };
 		B24106991F724BBA006F9E53 /* Structures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
 		B249AD111F7A92FC004A7AD0 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
@@ -93,28 +93,68 @@
 				B249F76E1F7A2E310036FAB7 /* FlickrOauthError.swift */,
 				B22AE49D1F7A67DC001D6D0C /* ErrorAlertController.swift */,
 				B24106991F724BBA006F9E53 /* Structures.swift */,
-				B26CF1681F697653006D7EF0 /* MainNavigationController.swift */,
-				B2202C0E1F7BBBCE002D33C2 /* UserViewController.swift */,
-				B29A9FF41F72869600567FD5 /* NotAuthorizedViewController.swift */,
-				B21C86311F79636C001CBC71 /* FlickrUserAuthentication.swift */,
-				B23C07821F7B8E7A001CEEF5 /* AuthorizedTabBarController.swift */,
-				B2754A9B1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift */,
-				B21C862D1F79553B001CBC71 /* FlickrCreateRequest.swift */,
-				B2F7EBAD1F7A860400300C74 /* FetchJSON.swift */,
-				B249AD111F7A92FC004A7AD0 /* CustomImageView.swift */,
-				B21C862F1F795594001CBC71 /* FlickrGetResponse.swift */,
-				B29A9FF01F72778C00567FD5 /* SearchCollectionViewController.swift */,
-				B29A9FEE1F7276C000567FD5 /* SearchCollectionViewCell.swift */,
+				B2D33E7A1F7BD960000FC8EB /* Model */,
+				B2D33E7B1F7BD969000FC8EB /* Controller */,
+				B2D33E7C1F7BD972000FC8EB /* View */,
+				B2D33E791F7BD927000FC8EB /* Helpers */,
+				B2D33E7E1F7BDA0A000FC8EB /* Encrypt */,
 				B22D38341F604AA300FCC371 /* Main.storyboard */,
 				B22D383A1F604AA300FCC371 /* Assets.xcassets */,
 				B22D383C1F604AA300FCC371 /* LaunchScreen.storyboard */,
 				B22D383F1F604AA300FCC371 /* Info.plist */,
 				B22D38371F604AA300FCC371 /* ClickrFlickr.xcdatamodeld */,
-				B2523AA31F67B766006DFA50 /* String+HMAC.swift */,
-				B2523AA11F67B6F5006DFA50 /* Encryption.swift */,
-				B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */,
 			);
 			path = ClickrFlickr;
+			sourceTree = "<group>";
+		};
+		B2D33E791F7BD927000FC8EB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				B249AD111F7A92FC004A7AD0 /* CustomImageView.swift */,
+				B2F7EBAD1F7A860400300C74 /* FetchJSON.swift */,
+				B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		B2D33E7A1F7BD960000FC8EB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B21C862F1F795594001CBC71 /* FlickrGetResponse.swift */,
+				B2754A9B1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift */,
+				B21C862D1F79553B001CBC71 /* FlickrCreateRequest.swift */,
+				B21C86311F79636C001CBC71 /* FlickrUserAuthentication.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B2D33E7B1F7BD969000FC8EB /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B2202C0E1F7BBBCE002D33C2 /* UserViewController.swift */,
+				B29A9FF41F72869600567FD5 /* NotAuthorizedViewController.swift */,
+				B26CF1681F697653006D7EF0 /* MainNavigationController.swift */,
+				B23C07821F7B8E7A001CEEF5 /* AuthorizedTabBarController.swift */,
+				B29A9FF01F72778C00567FD5 /* SearchCollectionViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		B2D33E7C1F7BD972000FC8EB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B29A9FEE1F7276C000567FD5 /* SearchCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B2D33E7E1F7BDA0A000FC8EB /* Encrypt */ = {
+			isa = PBXGroup;
+			children = (
+				B2523AA11F67B6F5006DFA50 /* Encryption.swift */,
+				B2523AA31F67B766006DFA50 /* String+HMAC.swift */,
+			);
+			path = Encrypt;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
