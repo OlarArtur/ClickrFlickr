@@ -16,7 +16,6 @@ class AuthorizedTabBarController: UITabBarController, SFSafariViewControllerDele
 
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOutPressed))
-        
     }
     
     func logOutPressed() {

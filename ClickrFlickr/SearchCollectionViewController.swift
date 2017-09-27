@@ -11,24 +11,27 @@ import UIKit
 
 class SearchCollectionViewController: UICollectionViewController {
     
+
+    @IBOutlet weak var tagsForSeachTextField: UITextField!
+    
     var tags: String = ""
     var arrayPhotosData = [[String: String]]()
+    
+    @IBAction func searthBarButtomItem(_ sender: UIBarButtonItem) {
+        guard let text = tagsForSeachTextField.text else {
+            tags = ""
+            return
+        }
+        tags = text
+        show(tags: tags)
+        tagsForSeachTextField.text = ""
+    
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DispatchQueue.global().async {
-            guard let string = CallingFlickrAPIwithOauth.getResponseApi(oauthTags: "dog") else {return}
-            
-            self.getPhotoData(string: string, completion: {(arrayPhotoData) in
-                self.arrayPhotosData = arrayPhotoData
-            
-                DispatchQueue.main.async {
-                    self.collectionView?.reloadData()
-                }
-            })
-        }
-
+        show(tags: tags)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -66,6 +69,20 @@ class SearchCollectionViewController: UICollectionViewController {
         fetchJSON.jsonToSerchPhoto(stringUrl: string) { (result) in
             guard let result = result else {return}
             completion(result)
+        }
+    }
+    
+    func show(tags: String) {
+        DispatchQueue.global().async {
+            guard let string = CallingFlickrAPIwithOauth.getResponseApi(oauthTags: tags) else {return}
+    
+            self.getPhotoData(string: string, completion: {(arrayPhotoData) in
+                self.arrayPhotosData = arrayPhotoData
+    
+                DispatchQueue.main.async {
+                    self.collectionView?.reloadData()
+                }
+            })
         }
     }
     
