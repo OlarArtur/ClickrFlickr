@@ -10,92 +10,65 @@ import UIKit
 
 
 class SearchCollectionViewController: UICollectionViewController {
-
-
+    
+    var tags: String = ""
     var arrayPhotosData = [[String: String]]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        AuthorizedViewController.delegate = self
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
-        return arrayPhotosData.count
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SearchCollectionViewCell
-
-        guard let title = arrayPhotosData[indexPath.row]["title"] else { return cell }
-
-        cell.titlePhoto.text = title
-
-        guard let farm = arrayPhotosData[indexPath.row]["farm"] else { return cell }
-
-        guard let server = arrayPhotosData[indexPath.row]["server"] else { return cell }
-
-        guard let id = arrayPhotosData[indexPath.row]["id"] else { return cell }
-
-        guard let secret = arrayPhotosData[indexPath.row]["secret"] else { return cell }
-
-        let url = URL(string: "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret).jpg")
-
-        let data = try? Data(contentsOf: url!)
-
-        if let imageData = data {
-            cell.photo.image = UIImage(data: imageData)
-        }
-
-        return cell
-    }
-
-    func getPhotosdata (data: Data, completion: @escaping ([[String: Any]]) -> ()) {
-        do {
-            let jsonData = try JSONSerialization.jsonObject(with: data, options: []) as AnyObject
-            if let photos = jsonData["photos"] as? [String: Any] {
-
-                if let photo = photos["photo"] as? [[String: Any]] {
-
-                    for arrayValue in photo {
-
-                        var helpDict: [String: String] = [:]
-
-                        for (key, value) in arrayValue {
-                            switch key {
-                            case "title", "owner", "server", "id", "secret", "farm":
-                                let valueStr = String(describing: value)
-                                helpDict[key] = valueStr
-                            default:
-                                break
-                            }
-                        }
-                        arrayPhotosData.append(helpDict)
-                    }
-                }
-            }
-        } catch {
-            print("Some ERROR JSONSerialization")
-        }
-
-        completion(arrayPhotosData)
-    }
-
-}
-
-extension SearchCollectionViewController: AuthorizedViewControllerDelegate {
-    
-    func fillPhotoData(photoData: Data) {
         
         DispatchQueue.global().async {
-            self.getPhotosdata(data: photoData, completion: { (arrayPhotosData) in
-                self.arrayPhotosData = arrayPhotosData as! [[String: String]]
-                
+            guard let string = CallingFlickrAPIwithOauth.getResponseApi(oauthTags: "dog") else {return}
+            
+            self.getPhotoData(string: string, completion: {(arrayPhotoData) in
+                self.arrayPhotosData = arrayPhotoData
+            
                 DispatchQueue.main.async {
                     self.collectionView?.reloadData()
                 }
             })
         }
+
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return arrayPhotosData.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SearchCollectionViewCell
+        
+        guard let title = arrayPhotosData[indexPath.row]["title"] else {return cell}
+        
+        cell.titlePhoto.text = title
+        
+        guard let farm = arrayPhotosData[indexPath.row]["farm"] else {return cell}
+        
+        guard let server = arrayPhotosData[indexPath.row]["server"] else {return cell}
+        
+        guard let id = arrayPhotosData[indexPath.row]["id"] else {return cell }
+        
+        guard let secret = arrayPhotosData[indexPath.row]["secret"] else {return cell}
+        
+        let url = "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret).jpg"
+        
+        let customImageView = CustomImageView()
+        customImageView.loadImageUsingUrlString(urlString: url) { (image) in
+            cell.photo.image = image
+        }
+        
+        return cell
+    }
+    
+    func getPhotoData(string: String, completion: @escaping ([[String: String]]) -> ()) {
+        let fetchJSON = FetchJSON()
+        fetchJSON.jsonToSerchPhoto(stringUrl: string) { (result) in
+            guard let result = result else {return}
+            completion(result)
+        }
+    }
+    
 }
+
+

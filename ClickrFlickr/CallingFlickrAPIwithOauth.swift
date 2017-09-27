@@ -9,51 +9,55 @@
 import Foundation
 
 
-class CallingFlickrAPIwithOauth: CreateRequestAndGetResponse {
+class CallingFlickrAPIwithOauth {
 
     private static var apiKey: String?
     private static var apiSecretKey: String?
-
-    private static var oauthSignature: String?
-
-    private static var oauthTags: String?
 
     class func configureDataAPI(apiKey: String, apiSecretKey: String) {
         self.apiKey = apiKey
         self.apiSecretKey = apiSecretKey
     }
 
-    class func getDataJSON(oauthTags: String, completion: @escaping (Data) -> ()) {
+    class func getResponseApi(oauthTags: String) -> String? {
 
-        self.oauthTags = oauthTags
+        var neededParameters = NeededParametersForRequest.callingFlickrMethodPhotosSearch
+        
+        let flickrCreateRequest = FlickrCreateRequest()
 
-        var neededParameters = [ParametersConstants.oauthMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp, ParametersConstants.oauthFormat, ParametersConstants.oauthNoJsonCallback, ParametersConstants.oauthToken, ParametersConstants.oauthNonce, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthVersion, ParametersConstants.oauthTags]
-
-        var oauthParameters = getOauthParametersByNeededParameters(oauthParam: authParameters(), neededParam: neededParameters)
-        let baseString = concatenateBaseUrlString(urlString: Constants.apiRequestUrl, parameters: oauthParameters)
+        var oauthParameters = flickrCreateRequest.getOauthParametersByNeededParameters(oauthParam: authParameters(oauthSignature: nil, oauthTags: oauthTags), neededParam: neededParameters)
+        let baseString = flickrCreateRequest.concatenateBaseUrlString(urlString: Constants.apiRequestUrl, parameters: oauthParameters)
 
         guard let baseStringCurrent = baseString else {
-            print("ERROR baseString")
-            return
+            print("ERROR CallingFlickrAPIwithOauth: baseString")
+            return nil
         }
 
-        if let tokenSecret = UserDefaults.standard.object(forKey: "tokensecret") as? String, let apiSecretKey = apiSecretKey {
-            self.oauthSignature = getSignatureFromStringWithEncodedCharact(string: baseStringCurrent, apiSecretKey: apiSecretKey, tokenSecret: tokenSecret)
-        } else {
+        guard let tokenSecret = UserDefaults.standard.object(forKey: "tokensecret") as? String, let apiSecretKey = apiSecretKey else {
             print("ERROR CallingFlickrAPIwithOauth: tokenSecret or apiSecretKey is empty ")
+            return nil
         }
+            let oauthSignature = flickrCreateRequest.getSignatureFromStringWithEncodedCharact(string: baseStringCurrent, apiSecretKey: apiSecretKey, tokenSecret: tokenSecret)
 
         neededParameters = [ParametersConstants.oauthSignature]
-        oauthParameters = oauthParameters + getOauthParametersByNeededParameters(oauthParam: authParameters(), neededParam: neededParameters)
+        oauthParameters = oauthParameters + flickrCreateRequest.getOauthParametersByNeededParameters(oauthParam: authParameters(oauthSignature: oauthSignature, oauthTags: oauthTags), neededParam: neededParameters)
 
-        let urlRequest = concatenateRequestUrlString(urlString: Constants.apiRequestUrl, parameters: oauthParameters)
-
-        getResponseFromUrl(link: urlRequest) { (data, result) in
-            completion(data)
-        }
+        let urlRequest = flickrCreateRequest.concatenateRequestUrlString(urlString: Constants.apiRequestUrl, parameters: oauthParameters)
+        
+        return urlRequest
+        
+//        let flickrGetResponse = FlickrGetResponse()
+//
+//        flickrGetResponse.getResponseFromUrl(link: urlRequest) { (data, _) in
+//            guard let data = data else {
+//                completion(nil)
+//                return
+//            }
+//            completion(data)
+//        }
     }
     
-    private class func authParameters() -> [String: String] {
+    private class func authParameters(oauthSignature : String?, oauthTags: String?) -> [String: String] {
         
         let oauthNonce: String = String(arc4random_uniform(99999999) + 10000000)
         let oauthTimestamp: String = String(Int(NSDate().timeIntervalSince1970))

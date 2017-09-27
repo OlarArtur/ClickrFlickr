@@ -12,7 +12,7 @@ import UIKit
 class NotAuthorizedVieController: UIViewController {
     
     @IBAction func authorize(_ sender: UIButton) {
-        UserAuthentication.authorize()
+        FlickrUserAuthentication.authorize()
     }
     
     override func viewDidLoad() {

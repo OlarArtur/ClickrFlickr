@@ -41,3 +41,14 @@ struct ParametersConstants {
     static let oauthVerifier: String = "oauth_verifier"
     static let oauthTokenSecret: String = "oauth_token_secret"
 }
+
+struct NeededParametersForRequest {
+    
+    static let getRequestToken: [String] = [ParametersConstants.oauthNonce, ParametersConstants.oauthCallback, ParametersConstants.oauthVersion, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp]
+    
+    static let getUserAuthorization: [String] = [ParametersConstants.oauthToken]
+    
+    static let exchangeRequestTokenForAccessToken: [String] = [ParametersConstants.oauthNonce, ParametersConstants.oauthVerifier, ParametersConstants.oauthVersion, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp, ParametersConstants.oauthToken]
+    
+    static let callingFlickrMethodPhotosSearch: [String] = [ParametersConstants.oauthMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp, ParametersConstants.oauthFormat, ParametersConstants.oauthNoJsonCallback, ParametersConstants.oauthToken, ParametersConstants.oauthNonce, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthVersion, ParametersConstants.oauthTags]
+}

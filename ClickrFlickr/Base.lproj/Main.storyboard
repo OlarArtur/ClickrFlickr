@@ -22,19 +22,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ClickrFlickr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hiJ-uq-I9r">
-                                <rect key="frame" x="118.5" y="237" width="137" height="33.5"/>
+                                <rect key="frame" x="118.5" y="197" width="137" height="33.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please, authorize" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYs-TR-CsT">
-                                <rect key="frame" x="121" y="323" width="132" height="21"/>
+                                <rect key="frame" x="121" y="380.5" width="132" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q5w-5f-vEK">
-                                <rect key="frame" x="148.5" y="373" width="78" height="34"/>
+                                <rect key="frame" x="148.5" y="411.5" width="78" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Authorize"/>
                                 <connections>
@@ -45,18 +45,18 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="hiJ-uq-I9r" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0Qs-z6-7H1"/>
-                            <constraint firstItem="hiJ-uq-I9r" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-80" id="3Hm-hx-qPB"/>
+                            <constraint firstItem="hiJ-uq-I9r" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-120" id="3Hm-hx-qPB"/>
                             <constraint firstItem="Q5w-5f-vEK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="937-ZY-wCZ"/>
                             <constraint firstItem="YYs-TR-CsT" firstAttribute="centerX" secondItem="hiJ-uq-I9r" secondAttribute="centerX" id="ZFn-GO-G8h"/>
-                            <constraint firstItem="Q5w-5f-vEK" firstAttribute="top" secondItem="YYs-TR-CsT" secondAttribute="bottom" constant="29" id="gU4-oB-L2L"/>
-                            <constraint firstItem="YYs-TR-CsT" firstAttribute="top" secondItem="hiJ-uq-I9r" secondAttribute="bottom" constant="52.5" id="tSx-jk-nbE"/>
+                            <constraint firstItem="Q5w-5f-vEK" firstAttribute="top" secondItem="YYs-TR-CsT" secondAttribute="bottom" constant="10" id="gU4-oB-L2L"/>
+                            <constraint firstItem="YYs-TR-CsT" firstAttribute="top" secondItem="hiJ-uq-I9r" secondAttribute="bottom" constant="150" id="tSx-jk-nbE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aoe-3j-bAi"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1578" y="-302"/>
+            <point key="canvasLocation" x="1785" y="-305"/>
         </scene>
         <!--Main Navigation Controller-->
         <scene sceneID="o7h-Pe-cYX">
@@ -66,20 +66,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="iTb-xD-HlV">
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="M07-f8-oac">
                         <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
-                        <segue destination="tx8-qV-NEB" kind="show" identifier="Authorized" id="jNb-Uz-4zz"/>
+                        <segue destination="6ZA-as-NYi" kind="show" identifier="Authorized" id="jNb-Uz-4zz"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="3WJ-Ya-rxr"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cKf-xA-jsf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="455" y="56"/>
+            <point key="canvasLocation" x="721" y="63"/>
         </scene>
-        <!--Authorized View Controller-->
+        <!--You-->
         <scene sceneID="aOX-9Q-g9g">
             <objects>
                 <viewController id="tx8-qV-NEB" customClass="AuthorizedViewController" customModule="ClickrFlickr" customModuleProvider="target" sceneMemberID="viewController">
@@ -92,81 +92,64 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Vf-Ot-8TN">
-                                <rect key="frame" x="133.5" y="319.5" width="109" height="27.5"/>
+                                <rect key="frame" x="133.5" y="320" width="109" height="27.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJ1-VX-qjQ">
-                                <rect key="frame" x="101" y="207.5" width="172.5" height="50.5"/>
+                                <rect key="frame" x="101" y="208" width="172.5" height="50.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter some #tag" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UZ5-ZK-qhH">
-                                <rect key="frame" x="124.5" y="412" width="127.5" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQt-FB-jmf">
-                                <rect key="frame" x="164" y="463" width="48" height="30"/>
-                                <state key="normal" title="Search"/>
-                                <connections>
-                                    <action selector="search:" destination="tx8-qV-NEB" eventType="touchUpInside" id="hEd-3j-Ov8"/>
-                                    <segue destination="c0d-Rf-fo1" kind="show" identifier="ShowCollectionView" id="Zl5-PZ-tin"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="bQt-FB-jmf" firstAttribute="centerX" secondItem="UZ5-ZK-qhH" secondAttribute="centerX" id="1ok-4E-8Qu"/>
-                            <constraint firstItem="UZ5-ZK-qhH" firstAttribute="top" secondItem="7Vf-Ot-8TN" secondAttribute="bottom" constant="65" id="B1C-lF-aTf"/>
                             <constraint firstItem="7Vf-Ot-8TN" firstAttribute="centerX" secondItem="TkL-BX-rex" secondAttribute="centerX" id="BYF-zk-OeN"/>
-                            <constraint firstItem="UZ5-ZK-qhH" firstAttribute="centerX" secondItem="7Vf-Ot-8TN" secondAttribute="centerX" id="MIA-G5-iF5"/>
-                            <constraint firstItem="bQt-FB-jmf" firstAttribute="top" secondItem="UZ5-ZK-qhH" secondAttribute="bottom" constant="21" id="XSE-Ta-oZd"/>
                             <constraint firstItem="7Vf-Ot-8TN" firstAttribute="top" secondItem="fJ1-VX-qjQ" secondAttribute="bottom" constant="61.5" id="bWq-kE-sbS"/>
                             <constraint firstItem="7Vf-Ot-8TN" firstAttribute="centerY" secondItem="TkL-BX-rex" secondAttribute="centerY" id="mHA-Kp-KfO"/>
                             <constraint firstItem="fJ1-VX-qjQ" firstAttribute="centerX" secondItem="TkL-BX-rex" secondAttribute="centerX" id="vBy-hl-pDD"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="You" id="ewx-4E-OTL"/>
                     <navigationItem key="navigationItem" id="6XK-Jt-biN"/>
                     <connections>
-                        <outlet property="tagsText" destination="UZ5-ZK-qhH" id="eFb-LQ-ehR"/>
                         <outlet property="userName" destination="7Vf-Ot-8TN" id="ULv-9x-ym9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ou4-pK-CtW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1577" y="386"/>
+            <point key="canvasLocation" x="2590" y="394"/>
         </scene>
         <!--Search Collection View Controller-->
         <scene sceneID="GwV-aD-i4g">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9RN-0b-GPV" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <collectionViewController id="c0d-Rf-fo1" customClass="SearchCollectionViewController" customModule="ClickrFlickr" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="56h-Pw-G9w">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="15" minimumInteritemSpacing="15" id="1Fg-ZW-3ci">
-                            <size key="itemSize" width="100" height="100"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1Fg-ZW-3ci">
+                            <size key="itemSize" width="150" height="150"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="15" minY="15" maxX="15" maxY="15"/>
+                            <inset key="sectionInset" minX="20" minY="60" maxX="20" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="2B2-5y-ZLQ" customClass="SearchCollectionViewCell" customModule="ClickrFlickr" customModuleProvider="target">
-                                <rect key="frame" x="15" y="15" width="100" height="100"/>
+                                <rect key="frame" x="20" y="60" width="150" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iFp-rc-9Ns">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="90S-S9-TlX">
-                                            <rect key="frame" x="39.5" y="88" width="21.5" height="12"/>
+                                            <rect key="frame" x="64.5" y="138" width="21.5" height="12"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                             <nil key="textColor"/>
@@ -193,10 +176,28 @@
                             <outlet property="delegate" destination="c0d-Rf-fo1" id="Oij-rG-PQn"/>
                         </connections>
                     </collectionView>
+                    <tabBarItem key="tabBarItem" systemItem="search" id="5Cd-Bv-08q"/>
                 </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9RN-0b-GPV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2398" y="386"/>
+            <point key="canvasLocation" x="3310" y="394"/>
+        </scene>
+        <!--Authorized Tab Bar Controller-->
+        <scene sceneID="3Ef-XO-ytD">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="6ZA-as-NYi" customClass="AuthorizedTabBarController" customModule="ClickrFlickr" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="Bf9-Tg-8D1">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="c0d-Rf-fo1" kind="relationship" relationship="viewControllers" id="enY-vd-7VN"/>
+                        <segue destination="tx8-qV-NEB" kind="relationship" relationship="viewControllers" id="Klc-gu-Dwn"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HoR-Rc-H4z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1786" y="394"/>
         </scene>
     </scenes>
 </document>

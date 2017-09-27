@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        UserAuthentication.configureDataAPI(apiKey: dataAPI.apiKey, apiSecretKey: dataAPI.apiSecretKey, callback: dataAPI.callback)
+        FlickrUserAuthentication.configureDataAPI(apiKey: dataAPI.apiKey, apiSecretKey: dataAPI.apiSecretKey, callback: dataAPI.callback)
         CallingFlickrAPIwithOauth.configureDataAPI(apiKey: dataAPI.apiKey, apiSecretKey: dataAPI.apiSecretKey)
         
         return true
@@ -57,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        _ = UserAuthentication.takeURLScheme(url: url)
+        _ = FlickrUserAuthentication.takeURLScheme(url: url)
         
         return true
     }

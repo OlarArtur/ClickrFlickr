@@ -14,20 +14,20 @@ class MainNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        UserAuthentication.delegate = self
+        FlickrUserAuthentication.delegate = self
         isAuthorized()
     }
     
     func isAuthorized() {
         
-        if UserAuthentication.getIsAuthorized() {
+        if FlickrUserAuthentication.getIsAuthorized() {
             performSegue(withIdentifier: "Authorized", sender: self)
         }
     }
     
 }
 
-extension MainNavigationController: UserAuthenticationDelegate {
+extension MainNavigationController: FlickrUserAuthenticationDelegate {
 
     func didFinishAuthorize() {
         DispatchQueue.main.async() {
