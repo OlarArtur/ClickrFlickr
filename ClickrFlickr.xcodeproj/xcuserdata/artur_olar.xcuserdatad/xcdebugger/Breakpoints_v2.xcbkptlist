@@ -49,38 +49,6 @@
             endingLineNumber = "61"
             landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ClickrFlickr.SearchCollectionViewController.collectionView (__ObjC.UICollectionView, cellForItemAt : Foundation.IndexPath) -&gt; __ObjC.UICollectionViewCell"
-                  moduleName = "ClickrFlickr"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/artur_olar/Desktop/ClickrFlickr/ClickrFlickr/SearchCollectionViewController.swift"
-                  timestampString = "528193911.035944"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "57"
-                  endingLineNumber = "57"
-                  offsetFromSymbolStart = "3484">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ClickrFlickr.SearchCollectionViewController.(collectionView (__ObjC.UICollectionView, cellForItemAt : Foundation.IndexPath) -&gt; __ObjC.UICollectionViewCell).(closure #1)"
-                  moduleName = "ClickrFlickr"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/artur_olar/Desktop/ClickrFlickr/ClickrFlickr/SearchCollectionViewController.swift"
-                  timestampString = "528193911.039649"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58"
-                  offsetFromSymbolStart = "23">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
