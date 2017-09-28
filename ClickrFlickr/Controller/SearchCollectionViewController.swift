@@ -18,6 +18,8 @@ class SearchCollectionViewController: UICollectionViewController {
     var arrayPhotosData = [[String: String]]()
     
     @IBAction func searthBarButtomItem(_ sender: UIBarButtonItem) {
+        
+        tagsForSeachTextField.autocorrectionType = .no
         guard let text = tagsForSeachTextField.text?.replacingOccurrences(of: " ", with: "+") else {
             tags = ""
             return
@@ -25,7 +27,6 @@ class SearchCollectionViewController: UICollectionViewController {
         tags = text
         show(tags: tags)
         tagsForSeachTextField.text = ""
-    
     }
     
     override func viewDidLoad() {

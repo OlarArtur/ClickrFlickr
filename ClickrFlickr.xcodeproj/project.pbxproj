@@ -44,7 +44,7 @@
 		B22D383A1F604AA300FCC371 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B22D383D1F604AA300FCC371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B22D383F1F604AA300FCC371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ClickrFlickr-Bridging-Header.h"; path = "../ClickrFlickr-Bridging-Header.h"; sourceTree = "<group>"; };
+		B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ClickrFlickr-Bridging-Header.h"; sourceTree = "<group>"; };
 		B23C07821F7B8E7A001CEEF5 /* AuthorizedTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizedTabBarController.swift; sourceTree = "<group>"; };
 		B24106991F724BBA006F9E53 /* Structures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
 		B249AD111F7A92FC004A7AD0 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
@@ -92,6 +92,7 @@
 				B22D38301F604AA300FCC371 /* AppDelegate.swift */,
 				B249F76E1F7A2E310036FAB7 /* FlickrOauthError.swift */,
 				B22AE49D1F7A67DC001D6D0C /* ErrorAlertController.swift */,
+				B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */,
 				B24106991F724BBA006F9E53 /* Structures.swift */,
 				B2D33E7A1F7BD960000FC8EB /* Model */,
 				B2D33E7B1F7BD969000FC8EB /* Controller */,
@@ -112,7 +113,6 @@
 			children = (
 				B249AD111F7A92FC004A7AD0 /* CustomImageView.swift */,
 				B2F7EBAD1F7A860400300C74 /* FetchJSON.swift */,
-				B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";

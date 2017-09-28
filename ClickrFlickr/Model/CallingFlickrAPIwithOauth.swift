@@ -46,15 +46,6 @@ class CallingFlickrAPIwithOauth {
         
         return urlRequest
         
-//        let flickrGetResponse = FlickrGetResponse()
-//
-//        flickrGetResponse.getResponseFromUrl(link: urlRequest) { (data, _) in
-//            guard let data = data else {
-//                completion(nil)
-//                return
-//            }
-//            completion(data)
-//        }
     }
     
     private class func authParameters(oauthSignature : String?, oauthTags: String?) -> [String: String] {
