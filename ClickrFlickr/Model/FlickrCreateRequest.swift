@@ -55,7 +55,7 @@ class FlickrCreateRequest {
         return stringFromArray
     }
     
-    func getSignatureFromStringWithEncodedCharact(string: String, apiSecretKey: String, tokenSecret: String?) -> String {
+    func getSignatureFromStringWithEncodedCharact(string: String, apiSecretKey: String, tokenSecret: String?) -> String? {
         
         var key: String
         
@@ -67,7 +67,10 @@ class FlickrCreateRequest {
         
         let customAllowedSet = CharacterSet(charactersIn: "=+/").inverted
         
-        var signature = string.hmac(algorithm: Encryption.HMACAlgorithm.SHA1, key: key)
+        guard var signature = string.hmac(algorithm: CCHmacAlgorithm(kCCHmacAlgSHA1), key: key) else {
+            return nil
+        }
+        
         guard let persSignature = signature.addingPercentEncoding(withAllowedCharacters: customAllowedSet) else {
             return signature
         }

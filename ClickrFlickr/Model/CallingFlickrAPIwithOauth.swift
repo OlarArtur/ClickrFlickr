@@ -51,7 +51,7 @@ class CallingFlickrAPIwithOauth {
     private class func authParameters(oauthSignature : String?, oauthTags: String?) -> [String: String] {
         
         let oauthNonce: String = String(arc4random_uniform(99999999) + 10000000)
-        let oauthTimestamp: String = String(Int(NSDate().timeIntervalSince1970))
+        let oauthTimestamp: String = String(Int(Date().timeIntervalSince1970))
         
         var dictionary = [ParametersConstants.oauthNonce: oauthNonce,
                           ParametersConstants.oauthTimestamp: oauthTimestamp,
