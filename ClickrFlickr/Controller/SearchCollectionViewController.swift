@@ -15,7 +15,7 @@ class SearchCollectionViewController: UICollectionViewController {
     @IBOutlet weak var tagsForSeachTextField: UITextField!
     
     var tags: String = ""
-    var arrayPhotosData = [[String: String]]()
+    var photo = [Photo]()
     
     @IBAction func searthBarButtomItem(_ sender: UIBarButtonItem) {
         
@@ -25,65 +25,58 @@ class SearchCollectionViewController: UICollectionViewController {
             return
         }
         tags = text
-        show(tags: tags)
+        loadPhotoFor(tags: tags)
         tagsForSeachTextField.text = ""
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        show(tags: tags)
+        loadPhotoFor(tags: tags)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return arrayPhotosData.count
+        return photo.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SearchCollectionViewCell
         
-        guard let title = arrayPhotosData[indexPath.row]["title"] else {return cell}
-        
-        cell.titlePhoto.text = title
-        
-        guard let farm = arrayPhotosData[indexPath.row]["farm"] else {return cell}
-        
-        guard let server = arrayPhotosData[indexPath.row]["server"] else {return cell}
-        
-        guard let id = arrayPhotosData[indexPath.row]["id"] else {return cell }
-        
-        guard let secret = arrayPhotosData[indexPath.row]["secret"] else {return cell}
-        
-        let url = "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret).jpg"
+        cell.titlePhoto.text = photo[indexPath.row].title
         
         let customImageView = CustomImageView()
-        customImageView.loadImageUsingUrlString(urlString: url) { (image) in
+        customImageView.loadImageUsingUrlString(urlString: photo[indexPath.row].url) { (image) in
             cell.photo.image = image
         }
         
         return cell
     }
     
-    func getPhotoData(string: String, completion: @escaping ([[String: String]]) -> ()) {
+    func getPhotoData(string: String) {
         let fetchJSON = FetchJSON()
-        fetchJSON.jsonToSerchPhoto(stringUrl: string) { (result) in
+        fetchJSON.getSerchPhotos(stringUrl: string) { (result) in
             guard let result = result else {return}
-            completion(result)
+            self.photo = result
+            DispatchQueue.main.async {
+                self.collectionView?.reloadData()
+            }
         }
     }
     
-    func show(tags: String) {
+    func loadPhotoFor(tags: String) {
         DispatchQueue.global().async {
             guard let string = CallingFlickrAPIwithOauth.getResponseApi(oauthTags: tags) else {return}
+            self.getPhotoData(string: string)
+        }
+    }
     
-            self.getPhotoData(string: string, completion: {(arrayPhotoData) in
-                self.arrayPhotosData = arrayPhotoData
-    
-                DispatchQueue.main.async {
-                    self.collectionView?.reloadData()
-                }
-            })
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "DetailSegue" {
+            if let cell = sender as? UICollectionViewCell, let indexPath = self.collectionView?.indexPath(for: cell) {
+                let detailVC = segue.destination as! SearchDetailViewController
+                detailVC.photo = self.photo[indexPath.row]
+            }
         }
     }
     

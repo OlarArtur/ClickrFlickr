@@ -21,7 +21,7 @@ struct Constants {
     static let format = "json"
     static let noJsonCallback = "1"
     static let methodPhotosSearch = "flickr.photos.search"
-    static let sort = "interestingness-desc"
+    static let sort = "interestingness-asc"
 }
 
 

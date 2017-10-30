@@ -33,9 +33,9 @@ class FetchJSON {
         
     }
     
-    func jsonToSerchPhoto(stringUrl: String, completion: @escaping ([[String: String]]?)->()) {
+    func getSerchPhotos(stringUrl: String, completion: @escaping ([Photo]?)->()) {
         
-        var arrayPhotosData = [[String: String]]()
+        var searchPhotos = [Photo]()
         
         fetchJsonFromUrl(stringUrl: stringUrl) { (json) in
             
@@ -45,22 +45,16 @@ class FetchJSON {
             
             guard let photo = photos["photo"] as? [[String: Any]] else {return}
             
-            for arrayValue in photo {
-                
-                var helpDict: [String: String] = [:]
-                
-                for (key, value) in arrayValue {
-                    switch key {
-                    case "title", "owner", "server", "id", "secret", "farm":
-                        let valueStr = String(describing: value)
-                        helpDict[key] = valueStr
-                    default:
-                        break
-                    }
-                }
-                arrayPhotosData.append(helpDict)
-                completion(arrayPhotosData)
+            _ = photo.map { element in
+                guard let title = element["title"] as? String,
+//                let owner = String(describing: element["owner"])
+                let server = element["server"] as? String,
+                let id = element["id"] as? String,
+                let secret = element["secret"] as? String,
+                let farm = element["farm"] as? Int  else {return}
+                searchPhotos.append(Photo(title: title, farm: farm, server: server, id: id, secret: secret))
             }
+            completion(searchPhotos)
         }
     }
     

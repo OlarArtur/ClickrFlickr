@@ -12,7 +12,7 @@ import UIKit
 struct Photo {
     
     let title: String
-    let farm: String
+    let farm: Int
     let server: String
     let id: String
     let secret: String
