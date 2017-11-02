@@ -16,7 +16,6 @@ class SearchCollectionViewController: UICollectionViewController {
     var textForSearch: String = ""
     var photo = [Photo]()
     
-//    var cellSize = CGSize.zero
     let itemsPerRow: CGFloat = 2
     
     @IBAction func searthBarButtomItem(_ sender: UIBarButtonItem) {
@@ -66,6 +65,7 @@ class SearchCollectionViewController: UICollectionViewController {
             self.photo[indexPath.item].image = image
             
             DispatchQueue.main.async {
+                collectionView.collectionViewLayout.invalidateLayout()
                 cell.configure(with: self.photo[indexPath.item])
                 cell.spinnerActivityIndicator.stopAnimating()
                 cell.spinnerActivityIndicator.isHidden = true
@@ -89,21 +89,27 @@ extension SearchCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (UIScreen.main.bounds.width - (CGFloat(itemsPerRow + 1.0) * 5.0)) / CGFloat(itemsPerRow) - 1
-        let height = width * 1.3
+        guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
+            let height = width
+            return CGSize(width: width, height: height)
+        }
+        let square = imageHeight/imageWidth
+        let height = width * square
+        
         return CGSize(width: width, height: height)
     }
-
-//    func calculateCellSize(indexPath: IndexPath) -> CGSize {
-//        let width = (UIScreen.main.bounds.width - (CGFloat(2.0 + 1.0) * 5.0)) / CGFloat(2.0) - 1
-//        let square = photo[indexPath.item].width/photo[indexPath.item].height
-//        let height = photo[indexPath.item].width * square
-//        return CGSize(width: width, height: height)
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let cellSize = calculateCellSize(indexPath: indexPath)
-//        return cellSize
-//    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 2.5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
+    }
     
 }
 
