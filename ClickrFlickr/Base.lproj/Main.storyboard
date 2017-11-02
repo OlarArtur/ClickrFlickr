@@ -126,7 +126,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="3" minimumInteritemSpacing="3" id="xyl-gR-w0Q">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="xyl-gR-w0Q">
                             <size key="itemSize" width="160" height="140"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -143,27 +143,33 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iFp-rc-9Ns">
                                             <rect key="frame" x="0.0" y="0.0" width="160" height="140"/>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="90S-S9-TlX">
-                                            <rect key="frame" x="0.0" y="128" width="160" height="12"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="90S-S9-TlX">
+                                            <rect key="frame" x="0.0" y="128" width="160" height="0.0"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hF4-sY-ICk">
+                                            <rect key="frame" x="70" y="60" width="20" height="20"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                 </view>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="iFp-rc-9Ns" secondAttribute="trailing" id="5x2-gd-qhm"/>
+                                    <constraint firstItem="hF4-sY-ICk" firstAttribute="centerY" secondItem="2B2-5y-ZLQ" secondAttribute="centerY" id="8pt-NU-Kum"/>
                                     <constraint firstItem="90S-S9-TlX" firstAttribute="top" secondItem="iFp-rc-9Ns" secondAttribute="bottom" constant="-12" id="E43-Dm-pPs"/>
                                     <constraint firstAttribute="bottom" secondItem="iFp-rc-9Ns" secondAttribute="bottom" id="NcM-1r-HTi"/>
                                     <constraint firstItem="iFp-rc-9Ns" firstAttribute="top" secondItem="2B2-5y-ZLQ" secondAttribute="top" id="XgP-pw-9I5"/>
                                     <constraint firstAttribute="trailing" secondItem="90S-S9-TlX" secondAttribute="trailing" id="gJL-FQ-be9"/>
                                     <constraint firstItem="90S-S9-TlX" firstAttribute="centerX" secondItem="2B2-5y-ZLQ" secondAttribute="centerX" id="ihx-6L-3Fb"/>
+                                    <constraint firstItem="hF4-sY-ICk" firstAttribute="centerX" secondItem="2B2-5y-ZLQ" secondAttribute="centerX" id="jVi-LO-Ys5"/>
                                     <constraint firstItem="iFp-rc-9Ns" firstAttribute="leading" secondItem="2B2-5y-ZLQ" secondAttribute="leading" id="nOu-Ls-YL8"/>
                                     <constraint firstItem="90S-S9-TlX" firstAttribute="leading" secondItem="2B2-5y-ZLQ" secondAttribute="leading" id="yHF-Ds-kPu"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="photo" destination="iFp-rc-9Ns" id="2GI-jT-8Pu"/>
+                                    <outlet property="spinnerActivityIndicator" destination="hF4-sY-ICk" id="hWa-7r-pEm"/>
                                     <outlet property="titlePhoto" destination="90S-S9-TlX" id="Elw-I7-Xfk"/>
                                     <segue destination="F34-d3-uhg" kind="show" identifier="DetailSegue" id="ezT-FF-6CO"/>
                                 </connections>

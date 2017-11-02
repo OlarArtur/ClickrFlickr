@@ -67,5 +67,162 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ClickrFlickr/Controller/SearchCollectionViewController.swift"
+            timestampString = "531300397.158897"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "SearchCollectionViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ClickrFlickr.SearchCollectionViewController.photo.getter : Swift.Array&lt;ClickrFlickr.Photo&gt;"
+                  moduleName = "ClickrFlickr"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/artur_olar/Desktop/ClickrFlickr/ClickrFlickr/Controller/SearchCollectionViewController.swift"
+                  timestampString = "531239583.32495"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "35">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ClickrFlickr.SearchCollectionViewController.photo.setter : Swift.Array&lt;ClickrFlickr.Photo&gt;"
+                  moduleName = "ClickrFlickr"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/artur_olar/Desktop/ClickrFlickr/ClickrFlickr/Controller/SearchCollectionViewController.swift"
+                  timestampString = "531239583.328643"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "65">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ClickrFlickr.SearchCollectionViewController.init (collectionViewLayout : __ObjC.UICollectionViewLayout) -&gt; ClickrFlickr.SearchCollectionViewController"
+                  moduleName = "ClickrFlickr"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/artur_olar/Desktop/ClickrFlickr/ClickrFlickr/Controller/SearchCollectionViewController.swift"
+                  timestampString = "531239583.332188"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "128">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ClickrFlickr.SearchCollectionViewController.init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; ClickrFlickr.SearchCollectionViewController"
+                  moduleName = "ClickrFlickr"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/artur_olar/Desktop/ClickrFlickr/ClickrFlickr/Controller/SearchCollectionViewController.swift"
+                  timestampString = "531239583.335809"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "198">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ClickrFlickr.SearchCollectionViewController.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;ClickrFlickr.SearchCollectionViewController&gt;"
+                  moduleName = "ClickrFlickr"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/artur_olar/Desktop/ClickrFlickr/ClickrFlickr/Controller/SearchCollectionViewController.swift"
+                  timestampString = "531239583.339337"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "128">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ClickrFlickr/Controller/SearchCollectionViewController.swift"
+            timestampString = "531311214.122326"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "collectionView(_:cellForItemAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ClickrFlickr/Controller/SearchCollectionViewController.swift"
+            timestampString = "531310594.722102"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "collectionView(_:cellForItemAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ClickrFlickr/Controller/SearchCollectionViewController.swift"
+            timestampString = "531301283.926891"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ClickrFlickr/Controller/SearchCollectionViewController.swift"
+            timestampString = "531312679.14631"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "collectionView(_:layout:sizeForItemAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

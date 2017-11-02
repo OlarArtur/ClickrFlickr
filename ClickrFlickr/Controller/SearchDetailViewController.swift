@@ -17,9 +17,13 @@ class SearchDetailViewController: UIViewController {
         super.viewDidLoad()
 
         let customImageView = CustomImageView()
-        customImageView.loadImageUsingUrlString(urlString: photo!.url) { (image) in
+        
+        guard let photo = photo else {return}
+        customImageView.loadImageUsingUrlString(urlString: photo.url) { (image) in
             self.detailImageView.image = image
         }
+        
+        print(photo.owner)
     }
 
 

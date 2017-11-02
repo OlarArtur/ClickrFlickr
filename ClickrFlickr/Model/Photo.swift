@@ -10,14 +10,35 @@ import UIKit
 
 
 struct Photo {
-    
     let title: String
     let farm: Int
     let server: String
     let id: String
     let secret: String
+    let owner: String
+    
+    var width: CGFloat?
+    var height: CGFloat?
+    
+    var image: UIImage?
     
     var url: String {
         return "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret).jpg"
+    }
+    
+    init? (dict: [String: Any]) {
+        guard let title = dict["title"] as? String,
+            let farm = dict["farm"] as? Int,
+            let server = dict["server"] as? String,
+            let id = dict["id"] as? String,
+            let secret = dict["secret"] as? String,
+            let owner = dict["owner"] as? String else { return nil }
+        
+        self.title = title
+        self.farm = farm
+        self.server = server
+        self.id = id
+        self.secret = secret
+        self.owner = owner
     }
 }

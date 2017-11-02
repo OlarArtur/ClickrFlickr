@@ -13,5 +13,11 @@ class SearchCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var photo: UIImageView!
     @IBOutlet weak var titlePhoto: UILabel!
-
+    @IBOutlet weak var spinnerActivityIndicator: UIActivityIndicatorView!
+    
+    func configure(with photo: Photo) {
+        self.photo.image = photo.image
+        self.titlePhoto.text = photo.title
+    }
+    
 }

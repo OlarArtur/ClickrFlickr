@@ -21,6 +21,8 @@ struct Constants {
     static let format = "json"
     static let noJsonCallback = "1"
     static let methodPhotosSearch = "flickr.photos.search"
+    static let methodPhotosGetSizes = "flickr.photos.getSizes"
+    static let methodPhotosGetPopular = "flickr.photos.getPopular"
     static let sort = "interestingness-asc"
 }
 
@@ -28,6 +30,7 @@ struct Constants {
 struct ParametersConstants {
     static let oauthSort: String = "sort"
     static let oauthText: String = "text"
+    static let oauthPhotoId: String = "photo_id"
     static let oauthMethod: String = "method"
     static let oauthFormat: String = "format"
     static let oauthNoJsonCallback: String = "nojsoncallback"
@@ -52,5 +55,18 @@ struct NeededParametersForRequest {
     
     static let exchangeRequestTokenForAccessToken: [String] = [ParametersConstants.oauthNonce, ParametersConstants.oauthVerifier, ParametersConstants.oauthVersion, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp, ParametersConstants.oauthToken]
     
-    static let callingFlickrMethodPhotosSearch: [String] = [ParametersConstants.oauthMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp, ParametersConstants.oauthFormat, ParametersConstants.oauthNoJsonCallback, ParametersConstants.oauthToken, ParametersConstants.oauthNonce, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthVersion, ParametersConstants.oauthText]
+    static let callingFlickrMethod: [String] = [ParametersConstants.oauthMethod, ParametersConstants.oauthConsumerKey, ParametersConstants.oauthTimestamp, ParametersConstants.oauthFormat, ParametersConstants.oauthNoJsonCallback, ParametersConstants.oauthToken, ParametersConstants.oauthNonce, ParametersConstants.oauthSignatureMethod, ParametersConstants.oauthVersion]
+    
+    static var callingFlickrMethodPhotosSearch: [String] {
+       return callingFlickrMethod + [ParametersConstants.oauthText]
+    }
+    
+    static var callingFlickrMethodPhotosGetSizes: [String] {
+        return callingFlickrMethod + [ParametersConstants.oauthPhotoId]
+    }
+    
+    static var callingFlickrMethodPhotosGetPopular: [String] {
+        return callingFlickrMethod
+    }
+    
 }

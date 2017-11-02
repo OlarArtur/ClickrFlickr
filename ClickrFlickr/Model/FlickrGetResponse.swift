@@ -17,37 +17,15 @@ class FlickrGetResponse {
             completion(nil, nil)
             return
         }
-        urlSessionTask(url: url) {(data, error) in
-            
-            guard let data = data else {
-                completion(nil, nil)
-                return
-            }
-            
+
+        NetworkServise.shared.getData(url: url) { (data) in
+        
             guard let responseString = String(data: data, encoding: String.Encoding.utf8) else {
                 completion(nil, nil)
                 return
             }
             completion(data, responseString)
         }
-    }
-    
-    func urlSessionTask(url: URL, competion: @escaping (Data?, Error?) -> ()) {
-        let session = URLSession.shared
-        let task = session.dataTask(with: url) {data, response, error in
-            
-            if let error = error {
-                print(error)
-                competion(nil, error)
-            } else {
-                guard let data = data else {
-                    competion(nil, nil)
-                    return
-                }
-                competion(data, nil)
-            }
-        }
-        task.resume()
     }
     
     func separateResponce(stringToSplit: String) -> [String: String]? {

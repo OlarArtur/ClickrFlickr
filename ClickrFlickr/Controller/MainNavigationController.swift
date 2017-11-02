@@ -30,6 +30,6 @@ class MainNavigationController: UINavigationController {
 extension MainNavigationController: FlickrUserAuthenticationDelegate {
 
     func didFinishAuthorize() {
-            self.isAuthorized()
+        self.isAuthorized()
     }
 }

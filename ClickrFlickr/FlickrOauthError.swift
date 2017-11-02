@@ -14,4 +14,5 @@ enum FlickOauthError: Error {
     case InvalidValue
     case ResponseError
     case RequestError
+    case NetworkServiseError
 }
