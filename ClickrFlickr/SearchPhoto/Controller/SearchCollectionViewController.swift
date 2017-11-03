@@ -15,8 +15,10 @@ class SearchCollectionViewController: UICollectionViewController {
     
     var textForSearch: String = ""
     var photo = [Photo]()
+    let imageCache = NSCache<NSString, UIImage>()
     
     let itemsPerRow: CGFloat = 2
+    let spacingItem: CGFloat = 5
     
     @IBAction func searthBarButtomItem(_ sender: UIBarButtonItem) {
         
@@ -28,6 +30,7 @@ class SearchCollectionViewController: UICollectionViewController {
         textForSearch = text
         loadPhotoFor(searchText: textForSearch)
         tagsForSeachTextField.text = ""
+        imageCache.removeAllObjects()
     }
     
     override func viewDidLoad() {
@@ -55,20 +58,33 @@ class SearchCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SearchCollectionViewCell
-        cell.spinnerActivityIndicator.startAnimating()
         
-        let customImageView = CustomImageView()
-        customImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { (image) in
+        if let imageFromCache = self.imageCache.object(forKey: self.photo[indexPath.item].url as NSString) {
             
-            self.photo[indexPath.item].width = image.size.width
-            self.photo[indexPath.item].height = image.size.height
-            self.photo[indexPath.item].image = image
+            cell.spinnerActivityIndicator.startAnimating()
             
             DispatchQueue.main.async {
-                collectionView.collectionViewLayout.invalidateLayout()
+                self.photo[indexPath.item].image = imageFromCache
                 cell.configure(with: self.photo[indexPath.item])
                 cell.spinnerActivityIndicator.stopAnimating()
                 cell.spinnerActivityIndicator.isHidden = true
+            }
+        } else {
+            cell.spinnerActivityIndicator.startAnimating()
+            
+            let customImageView = CustomImageView()
+            customImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { (image) in
+                
+                self.photo[indexPath.item].width = image.size.width
+                self.photo[indexPath.item].height = image.size.height
+                self.imageCache.setObject(image, forKey: self.photo[indexPath.item].url as NSString)
+                DispatchQueue.main.async {
+                    collectionView.collectionViewLayout.invalidateLayout()
+                    self.photo[indexPath.item].image = image
+                    cell.configure(with: self.photo[indexPath.item])
+                    cell.spinnerActivityIndicator.stopAnimating()
+                    cell.spinnerActivityIndicator.isHidden = true
+                }
             }
         }
         return cell
@@ -88,27 +104,34 @@ class SearchCollectionViewController: UICollectionViewController {
 extension SearchCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (UIScreen.main.bounds.width - (CGFloat(itemsPerRow + 1.0) * 5.0)) / CGFloat(itemsPerRow) - 1
+        
+        var width = (UIScreen.main.bounds.width - (CGFloat(itemsPerRow + 1.0) * spacingItem)) / CGFloat(itemsPerRow) - 1
+        
         guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
             let height = width
             return CGSize(width: width, height: height)
         }
-        let square = imageHeight/imageWidth
-        let height = width * square
+        
+        if imageWidth < width {
+            width = imageWidth
+        }
+        
+        let squareInd = imageHeight/imageWidth
+        let height = width * squareInd
         
         return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 2.5
+        return spacingItem
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        return UIEdgeInsets(top: spacingItem, left: spacingItem, bottom: spacingItem, right: spacingItem)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 5
+        return spacingItem
     }
     
 }
