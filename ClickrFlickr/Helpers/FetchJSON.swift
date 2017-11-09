@@ -11,7 +11,7 @@ import Foundation
 
 class FetchJSON {
 
-    func fetchJsonFromUrl(stringUrl: String, completion: @escaping (AnyObject?)->()) {
+    func fetchJson(fromUrl stringUrl: String, completion: @escaping (AnyObject?)->()) {
         
         guard let url = URL(string: stringUrl) else {return}
         
@@ -19,43 +19,14 @@ class FetchJSON {
             
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-                completion(json as AnyObject)
+                DispatchQueue.main.async {
+                    completion(json as AnyObject)
+                }
             } catch let errorJson {
                 print(errorJson)
             }
         }
         
-    }
-    
-    func getSerchPhotos(stringUrl: String, completion: @escaping ([Photo]?)->()) {
-        
-        fetchJsonFromUrl(stringUrl: stringUrl) { (json) in
-            
-            guard let json = json else {
-                completion(nil)
-                return
-            }
-            
-            guard let photos = json["photos"] as? [String: Any] else {
-                completion(nil)
-                return
-            }
-            
-            guard let photo = photos["photo"] as? [[String: Any]] else {
-                completion(nil)
-                return
-            }
-            
-            var searchPhotos = [Photo]()
-            
-            for element in photo {
-                guard let photo = Photo(dict: element) else { continue }
-                searchPhotos.append(photo)
-            }
-            DispatchQueue.main.async {
-                completion(searchPhotos)
-            }
-        }
     }
     
 }

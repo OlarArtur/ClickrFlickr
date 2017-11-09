@@ -28,7 +28,11 @@ class SearchCollectionViewController: UICollectionViewController {
             return
         }
         textForSearch = text
-        loadPhotoFor(searchText: textForSearch)
+        SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) { photo in
+            self.photo = photo.searchPhoto
+            self.collectionView?.reloadData()
+        }
+        
         tagsForSeachTextField.text = ""
         imageCache.removeAllObjects()
     }
@@ -36,17 +40,8 @@ class SearchCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadPhotoFor(searchText: textForSearch)
-    }
-    
-    func loadPhotoFor(searchText: String) {
-        guard let string = CallingFlickrAPIwithOauth.methodPhotosSearch(oauthText: searchText) else {return}
-        
-        let fetchJSON = FetchJSON()
-        fetchJSON.getSerchPhotos(stringUrl: string) { (result) in
-            guard let result = result else {return}
-            self.photo = result
-            
+        SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) { photo in
+            self.photo = photo.searchPhoto
             self.collectionView?.reloadData()
         }
     }
@@ -59,18 +54,17 @@ class SearchCollectionViewController: UICollectionViewController {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SearchCollectionViewCell
         
+        cell.spinnerActivityIndicator.startAnimating()
+        
         if let imageFromCache = self.imageCache.object(forKey: self.photo[indexPath.item].url as NSString) {
             
-            cell.spinnerActivityIndicator.startAnimating()
+            self.photo[indexPath.item].image = imageFromCache
+            cell.configure(with: self.photo[indexPath.item])
             
-            DispatchQueue.main.async {
-                self.photo[indexPath.item].image = imageFromCache
-                cell.configure(with: self.photo[indexPath.item])
-                cell.spinnerActivityIndicator.stopAnimating()
-                cell.spinnerActivityIndicator.isHidden = true
-            }
+            cell.spinnerActivityIndicator.stopAnimating()
+            cell.spinnerActivityIndicator.isHidden = true
+
         } else {
-            cell.spinnerActivityIndicator.startAnimating()
             
             let customImageView = CustomImageView()
             customImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { (image) in
@@ -78,13 +72,14 @@ class SearchCollectionViewController: UICollectionViewController {
                 self.photo[indexPath.item].width = image.size.width
                 self.photo[indexPath.item].height = image.size.height
                 self.imageCache.setObject(image, forKey: self.photo[indexPath.item].url as NSString)
-                DispatchQueue.main.async {
-                    collectionView.collectionViewLayout.invalidateLayout()
-                    self.photo[indexPath.item].image = image
-                    cell.configure(with: self.photo[indexPath.item])
-                    cell.spinnerActivityIndicator.stopAnimating()
-                    cell.spinnerActivityIndicator.isHidden = true
-                }
+                
+                collectionView.collectionViewLayout.invalidateLayout()
+                
+                self.photo[indexPath.item].image = image
+                cell.configure(with: self.photo[indexPath.item])
+                
+                cell.spinnerActivityIndicator.stopAnimating()
+                cell.spinnerActivityIndicator.isHidden = true
             }
         }
         return cell
