@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B20A865E1FB4464E00794FBE /* PhotoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20A865D1FB4464E00794FBE /* PhotoLayout.swift */; };
 		B21603591FB42EF700AFA5F3 /* SearchNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21603581FB42EF700AFA5F3 /* SearchNetworkService.swift */; };
 		B216035B1FB42F7800AFA5F3 /* SearchPhotos.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216035A1FB42F7800AFA5F3 /* SearchPhotos.swift */; };
 		B21C862E1F79553B001CBC71 /* FlickrCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21C862D1F79553B001CBC71 /* FlickrCreateRequest.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B20A865D1FB4464E00794FBE /* PhotoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLayout.swift; sourceTree = "<group>"; };
 		B21603581FB42EF700AFA5F3 /* SearchNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchNetworkService.swift; path = SearchPhoto/SearchNetworkService/SearchNetworkService.swift; sourceTree = "<group>"; };
 		B216035A1FB42F7800AFA5F3 /* SearchPhotos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPhotos.swift; path = SearchPhoto/Model/SearchPhotos.swift; sourceTree = "<group>"; };
 		B21C862D1F79553B001CBC71 /* FlickrCreateRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrCreateRequest.swift; path = "Application/Network Service/FlickrCreateRequest.swift"; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				B29A9FEE1F7276C000567FD5 /* SearchCollectionViewCell.swift */,
+				B20A865D1FB4464E00794FBE /* PhotoLayout.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				B21C862E1F79553B001CBC71 /* FlickrCreateRequest.swift in Sources */,
 				B21603591FB42EF700AFA5F3 /* SearchNetworkService.swift in Sources */,
 				B26CF1691F697653006D7EF0 /* MainNavigationController.swift in Sources */,
+				B20A865E1FB4464E00794FBE /* PhotoLayout.swift in Sources */,
 				B241069A1F724BBA006F9E53 /* Structures.swift in Sources */,
 				B29A9FF11F72778C00567FD5 /* SearchCollectionViewController.swift in Sources */,
 				B21C86301F795594001CBC71 /* FlickrGetResponse.swift in Sources */,

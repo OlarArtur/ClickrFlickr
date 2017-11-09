@@ -144,5 +144,3 @@ extension SearchCollectionViewController: UICollectionViewDataSourcePrefetching 
     }
 
 }
-
-

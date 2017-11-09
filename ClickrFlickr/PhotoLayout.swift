@@ -2,7 +2,7 @@
 //  PhotoLayout.swift
 //  ClickrFlickr
 //
-//  Created by Artur Olar on 11/4/17.
+//  Created by Artur Olar on 11/9/17.
 //  Copyright © 2017 Artur Olar. All rights reserved.
 //
 
@@ -89,5 +89,6 @@ class PhotoLayout: UICollectionViewLayout {
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }
-
+    
 }
+
