@@ -10,8 +10,10 @@ import Foundation
 
 
 class FetchJSON {
+    
+    private init() {}
 
-    func fetchJson(fromUrl stringUrl: String, completion: @escaping (AnyObject?)->()) {
+    static func fetchJson(fromUrl stringUrl: String, completion: @escaping (AnyObject?)->()) {
         
         guard let url = URL(string: stringUrl) else {return}
         

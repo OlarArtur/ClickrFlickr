@@ -16,8 +16,7 @@ class SearchNetworkservice {
     static func getJsonForSearchPhoto(searchText: String, completion: @escaping (SearchPhotos)->()) {
         guard let string = CallingFlickrAPIwithOauth.methodPhotosSearch(oauthText: searchText) else {return}
         
-        let fetchJSON = FetchJSON()
-        fetchJSON.fetchJson(fromUrl: string) { (json) in
+        FetchJSON.fetchJson(fromUrl: string) { (json) in
             
             guard let json = json else {return}
             do {

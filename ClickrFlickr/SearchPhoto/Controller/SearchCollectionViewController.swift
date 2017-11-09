@@ -66,8 +66,7 @@ class SearchCollectionViewController: UICollectionViewController {
 
         } else {
             
-            let customImageView = CustomImageView()
-            customImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { (image) in
+            CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { (image) in
                 
                 self.photo[indexPath.item].width = image.size.width
                 self.photo[indexPath.item].height = image.size.height
@@ -129,6 +128,21 @@ extension SearchCollectionViewController: UICollectionViewDelegateFlowLayout {
         return spacingItem
     }
     
+}
+
+extension SearchCollectionViewController: UICollectionViewDataSourcePrefetching {
+
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { (image) in
+                self.photo[indexPath.item].width = image.size.width
+                self.photo[indexPath.item].height = image.size.height
+                self.imageCache.setObject(image, forKey: self.photo[indexPath.item].url as NSString)
+                self.photo[indexPath.item].image = image
+            }
+        }
+    }
+
 }
 
 

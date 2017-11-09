@@ -9,9 +9,11 @@
 import UIKit
 
 
-class CustomImageView: UIImageView {
+class CustomImageView {
     
-    func loadImageUsingUrlString (urlString: String, completion: @escaping (UIImage) ->()) {
+    private init() {}
+    
+    static func loadImageUsingUrlString (urlString: String, completion: @escaping (UIImage) ->()) {
         
         guard let url = URL(string: urlString) else {return}
         
