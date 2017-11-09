@@ -37,7 +37,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B20A865D1FB4464E00794FBE /* PhotoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLayout.swift; sourceTree = "<group>"; };
+		B20A865D1FB4464E00794FBE /* PhotoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoLayout.swift; path = SearchPhoto/View/PhotoLayout.swift; sourceTree = "<group>"; };
 		B21603581FB42EF700AFA5F3 /* SearchNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchNetworkService.swift; path = SearchPhoto/SearchNetworkService/SearchNetworkService.swift; sourceTree = "<group>"; };
 		B216035A1FB42F7800AFA5F3 /* SearchPhotos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPhotos.swift; path = SearchPhoto/Model/SearchPhotos.swift; sourceTree = "<group>"; };
 		B21C862D1F79553B001CBC71 /* FlickrCreateRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrCreateRequest.swift; path = "Application/Network Service/FlickrCreateRequest.swift"; sourceTree = "<group>"; };
