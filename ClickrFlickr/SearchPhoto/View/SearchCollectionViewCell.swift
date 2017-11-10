@@ -20,4 +20,10 @@ class SearchCollectionViewCell: UICollectionViewCell {
         self.titlePhoto.text = photo.title
     }
     
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        self.layer.cornerRadius = 10.0
+//        layer.borderWidth = 0.5
+//    }
+    
 }

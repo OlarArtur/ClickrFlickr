@@ -40,6 +40,8 @@ class SearchCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionView?.prefetchDataSource = self
+        
         SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) { photo in
             self.photo = photo.searchPhoto
             self.collectionView?.reloadData()

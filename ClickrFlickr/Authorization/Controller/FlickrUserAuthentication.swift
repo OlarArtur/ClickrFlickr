@@ -147,7 +147,6 @@ class FlickrUserAuthentication {
         let urlUserAuthorization = flickrCreateRequest.concatenateRequestUrlString(urlString: Constants.authorizeUrl, parameters: arrayOfOauthParameters)
 
         guard let url = URL(string: urlUserAuthorization) else {
-            print("Error get URL from urlUserAuthorization")
             throw FlickOauthError.RequestError
         }
         let safariView = SFSafariViewController(url: url)
@@ -183,13 +182,11 @@ class FlickrUserAuthentication {
             }
 
             guard let tokenSecret = response["oauth_token_secret"] else {
-                print("error AccessSecretToken")
                 completion(nil, nil, nil, nil, nil)
                 return
             }
 
             guard let token = response["oauth_token"] else {
-                print("error AccessToken")
                 completion(nil, nil, nil, nil, nil)
                 return
             }
@@ -211,12 +208,10 @@ class FlickrUserAuthentication {
         let baseString = flickrCreateRequest.concatenateBaseUrlString(urlString: requestURL, parameters: arrayOfOauthParameters)
 
         guard let apiSecretKey = apiSecretKey else {
-            print("ERROR getRequestToken: apiSecretKey is empty")
             return nil
         }
 
         guard let baseStringCurrent = baseString else {
-            print("ERROR getRequestToken: baseString")
             return nil
         }
 

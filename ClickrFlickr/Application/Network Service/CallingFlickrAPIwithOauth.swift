@@ -29,12 +29,10 @@ class CallingFlickrAPIwithOauth {
         let baseString = flickrCreateRequest.concatenateBaseUrlString(urlString: Constants.apiRequestUrl, parameters: oauthParameters)
 
         guard let baseStringCurrent = baseString else {
-            print("ERROR CallingFlickrAPIwithOauth: baseString")
             return nil
         }
 
         guard let tokenSecret = UserDefaults.standard.object(forKey: "tokensecret") as? String, let apiSecretKey = apiSecretKey else {
-            print("ERROR CallingFlickrAPIwithOauth: tokenSecret or apiSecretKey is empty ")
             return nil
         }
             let oauthSignature = flickrCreateRequest.getSignatureFromStringWithEncodedCharact(string: baseStringCurrent, apiSecretKey: apiSecretKey, tokenSecret: tokenSecret)

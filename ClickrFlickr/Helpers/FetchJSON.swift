@@ -25,7 +25,8 @@ class FetchJSON {
                     completion(json as AnyObject)
                 }
             } catch let errorJson {
-                print(errorJson)
+                let error = ErrorAlertController()
+                error.showErrorAlertController(title: String(describing: errorJson), message: "Try again?")
             }
         }
         
