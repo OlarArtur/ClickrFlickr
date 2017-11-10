@@ -27,7 +27,7 @@ class FlickrUserAuthentication {
     private static var oauthTokenSecret: String?
 
     private static var isAuthorized: Bool {
-        let nameObject = UserDefaults.standard.object(forKey: "fullname")
+        let nameObject = UserDefaults.standard.object(forKey: "usernsid")
         if let _ = nameObject {
             return true
         } else {
