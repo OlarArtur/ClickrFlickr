@@ -16,13 +16,16 @@ class SearchDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         guard let photo = photo else {return}
         CustomImageView.loadImageUsingUrlString(urlString: photo.url) { (image) in
             self.detailImageView.image = image
         }
-        
         print(photo.owner)
     }
-
 
 }

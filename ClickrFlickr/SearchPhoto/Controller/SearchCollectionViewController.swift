@@ -155,14 +155,16 @@ extension SearchCollectionViewController: UISearchBarDelegate {
         }
         textForSearch = text
         SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) {[weak self] photo in
-            
             guard let strongSelf = self else {return}
             strongSelf.photo = photo.searchPhoto
+            strongSelf.imageCache.removeAllObjects()
             strongSelf.collectionView?.reloadData()
+            searchBar.endEditing(true)
         }
-        imageCache.removeAllObjects()
+        searchBar.text = ""
     }
     
 }
+
 
 
