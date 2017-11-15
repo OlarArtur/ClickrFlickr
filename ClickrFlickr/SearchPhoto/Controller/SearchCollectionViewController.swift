@@ -11,8 +11,6 @@ import UIKit
 
 class SearchCollectionViewController: UICollectionViewController {
     
-    @IBOutlet weak var tagsForSeachTextField: UITextField!
-    
     var textForSearch: String = ""
     var photo = [Photo]()
     let imageCache = NSCache<NSString, UIImage>()
@@ -20,34 +18,23 @@ class SearchCollectionViewController: UICollectionViewController {
     let itemsPerRow: CGFloat = 2
     let spacingItem: CGFloat = 5
     
-    @IBAction func searthBarButtomItem(_ sender: UIBarButtonItem) {
-        
-        tagsForSeachTextField.autocorrectionType = .no
-        guard let text = tagsForSeachTextField.text?.replacingOccurrences(of: " ", with: "+") else {
-            textForSearch = ""
-            return
-        }
-        textForSearch = text
-        SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) {[weak self] photo in
-            
-            guard let strongSelf = self else {return}
-            
-            strongSelf.photo = photo.searchPhoto
-            strongSelf.collectionView?.reloadData()
-        }
-        
-        tagsForSeachTextField.text = ""
-        imageCache.removeAllObjects()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        createSearchBar()
+        
         SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) {[weak self] photo in
             guard let strongSelf = self else {return}
             strongSelf.photo = photo.searchPhoto
             strongSelf.collectionView?.reloadData()
         }
+    }
+    
+    func createSearchBar() {
+        let searchBar: UISearchBar = UISearchBar()
+        searchBar.placeholder = "Search Photos"
+        searchBar.delegate = self
+        self.navigationItem.titleView = searchBar
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -107,7 +94,7 @@ extension SearchCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        var width = (UIScreen.main.bounds.width - (CGFloat(itemsPerRow + 1.0) * spacingItem)) / CGFloat(itemsPerRow) - 1
+        var width = (UIScreen.main.bounds.width - (CGFloat(itemsPerRow + 1.0) * spacingItem)) / CGFloat(itemsPerRow)
         
         guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
             let height = width
@@ -119,6 +106,11 @@ extension SearchCollectionViewController: UICollectionViewDelegateFlowLayout {
         }
         
         let squareInd = imageHeight/imageWidth
+        
+        if imageWidth > UIScreen.main.bounds.width {
+            width = (UIScreen.main.bounds.width - (2 * spacingItem))
+        }
+        
         let height = width * squareInd
         
         return CGSize(width: width, height: height)
@@ -152,6 +144,25 @@ extension SearchCollectionViewController: UICollectionViewDataSourcePrefetching 
         }
     }
 
+}
+
+extension SearchCollectionViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text?.replacingOccurrences(of: " ", with: "+") else {
+            textForSearch = ""
+            return
+        }
+        textForSearch = text
+        SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) {[weak self] photo in
+            
+            guard let strongSelf = self else {return}
+            strongSelf.photo = photo.searchPhoto
+            strongSelf.collectionView?.reloadData()
+        }
+        imageCache.removeAllObjects()
+    }
+    
 }
 
 

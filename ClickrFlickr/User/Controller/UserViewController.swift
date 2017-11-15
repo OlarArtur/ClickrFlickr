@@ -40,7 +40,7 @@ class UserViewController: UIViewController, SFSafariViewControllerDelegate {
         self.navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     }
     
-    func logOutPressed() {
+    @objc func logOutPressed() {
         UserDefaults.standard.removeObject(forKey: "fullname")
         UserDefaults.standard.removeObject(forKey: "token")
         UserDefaults.standard.removeObject(forKey: "tokensecret")
@@ -65,7 +65,7 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! UserCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellUser", for: indexPath) as! UserCollectionViewCell
         
         CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
             
@@ -85,7 +85,10 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        var width = (UIScreen.main.bounds.width - (CGFloat(itemsPerRow + 1.0) * spacingItem)) / CGFloat(itemsPerRow) - 1
+//        let insets = collectionView.contentInset
+//        (collectionView?.bounds.width)! - (insets.left + insets.right)
+        
+        var width = (UIScreen.main.bounds.width - (CGFloat(itemsPerRow + 1.0) * spacingItem)) / CGFloat(itemsPerRow)
         
         guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
             let height = width
@@ -98,7 +101,7 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
         let squareInd = imageHeight/imageWidth
         
         if imageWidth > UIScreen.main.bounds.width {
-            width = UIScreen.main.bounds.width
+            width = (UIScreen.main.bounds.width - (2 * spacingItem))
         }
         
         let height = width * squareInd
