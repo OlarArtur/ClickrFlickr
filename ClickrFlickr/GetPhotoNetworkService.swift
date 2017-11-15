@@ -1,19 +1,19 @@
 //
-//  SearchNetworkService.swift
+//  GetPhotoNetworkService.swift
 //  ClickrFlickr
 //
-//  Created by Artur Olar on 11/9/17.
+//  Created by Artur Olar on 11/15/17.
 //  Copyright © 2017 Artur Olar. All rights reserved.
 //
 
 import Foundation
 
-class SearchNetworkservice {
+class GetPhotoNetworkservice {
     
     private init() {}
     
-    static func getJsonForSearchPhoto(searchText: String, completion: @escaping (SearchPhotos)->()) {
-        guard let string = CallingFlickrAPIwithOauth.methodPhotosSearch(oauthText: searchText) else {return}
+    static func getJsonForSearchPhoto(userId: String, completion: @escaping (SearchPhotos)->()) {
+        guard let string = CallingFlickrAPIwithOauth.methodPeopleGetPhoto(userId: userId) else {return}
         
         FetchJSON.fetchJson(fromUrl: string) { (json) in
             

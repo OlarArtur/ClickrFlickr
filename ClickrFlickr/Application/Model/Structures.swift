@@ -21,8 +21,9 @@ struct Constants {
     static let format = "json"
     static let noJsonCallback = "1"
     static let methodPhotosSearch = "flickr.photos.search"
-    static let methodPhotosGetSizes = "flickr.photos.getSizes"
+//    static let methodPhotosGetSizes = "flickr.photos.getSizes"
     static let methodPhotosGetPopular = "flickr.photos.getPopular"
+    static let methodPeopleGetPhotos = "flickr.people.getPhotos"
     static let sort = "interestingness-asc"
 }
 
@@ -31,6 +32,7 @@ struct ParametersConstants {
     static let oauthSort: String = "sort"
     static let oauthText: String = "text"
     static let oauthPhotoId: String = "photo_id"
+    static let oauthUserId: String = "user_id"
     static let oauthMethod: String = "method"
     static let oauthFormat: String = "format"
     static let oauthNoJsonCallback: String = "nojsoncallback"
@@ -61,12 +63,16 @@ struct NeededParametersForRequest {
        return callingFlickrMethod + [ParametersConstants.oauthText]
     }
     
-    static var callingFlickrMethodPhotosGetSizes: [String] {
-        return callingFlickrMethod + [ParametersConstants.oauthPhotoId]
-    }
+//    static var callingFlickrMethodPhotosGetSizes: [String] {
+//        return callingFlickrMethod + [ParametersConstants.oauthPhotoId]
+//    }
     
     static var callingFlickrMethodPhotosGetPopular: [String] {
         return callingFlickrMethod
+    }
+    
+    static var callingFlickrMethodPeopleGetPhotos: [String] {
+        return callingFlickrMethod + [ParametersConstants.oauthUserId]
     }
     
 }
