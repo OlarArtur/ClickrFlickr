@@ -45,9 +45,10 @@ class SearchCollectionViewController: UICollectionViewController {
         
         collectionView?.prefetchDataSource = self
         
-        SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) { photo in
-            self.photo = photo.searchPhoto
-            self.collectionView?.reloadData()
+        SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) { [weak self] photo in
+           guard let strongSelf = self else {return}
+            strongSelf.photo = photo.searchPhoto
+            strongSelf.collectionView?.reloadData()
         }
     }
     
