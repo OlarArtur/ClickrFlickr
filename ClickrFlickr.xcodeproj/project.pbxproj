@@ -16,6 +16,8 @@
 		B2202C0F1F7BBBCE002D33C2 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2202C0E1F7BBBCE002D33C2 /* UserViewController.swift */; };
 		B2240B981FA75E0100AE1602 /* SearchDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2240B971FA75E0100AE1602 /* SearchDetailViewController.swift */; };
 		B22AE49E1F7A67DC001D6D0C /* ErrorAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22AE49D1F7A67DC001D6D0C /* ErrorAlertController.swift */; };
+		B22B8B371FBC19A200A21401 /* UserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B8B361FBC19A200A21401 /* UserCollectionViewCell.swift */; };
+		B22B8B3A1FBC20E500A21401 /* GetPhotoNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B8B391FBC20E500A21401 /* GetPhotoNetworkService.swift */; };
 		B22D38311F604AA300FCC371 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D38301F604AA300FCC371 /* AppDelegate.swift */; };
 		B22D38391F604AA300FCC371 /* ClickrFlickr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B22D38371F604AA300FCC371 /* ClickrFlickr.xcdatamodeld */; };
 		B22D383B1F604AA300FCC371 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B22D383A1F604AA300FCC371 /* Assets.xcassets */; };
@@ -24,7 +26,6 @@
 		B249F76F1F7A2E310036FAB7 /* FlickrOauthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249F76E1F7A2E310036FAB7 /* FlickrOauthError.swift */; };
 		B2523AA41F67B766006DFA50 /* String+HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2523AA31F67B766006DFA50 /* String+HMAC.swift */; };
 		B25AA1C91FAB1E0C0063E7AC /* NetworkServise.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25AA1C81FAB1E0C0063E7AC /* NetworkServise.swift */; };
-		B25AA1DB1FAB3A7B0063E7AC /* AuthorizedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25AA1DA1FAB3A7B0063E7AC /* AuthorizedTabBarController.swift */; };
 		B25AA1DC1FAB40420063E7AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22D383C1F604AA300FCC371 /* LaunchScreen.storyboard */; };
 		B25AA1DD1FAB404C0063E7AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22D38341F604AA300FCC371 /* Main.storyboard */; };
 		B26CF1691F697653006D7EF0 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26CF1681F697653006D7EF0 /* MainNavigationController.swift */; };
@@ -42,10 +43,12 @@
 		B216035A1FB42F7800AFA5F3 /* SearchPhotos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPhotos.swift; path = SearchPhoto/Model/SearchPhotos.swift; sourceTree = "<group>"; };
 		B21C862D1F79553B001CBC71 /* FlickrCreateRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrCreateRequest.swift; path = "Application/Network Service/FlickrCreateRequest.swift"; sourceTree = "<group>"; };
 		B21C862F1F795594001CBC71 /* FlickrGetResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrGetResponse.swift; path = "Application/Network Service/FlickrGetResponse.swift"; sourceTree = "<group>"; };
-		B21C86311F79636C001CBC71 /* FlickrUserAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrUserAuthentication.swift; path = Authorization/Controller/FlickrUserAuthentication.swift; sourceTree = "<group>"; };
+		B21C86311F79636C001CBC71 /* FlickrUserAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrUserAuthentication.swift; path = Authorization/Model/FlickrUserAuthentication.swift; sourceTree = "<group>"; };
 		B2202C0E1F7BBBCE002D33C2 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserViewController.swift; path = User/Controller/UserViewController.swift; sourceTree = "<group>"; };
 		B2240B971FA75E0100AE1602 /* SearchDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchDetailViewController.swift; path = SearchPhotoDetail/Controller/SearchDetailViewController.swift; sourceTree = "<group>"; };
 		B22AE49D1F7A67DC001D6D0C /* ErrorAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorAlertController.swift; path = "Error Handle/ErrorAlertController.swift"; sourceTree = "<group>"; };
+		B22B8B361FBC19A200A21401 /* UserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserCollectionViewCell.swift; path = User/View/UserCollectionViewCell.swift; sourceTree = "<group>"; };
+		B22B8B391FBC20E500A21401 /* GetPhotoNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPhotoNetworkService.swift; sourceTree = "<group>"; };
 		B22D382D1F604AA300FCC371 /* ClickrFlickr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClickrFlickr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22D38301F604AA300FCC371 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Application/Controller/AppDelegate.swift; sourceTree = "<group>"; };
 		B22D38351F604AA300FCC371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -59,7 +62,6 @@
 		B249F76E1F7A2E310036FAB7 /* FlickrOauthError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrOauthError.swift; path = "Error Handle/FlickrOauthError.swift"; sourceTree = "<group>"; };
 		B2523AA31F67B766006DFA50 /* String+HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HMAC.swift"; sourceTree = "<group>"; };
 		B25AA1C81FAB1E0C0063E7AC /* NetworkServise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkServise.swift; path = "Application/Network Service/NetworkServise.swift"; sourceTree = "<group>"; };
-		B25AA1DA1FAB3A7B0063E7AC /* AuthorizedTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorizedTabBarController.swift; path = Authorization/Controller/AuthorizedTabBarController.swift; sourceTree = "<group>"; };
 		B26CF1681F697653006D7EF0 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainNavigationController.swift; path = Authorization/Controller/MainNavigationController.swift; sourceTree = "<group>"; };
 		B2754A9B1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallingFlickrAPIwithOauth.swift; path = "Application/Network Service/CallingFlickrAPIwithOauth.swift"; sourceTree = "<group>"; };
 		B29A9FEE1F7276C000567FD5 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchCollectionViewCell.swift; path = SearchPhoto/View/SearchCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -86,6 +88,14 @@
 				B21603581FB42EF700AFA5F3 /* SearchNetworkService.swift */,
 			);
 			name = "Search Network Service";
+			sourceTree = "<group>";
+		};
+		B22B8B381FBC20A500A21401 /* GetPhotoNetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				B22B8B391FBC20E500A21401 /* GetPhotoNetworkService.swift */,
+			);
+			name = GetPhotoNetworkService;
 			sourceTree = "<group>";
 		};
 		B22D38241F604AA300FCC371 = {
@@ -215,6 +225,7 @@
 		B25AA1D31FAB33C90063E7AC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B21C86311F79636C001CBC71 /* FlickrUserAuthentication.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -230,9 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				B26CF1681F697653006D7EF0 /* MainNavigationController.swift */,
-				B25AA1DA1FAB3A7B0063E7AC /* AuthorizedTabBarController.swift */,
 				B29A9FF41F72869600567FD5 /* NotAuthorizedViewController.swift */,
-				B21C86311F79636C001CBC71 /* FlickrUserAuthentication.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -240,6 +249,7 @@
 		B25AA1D61FAB34560063E7AC /* User */ = {
 			isa = PBXGroup;
 			children = (
+				B22B8B381FBC20A500A21401 /* GetPhotoNetworkService */,
 				B25AA1D91FAB346B0063E7AC /* View */,
 				B25AA1D81FAB34640063E7AC /* Controller */,
 				B25AA1D71FAB345D0063E7AC /* Model */,
@@ -265,6 +275,7 @@
 		B25AA1D91FAB346B0063E7AC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B22B8B361FBC19A200A21401 /* UserCollectionViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -417,6 +428,7 @@
 				B22D38311F604AA300FCC371 /* AppDelegate.swift in Sources */,
 				B2202C0F1F7BBBCE002D33C2 /* UserViewController.swift in Sources */,
 				B249AD121F7A92FC004A7AD0 /* CustomImageView.swift in Sources */,
+				B22B8B3A1FBC20E500A21401 /* GetPhotoNetworkService.swift in Sources */,
 				B2F7EBAE1F7A860400300C74 /* FetchJSON.swift in Sources */,
 				B29A9FEF1F7276C000567FD5 /* SearchCollectionViewCell.swift in Sources */,
 				B29A9FF51F72869600567FD5 /* NotAuthorizedViewController.swift in Sources */,
@@ -432,10 +444,10 @@
 				B2C6EDBF1FA71DF700C254D5 /* Photo.swift in Sources */,
 				B2754A9C1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift in Sources */,
 				B22AE49E1F7A67DC001D6D0C /* ErrorAlertController.swift in Sources */,
-				B25AA1DB1FAB3A7B0063E7AC /* AuthorizedTabBarController.swift in Sources */,
 				B22D38391F604AA300FCC371 /* ClickrFlickr.xcdatamodeld in Sources */,
 				B21C86321F79636C001CBC71 /* FlickrUserAuthentication.swift in Sources */,
 				B216035B1FB42F7800AFA5F3 /* SearchPhotos.swift in Sources */,
+				B22B8B371FBC19A200A21401 /* UserCollectionViewCell.swift in Sources */,
 				B249F76F1F7A2E310036FAB7 /* FlickrOauthError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

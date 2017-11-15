@@ -27,7 +27,7 @@ class FlickrUserAuthentication {
     private static var oauthTokenSecret: String?
 
     private static var isAuthorized: Bool {
-        let nameObject = UserDefaults.standard.object(forKey: "fullname")
+        let nameObject = UserDefaults.standard.object(forKey: "usernsid")
         if let _ = nameObject {
             return true
         } else {
@@ -64,8 +64,7 @@ class FlickrUserAuthentication {
                 let error = ErrorAlertController()
                 error.showErrorAlertController(title: "Error! ExchangeRequestTokenForAccessToken", message: "Try again?")
             }
-
-
+            
             return true
         } else {
             return false
@@ -150,7 +149,9 @@ class FlickrUserAuthentication {
             throw FlickOauthError.RequestError
         }
         let safariView = SFSafariViewController(url: url)
+        
         UIApplication.shared.keyWindow?.rootViewController?.present(safariView, animated: true, completion: nil)
+        
     }
 
     private static func exchangeRequestTokenForAccessToken(callBackAfterUserAuthorization: String, completion: @escaping (_ token: String?, _ secretToken: String?, _ userName: String?, _ fullName: String?, _ userNsid: String?) -> ()) throws {

@@ -28,9 +28,12 @@ class SearchCollectionViewController: UICollectionViewController {
             return
         }
         textForSearch = text
-        SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) { photo in
-            self.photo = photo.searchPhoto
-            self.collectionView?.reloadData()
+        SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) {[weak self] photo in
+            
+            guard let strongSelf = self else {return}
+            
+            strongSelf.photo = photo.searchPhoto
+            strongSelf.collectionView?.reloadData()
         }
         
         tagsForSeachTextField.text = ""
@@ -63,21 +66,25 @@ class SearchCollectionViewController: UICollectionViewController {
             self.photo[indexPath.item].image = imageFromCache
             cell.configure(with: self.photo[indexPath.item])
             
+            collectionView.collectionViewLayout.invalidateLayout()
+            
             cell.spinnerActivityIndicator.stopAnimating()
             cell.spinnerActivityIndicator.isHidden = true
 
         } else {
             
-            CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { (image) in
+            CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
                 
-                self.photo[indexPath.item].width = image.size.width
-                self.photo[indexPath.item].height = image.size.height
-                self.imageCache.setObject(image, forKey: self.photo[indexPath.item].url as NSString)
+                guard let strongSelf = self else {return}
+                
+                strongSelf.photo[indexPath.item].width = image.size.width
+                strongSelf.photo[indexPath.item].height = image.size.height
+                strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
                 
                 collectionView.collectionViewLayout.invalidateLayout()
                 
-                self.photo[indexPath.item].image = image
-                cell.configure(with: self.photo[indexPath.item])
+                strongSelf.photo[indexPath.item].image = image
+                cell.configure(with: (strongSelf.photo[indexPath.item]))
                 
                 cell.spinnerActivityIndicator.stopAnimating()
                 cell.spinnerActivityIndicator.isHidden = true
@@ -136,11 +143,12 @@ extension SearchCollectionViewController: UICollectionViewDataSourcePrefetching 
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { (image) in
-                self.photo[indexPath.item].width = image.size.width
-                self.photo[indexPath.item].height = image.size.height
-                self.imageCache.setObject(image, forKey: self.photo[indexPath.item].url as NSString)
-                self.photo[indexPath.item].image = image
+            CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
+                guard let strongSelf = self else {return}
+                strongSelf.photo[indexPath.item].width = image.size.width
+                strongSelf.photo[indexPath.item].height = image.size.height
+                strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
+                strongSelf.photo[indexPath.item].image = image
             }
         }
     }
