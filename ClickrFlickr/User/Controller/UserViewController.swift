@@ -85,9 +85,6 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-//        let insets = collectionView.contentInset
-//        (collectionView?.bounds.width)! - (insets.left + insets.right)
-        
         var width = (UIScreen.main.bounds.width - (CGFloat(itemsPerRow + 1.0) * spacingItem)) / CGFloat(itemsPerRow)
         
         guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {

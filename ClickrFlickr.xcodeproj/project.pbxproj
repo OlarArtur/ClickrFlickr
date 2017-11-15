@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B20D008E1FBC84E00046004A /* InterestingnessPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20D008D1FBC84E00046004A /* InterestingnessPhotoViewController.swift */; };
+		B20D00911FBC86F60046004A /* InterestingnessPhotoNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20D00901FBC86F60046004A /* InterestingnessPhotoNetworkService.swift */; };
+		B20D00931FBC88620046004A /* InterstingnessPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20D00921FBC88620046004A /* InterstingnessPhotoCollectionViewCell.swift */; };
 		B21603591FB42EF700AFA5F3 /* SearchNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21603581FB42EF700AFA5F3 /* SearchNetworkService.swift */; };
 		B216035B1FB42F7800AFA5F3 /* SearchPhotos.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216035A1FB42F7800AFA5F3 /* SearchPhotos.swift */; };
 		B21C862E1F79553B001CBC71 /* FlickrCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21C862D1F79553B001CBC71 /* FlickrCreateRequest.swift */; };
@@ -37,6 +40,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B20D008D1FBC84E00046004A /* InterestingnessPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestingnessPhotoViewController.swift; sourceTree = "<group>"; };
+		B20D00901FBC86F60046004A /* InterestingnessPhotoNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestingnessPhotoNetworkService.swift; sourceTree = "<group>"; };
+		B20D00921FBC88620046004A /* InterstingnessPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstingnessPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		B21603581FB42EF700AFA5F3 /* SearchNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchNetworkService.swift; path = SearchPhoto/SearchNetworkService/SearchNetworkService.swift; sourceTree = "<group>"; };
 		B216035A1FB42F7800AFA5F3 /* SearchPhotos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPhotos.swift; path = SearchPhoto/Model/SearchPhotos.swift; sourceTree = "<group>"; };
 		B21C862D1F79553B001CBC71 /* FlickrCreateRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrCreateRequest.swift; path = "Application/Network Service/FlickrCreateRequest.swift"; sourceTree = "<group>"; };
@@ -80,6 +86,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B20D00891FBC843E0046004A /* InterestingnessPhoto */ = {
+			isa = PBXGroup;
+			children = (
+				B20D008F1FBC86B60046004A /* InterstingnessPhotoNetworkService */,
+				B20D008C1FBC845B0046004A /* Controller */,
+				B20D008B1FBC84550046004A /* View */,
+				B20D008A1FBC844E0046004A /* Model */,
+			);
+			path = InterestingnessPhoto;
+			sourceTree = "<group>";
+		};
+		B20D008A1FBC844E0046004A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B20D008B1FBC84550046004A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B20D00921FBC88620046004A /* InterstingnessPhotoCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B20D008C1FBC845B0046004A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B20D008D1FBC84E00046004A /* InterestingnessPhotoViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		B20D008F1FBC86B60046004A /* InterstingnessPhotoNetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				B20D00901FBC86F60046004A /* InterestingnessPhotoNetworkService.swift */,
+			);
+			path = InterstingnessPhotoNetworkService;
+			sourceTree = "<group>";
+		};
 		B21603571FB42EAE00AFA5F3 /* Search Network Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +150,7 @@
 				B22D382F1F604AA300FCC371 /* ClickrFlickr */,
 				B22D38341F604AA300FCC371 /* Main.storyboard */,
 				B22D383C1F604AA300FCC371 /* LaunchScreen.storyboard */,
+				B22D38371F604AA300FCC371 /* ClickrFlickr.xcdatamodeld */,
 				B22D382E1F604AA300FCC371 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -118,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				B2A27F031FAB0C5C00EE7A97 /* Application */,
+				B20D00891FBC843E0046004A /* InterestingnessPhoto */,
 				B25AA1D61FAB34560063E7AC /* User */,
 				B25AA1D21FAB33BE0063E7AC /* Authorization */,
 				B25AA1CA1FAB32880063E7AC /* SearchPhoto */,
@@ -126,7 +176,6 @@
 				B2D33E791F7BD927000FC8EB /* Helpers */,
 				B2D33E7E1F7BDA0A000FC8EB /* Encrypt */,
 				B2A27F021FAB0C1400EE7A97 /* Supporting Files */,
-				B22D38371F604AA300FCC371 /* ClickrFlickr.xcdatamodeld */,
 			);
 			path = ClickrFlickr;
 			sourceTree = "<group>";
@@ -441,10 +490,13 @@
 				B2754A9C1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift in Sources */,
 				B22AE49E1F7A67DC001D6D0C /* ErrorAlertController.swift in Sources */,
 				B22D38391F604AA300FCC371 /* ClickrFlickr.xcdatamodeld in Sources */,
+				B20D008E1FBC84E00046004A /* InterestingnessPhotoViewController.swift in Sources */,
 				B21C86321F79636C001CBC71 /* FlickrUserAuthentication.swift in Sources */,
 				B216035B1FB42F7800AFA5F3 /* SearchPhotos.swift in Sources */,
 				B22B8B371FBC19A200A21401 /* UserCollectionViewCell.swift in Sources */,
+				B20D00931FBC88620046004A /* InterstingnessPhotoCollectionViewCell.swift in Sources */,
 				B249F76F1F7A2E310036FAB7 /* FlickrOauthError.swift in Sources */,
+				B20D00911FBC86F60046004A /* InterestingnessPhotoNetworkService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,7 +642,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ClickrFlickr/Supporting Files/ClickrFlickr-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -605,7 +657,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = epam.com.ClickrFlickr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ClickrFlickr/Supporting Files/ClickrFlickr-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

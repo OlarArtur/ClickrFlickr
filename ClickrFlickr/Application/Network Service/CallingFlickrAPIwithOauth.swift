@@ -53,13 +53,8 @@ class CallingFlickrAPIwithOauth {
         return urlRequest
     }
     
-//    class func methodPhotosGetSizes(oauthPhotoId: String) -> String? {
-//        let urlRequest = getResponseApi(neededParameters: NeededParametersForRequest.callingFlickrMethodPhotosGetSizes, oauthText: nil, oauthPhotoId: oauthPhotoId)
-//        return urlRequest
-//    }
-    
-    class func methodPhotosGetPopular() -> String? {
-        let urlRequest = getResponseApi(neededParameters: NeededParametersForRequest.callingFlickrMethodPhotosGetPopular, oauthText: nil, oauthUserId: nil)
+    class func methodInterestingnessGetList() -> String? {
+        let urlRequest = getResponseApi(neededParameters: NeededParametersForRequest.callingFlickrMethodInterestingnessGetList, oauthText: nil, oauthUserId: nil)
         return urlRequest
     }
     
@@ -78,8 +73,7 @@ class CallingFlickrAPIwithOauth {
                           ParametersConstants.oauthSignatureMethod: Constants.signatureMethod,
                           ParametersConstants.oauthVersion: Constants.version,
                           ParametersConstants.oauthFormat: Constants.format,
-                          ParametersConstants.oauthMethod: Constants.methodPhotosGetPopular,
-                          ParametersConstants.oauthSort: Constants.sort,
+                          ParametersConstants.oauthMethod: Constants.methodInterestingnessGetList,
                           ParametersConstants.oauthNoJsonCallback: Constants.noJsonCallback]
         
         if let oauthConsumerKey = CallingFlickrAPIwithOauth.apiKey {
@@ -97,17 +91,13 @@ class CallingFlickrAPIwithOauth {
         if let oauthText = oauthText {
             dictionary[ParametersConstants.oauthText] = oauthText
             dictionary[ParametersConstants.oauthMethod] = Constants.methodPhotosSearch
+            dictionary[ParametersConstants.oauthSort] = Constants.sort
         }
         
         if let oauthUserId = oauthUserId {
             dictionary[ParametersConstants.oauthUserId] = oauthUserId
             dictionary[ParametersConstants.oauthMethod] = Constants.methodPeopleGetPhotos
         }
-//        if let oauthPhotoId = oauthPhotoId {
-//            dictionary[ParametersConstants.oauthPhotoId] = oauthPhotoId
-//            dictionary[ParametersConstants.oauthMethod] = Constants.methodPhotosGetSizes
-//        }
-        
         return dictionary
     }
 
