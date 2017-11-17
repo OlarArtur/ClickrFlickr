@@ -32,6 +32,7 @@ class SearchCollectionViewController: UICollectionViewController {
     
     func createSearchBar() {
         let searchBar: UISearchBar = UISearchBar()
+        searchBar.searchBarStyle = .default
         searchBar.placeholder = "Search Photos"
         searchBar.delegate = self
         self.navigationItem.titleView = searchBar
@@ -84,6 +85,12 @@ class SearchCollectionViewController: UICollectionViewController {
             if let cell = sender as? UICollectionViewCell, let indexPath = self.collectionView?.indexPath(for: cell) {
                 let detailVC = segue.destination as! SearchDetailViewController
                 detailVC.photo = self.photo[indexPath.item]
+                DispatchQueue.global().async {
+                    UserInfoNetworkservice.getUserInfo(for: self.photo[indexPath.item].owner) { user in
+                        detailVC.user = user
+                        detailVC.configUserInfo()
+                    }
+                }
             }
         }
     }

@@ -19,13 +19,13 @@ class CallingFlickrAPIwithOauth {
         self.apiSecretKey = apiSecretKey
     }
 
-    private class func getResponseApi(neededParameters: [String], oauthText: String?, oauthUserId: String?) -> String? {
+    private class func getResponseApi(neededParameters: [String], oauthText: String?, oauthUserId: String?, isUserIdForPhoto: Bool?) -> String? {
 
         var neededParameters = neededParameters
         
         let flickrCreateRequest = FlickrCreateRequest()
 
-        var oauthParameters = flickrCreateRequest.getOauthParametersByNeededParameters(oauthParam: authParameters(oauthSignature: nil, oauthText: oauthText, oauthUserId: oauthUserId), neededParam: neededParameters)
+        var oauthParameters = flickrCreateRequest.getOauthParametersByNeededParameters(oauthParam: authParameters(oauthSignature: nil, oauthText: oauthText, oauthUserId: oauthUserId, isUserIdForPhoto: isUserIdForPhoto), neededParam: neededParameters)
         let baseString = flickrCreateRequest.concatenateBaseUrlString(urlString: Constants.apiRequestUrl, parameters: oauthParameters)
 
         guard let baseStringCurrent = baseString else {
@@ -40,7 +40,7 @@ class CallingFlickrAPIwithOauth {
             let oauthSignature = flickrCreateRequest.getSignatureFromStringWithEncodedCharact(string: baseStringCurrent, apiSecretKey: apiSecretKey, tokenSecret: tokenSecret)
 
         neededParameters = [ParametersConstants.oauthSignature]
-        oauthParameters = oauthParameters + flickrCreateRequest.getOauthParametersByNeededParameters(oauthParam: authParameters(oauthSignature: oauthSignature, oauthText: oauthText, oauthUserId: oauthUserId), neededParam: neededParameters)
+        oauthParameters = oauthParameters + flickrCreateRequest.getOauthParametersByNeededParameters(oauthParam: authParameters(oauthSignature: oauthSignature, oauthText: oauthText, oauthUserId: oauthUserId, isUserIdForPhoto: isUserIdForPhoto), neededParam: neededParameters)
 
         let urlRequest = flickrCreateRequest.concatenateRequestUrlString(urlString: Constants.apiRequestUrl, parameters: oauthParameters)
         
@@ -49,21 +49,26 @@ class CallingFlickrAPIwithOauth {
     }
     
     class func methodPhotosSearch(oauthText: String) -> String? {
-        let urlRequest = getResponseApi(neededParameters: NeededParametersForRequest.callingFlickrMethodPhotosSearch, oauthText: oauthText, oauthUserId: nil)
+        let urlRequest = getResponseApi(neededParameters: NeededParametersForRequest.callingFlickrMethodPhotosSearch, oauthText: oauthText, oauthUserId: nil, isUserIdForPhoto: nil)
         return urlRequest
     }
     
     class func methodInterestingnessGetList() -> String? {
-        let urlRequest = getResponseApi(neededParameters: NeededParametersForRequest.callingFlickrMethodInterestingnessGetList, oauthText: nil, oauthUserId: nil)
+        let urlRequest = getResponseApi(neededParameters: NeededParametersForRequest.callingFlickrMethodInterestingnessGetList, oauthText: nil, oauthUserId: nil, isUserIdForPhoto: nil)
         return urlRequest
     }
     
     class func methodPeopleGetPhoto(userId: String) -> String? {
-        let urlRequest = getResponseApi(neededParameters: NeededParametersForRequest.callingFlickrMethodPeopleGetPhotos, oauthText: nil, oauthUserId: userId)
+        let urlRequest = getResponseApi(neededParameters: NeededParametersForRequest.callingFlickrMethodPeopleGetPhotos, oauthText: nil, oauthUserId: userId, isUserIdForPhoto: true)
         return urlRequest
     }
     
-    private class func authParameters(oauthSignature : String?, oauthText: String?, oauthUserId: String? /*oauthPhotoId: String?*/) -> [String: String] {
+    class func methodPeopleGetInfo(userId: String) -> String? {
+        let urlRequest = getResponseApi(neededParameters: NeededParametersForRequest.callingFlickrMethodPeopleGetInfo, oauthText: nil, oauthUserId: userId, isUserIdForPhoto: false)
+        return urlRequest
+    }
+    
+    private class func authParameters(oauthSignature : String?, oauthText: String?, oauthUserId: String?, isUserIdForPhoto: Bool?) -> [String: String] {
         
         let oauthNonce: String = String(arc4random_uniform(99999999) + 10000000)
         let oauthTimestamp: String = String(Int(Date().timeIntervalSince1970))
@@ -93,10 +98,16 @@ class CallingFlickrAPIwithOauth {
             dictionary[ParametersConstants.oauthMethod] = Constants.methodPhotosSearch
             dictionary[ParametersConstants.oauthSort] = Constants.sort
         }
+        guard let isIdForPhoto = isUserIdForPhoto else {return dictionary}
         
         if let oauthUserId = oauthUserId {
-            dictionary[ParametersConstants.oauthUserId] = oauthUserId
-            dictionary[ParametersConstants.oauthMethod] = Constants.methodPeopleGetPhotos
+            if isIdForPhoto {
+                dictionary[ParametersConstants.oauthUserId] = oauthUserId
+                dictionary[ParametersConstants.oauthMethod] = Constants.methodPeopleGetPhotos
+            } else {
+                dictionary[ParametersConstants.oauthUserId] = oauthUserId
+                dictionary[ParametersConstants.oauthMethod] = Constants.methodPeopleGetInfo
+            }
         }
         return dictionary
     }

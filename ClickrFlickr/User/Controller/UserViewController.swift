@@ -11,19 +11,22 @@ import SafariServices
 
 class UserViewController: UIViewController, SFSafariViewControllerDelegate {
 
-    @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var userInfo: UserInfo!
     
     let itemsPerRow: CGFloat = 2
     let spacingItem: CGFloat = 5
     var photo = [Photo]()
+    var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let nameObject = UserDefaults.standard.object(forKey: "fullname")
-        if let name = nameObject as? String {
-            userNameLabel.text = name.removingPercentEncoding
+        let userNameObject = UserDefaults.standard.object(forKey: "username")
+        let fullNameObject = UserDefaults.standard.object(forKey: "fullname")
+        if let fullName = fullNameObject as? String, let userName = userNameObject as? String {
+            userInfo.fullNameLabel.text = fullName.removingPercentEncoding
+            userInfo.userNameLabel.text = userName
+            userInfo.photoCountLabel.text = ""
         }
         
         let userId = UserDefaults.standard.object(forKey: "usernsid")
@@ -33,11 +36,36 @@ class UserViewController: UIViewController, SFSafariViewControllerDelegate {
                 strongSelf.photo = photo.searchPhoto
                 strongSelf.collectionView?.reloadData()
             }
+            DispatchQueue.global().async {
+                UserInfoNetworkservice.getUserInfo(for: userId) { [weak self] user in
+                    guard let strongSelf = self else {return}
+                    strongSelf.user = user
+                    strongSelf.configUserInfo()
+                }
+            }
         }
         
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logOutPressed))
         self.navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    }
+    
+    func configUserInfo() {
+        guard let user = user else {return}
+        DispatchQueue.main.async {
+            self.userInfo.fullNameLabel.text = user.realName
+            self.userInfo.userNameLabel.text = user.userName
+            self.userInfo.photoCountLabel.text = "\(user.photoCount) photos"
+        }
+        
+        CustomImageView.loadImageUsingUrlString(urlString: user.urlAvatar) { [weak self] image in
+            guard let strongSelf = self else {return}
+            DispatchQueue.main.async {
+                strongSelf.userInfo.avatarImageView.image = image
+                strongSelf.userInfo.avatarImageView.layer.cornerRadius = 10
+                strongSelf.userInfo.avatarImageView.clipsToBounds = true
+            }
+        }
     }
     
     @objc func logOutPressed() {

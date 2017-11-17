@@ -16,7 +16,7 @@ class ErrorAlertController: UIAlertController{
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let alertTryAgain = UIAlertAction(title: "Try again", style: .default, handler: nil)
         alert.addAction(alertTryAgain)
-        present(alert, animated: true, completion: nil)
+        presentingViewController?.present(alert, animated: true, completion: nil)
     }
     
 }

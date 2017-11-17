@@ -23,6 +23,7 @@ struct Constants {
     static let methodPhotosSearch = "flickr.photos.search"
     static let methodPhotosGetPopular = "flickr.photos.getPopular"
     static let methodPeopleGetPhotos = "flickr.people.getPhotos"
+    static let methodPeopleGetInfo = "flickr.people.getInfo"
     static let methodInterestingnessGetList = "flickr.interestingness.getList"
     static let sort = "interestingness-desc"
 }
@@ -31,7 +32,6 @@ struct Constants {
 struct ParametersConstants {
     static let oauthSort: String = "sort"
     static let oauthText: String = "text"
-    static let oauthPhotoId: String = "photo_id"
     static let oauthUserId: String = "user_id"
     static let oauthMethod: String = "method"
     static let oauthFormat: String = "format"
@@ -68,6 +68,10 @@ struct NeededParametersForRequest {
     }
     
     static var callingFlickrMethodPeopleGetPhotos: [String] {
+        return callingFlickrMethod + [ParametersConstants.oauthUserId]
+    }
+    
+    static var callingFlickrMethodPeopleGetInfo: [String] {
         return callingFlickrMethod + [ParametersConstants.oauthUserId]
     }
     
