@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -98,7 +99,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="tjh-qn-4J5">
                                 <rect key="frame" x="0.0" y="90" width="375" height="464"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZXq-Va-uWT">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZXq-Va-uWT">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -162,38 +163,38 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ou4-pK-CtW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3469.5999999999999" y="36.431784107946029"/>
+            <point key="canvasLocation" x="3633" y="36"/>
         </scene>
         <!--Search Collection View Controller-->
         <scene sceneID="GwV-aD-i4g">
             <objects>
                 <collectionViewController extendedLayoutIncludesOpaqueBars="YES" id="c0d-Rf-fo1" customClass="SearchCollectionViewController" customModule="ClickrFlickr" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="56h-Pw-G9w">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" dataMode="prototypes" id="56h-Pw-G9w">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Zks-mx-GW8">
-                            <size key="itemSize" width="323" height="281"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vsD-QS-P71">
+                            <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="2B2-5y-ZLQ" customClass="SearchCollectionViewCell" customModule="ClickrFlickr" customModuleProvider="target">
-                                <rect key="frame" x="26" y="0.0" width="323" height="281"/>
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="323" height="281"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iFp-rc-9Ns">
-                                            <rect key="frame" x="0.0" y="0.0" width="323" height="281"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         </imageView>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hF4-sY-ICk">
-                                            <rect key="frame" x="151.5" y="130.5" width="20" height="20"/>
+                                            <rect key="frame" x="15" y="15" width="20" height="20"/>
                                         </activityIndicatorView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vvvv" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="90S-S9-TlX">
-                                            <rect key="frame" x="0.0" y="266.5" width="323" height="14.5"/>
+                                            <rect key="frame" x="0.0" y="35.5" width="50" height="14.5"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.22213358274647887" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -223,6 +224,7 @@
                         <connections>
                             <outlet property="dataSource" destination="c0d-Rf-fo1" id="eJT-7q-fFr"/>
                             <outlet property="delegate" destination="c0d-Rf-fo1" id="Oij-rG-PQn"/>
+                            <outlet property="prefetchDataSource" destination="c0d-Rf-fo1" id="Wje-em-mAd"/>
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="txJ-b5-A3t"/>
@@ -244,8 +246,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6u2-XU-vSe">
-                                <rect key="frame" x="0.0" y="90" width="375" height="464"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="90" width="375" height="267"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="6u2-XU-vSe" secondAttribute="height" multiplier="125:89" id="hJb-uJ-rmI"/>
+                                </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cuh-Mu-mye" customClass="UserInfo" customModule="ClickrFlickr" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
@@ -257,13 +261,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="6u2-XU-vSe" secondAttribute="trailing" id="8gD-5M-1h6"/>
                             <constraint firstItem="Cuh-Mu-mye" firstAttribute="trailing" secondItem="DLe-iN-qZp" secondAttribute="trailingMargin" constant="16" id="EWD-TG-RIE"/>
-                            <constraint firstItem="MnX-OV-onn" firstAttribute="top" secondItem="6u2-XU-vSe" secondAttribute="bottom" id="Ksb-GY-8fM"/>
+                            <constraint firstItem="6u2-XU-vSe" firstAttribute="top" secondItem="Cuh-Mu-mye" secondAttribute="bottom" id="TCn-0X-yzP"/>
+                            <constraint firstItem="6u2-XU-vSe" firstAttribute="centerX" secondItem="DLe-iN-qZp" secondAttribute="centerX" id="Zrr-Lv-o9w"/>
                             <constraint firstItem="Cuh-Mu-mye" firstAttribute="top" secondItem="aUH-Ed-RL5" secondAttribute="bottom" id="b3x-W5-6Y1"/>
-                            <constraint firstItem="6u2-XU-vSe" firstAttribute="leading" secondItem="DLe-iN-qZp" secondAttribute="leading" id="evw-6z-oFr"/>
-                            <constraint firstItem="6u2-XU-vSe" firstAttribute="top" secondItem="Cuh-Mu-mye" secondAttribute="bottom" id="u1G-6J-ojQ"/>
                             <constraint firstItem="Cuh-Mu-mye" firstAttribute="leading" secondItem="DLe-iN-qZp" secondAttribute="leadingMargin" constant="-16" id="vTa-cH-ALK"/>
+                            <constraint firstItem="6u2-XU-vSe" firstAttribute="width" secondItem="DLe-iN-qZp" secondAttribute="width" id="z5e-Tq-7AX"/>
                         </constraints>
                     </view>
                     <connections>
@@ -352,7 +355,7 @@
             </objects>
             <point key="canvasLocation" x="1726" y="1545"/>
         </scene>
-        <!--Home-->
+        <!--Most Popular-->
         <scene sceneID="3bU-7o-o3l">
             <objects>
                 <viewController id="hAH-Um-JvC" customClass="InterestingnessPhotoViewController" customModule="ClickrFlickr" customModuleProvider="target" sceneMemberID="viewController">
@@ -412,7 +415,7 @@
                             <constraint firstItem="AOs-uu-6ED" firstAttribute="leading" secondItem="Tbz-3x-hJQ" secondAttribute="leadingMargin" constant="-16" id="gV6-a4-5GC"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="DJo-ou-qSg"/>
+                    <navigationItem key="navigationItem" title="Most Popular" id="DJo-ou-qSg"/>
                     <connections>
                         <outlet property="collectionView" destination="AOs-uu-6ED" id="PfN-yE-t7f"/>
                     </connections>

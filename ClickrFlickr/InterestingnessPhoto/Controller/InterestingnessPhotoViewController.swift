@@ -15,8 +15,7 @@ class InterestingnessPhotoViewController: UIViewController {
     var photo = [Photo]()
     let imageCache = NSCache<NSString, UIImage>()
     
-    let itemsPerRow: CGFloat = 2
-    let spacingItem: CGFloat = 5
+    let spacingItem: CGFloat = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +70,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        var width = (UIScreen.main.bounds.width - (CGFloat(itemsPerRow + 1.0) * spacingItem)) / CGFloat(itemsPerRow)
+        var width = (UIScreen.main.bounds.width - (2 * spacingItem))
         
         guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
             let height = width
@@ -83,11 +82,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
         }
         
         let squareInd = imageHeight/imageWidth
-        
-        if imageWidth > UIScreen.main.bounds.width {
-            width = (UIScreen.main.bounds.width - (2 * spacingItem))
-        }
-        
         let height = width * squareInd
         
         return CGSize(width: width, height: height)
@@ -111,12 +105,16 @@ extension InterestingnessPhotoViewController: UICollectionViewDataSourcePrefetch
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
-                guard let strongSelf = self else {return}
-                strongSelf.photo[indexPath.item].width = image.size.width
-                strongSelf.photo[indexPath.item].height = image.size.height
-                strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
-                strongSelf.photo[indexPath.item].image = image
+            if let imageFromCache = self.imageCache.object(forKey: self.photo[indexPath.item].url as NSString) {
+                self.photo[indexPath.item].image = imageFromCache
+            } else {
+                CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
+                    guard let strongSelf = self else {return}
+                    strongSelf.photo[indexPath.item].width = image.size.width
+                    strongSelf.photo[indexPath.item].height = image.size.height
+                    strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
+                    strongSelf.photo[indexPath.item].image = image
+                }
             }
         }
     }

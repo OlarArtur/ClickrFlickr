@@ -14,12 +14,17 @@ class SearchCollectionViewController: UICollectionViewController {
     var textForSearch: String = ""
     var photo = [Photo]()
     let imageCache = NSCache<NSString, UIImage>()
+    let layout = WaterfallLayout()
     
     let itemsPerRow: CGFloat = 2
-    let spacingItem: CGFloat = 5
+    let spacingItem: CGFloat = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let layout = WaterfallLayout()
+//        collectionView?.collectionViewLayout = layout
+//        layout.delegate = self
         
         createSearchBar()
         
@@ -68,10 +73,12 @@ class SearchCollectionViewController: UICollectionViewController {
                 strongSelf.photo[indexPath.item].height = image.size.height
                 strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
                 
-                collectionView.collectionViewLayout.invalidateLayout()
-                
                 strongSelf.photo[indexPath.item].image = image
                 cell.configure(with: (strongSelf.photo[indexPath.item]))
+                
+//                strongSelf.layout.delegate = self
+//                collectionView.setCollectionViewLayout(strongSelf.layout, animated: false)
+                collectionView.collectionViewLayout.invalidateLayout()
                 
                 cell.spinnerActivityIndicator.stopAnimating()
                 cell.spinnerActivityIndicator.isHidden = true
@@ -98,55 +105,54 @@ class SearchCollectionViewController: UICollectionViewController {
 }
 
 extension SearchCollectionViewController: UICollectionViewDelegateFlowLayout {
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        var width = (UIScreen.main.bounds.width - (CGFloat(itemsPerRow + 1.0) * spacingItem)) / CGFloat(itemsPerRow)
-        
+
+        var width = (UIScreen.main.bounds.width - (2 * spacingItem))
+
         guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
             let height = width
             return CGSize(width: width, height: height)
         }
-        
+
         if imageWidth < width {
             width = imageWidth
         }
-        
+
         let squareInd = imageHeight/imageWidth
-        
-        if imageWidth > UIScreen.main.bounds.width {
-            width = (UIScreen.main.bounds.width - (2 * spacingItem))
-        }
-        
         let height = width * squareInd
-        
+
         return CGSize(width: width, height: height)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return spacingItem
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: spacingItem, left: spacingItem, bottom: spacingItem, right: spacingItem)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return spacingItem
     }
-    
+
 }
 
 extension SearchCollectionViewController: UICollectionViewDataSourcePrefetching {
-
+    
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
-                guard let strongSelf = self else {return}
-                strongSelf.photo[indexPath.item].width = image.size.width
-                strongSelf.photo[indexPath.item].height = image.size.height
-                strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
-                strongSelf.photo[indexPath.item].image = image
+            if let imageFromCache = self.imageCache.object(forKey: self.photo[indexPath.item].url as NSString) {
+                self.photo[indexPath.item].image = imageFromCache
+            } else {
+                CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
+                    guard let strongSelf = self else {return}
+                    strongSelf.photo[indexPath.item].width = image.size.width
+                    strongSelf.photo[indexPath.item].height = image.size.height
+                    strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
+                    strongSelf.photo[indexPath.item].image = image
+                }
             }
         }
     }
@@ -171,6 +177,14 @@ extension SearchCollectionViewController: UISearchBarDelegate {
         searchBar.text = ""
     }
     
+}
+
+extension SearchCollectionViewController: WaterfallLayoutDelegate {
+    func collectionView(collectionView: UICollectionView, heightForPhotoAt indexPath: IndexPath, with width: CGFloat) -> CGFloat? {
+//        let height: CGFloat = photo[indexPath.item].height!
+//            / photo[indexPath.item].height!
+        return 100
+    }
 }
 
 

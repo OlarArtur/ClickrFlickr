@@ -44,8 +44,6 @@ class SearchDetailViewController: UIViewController {
             guard let strongSelf = self else {return}
             DispatchQueue.main.async {
                 strongSelf.userInfo.avatarImageView.image = image
-                strongSelf.userInfo.avatarImageView.layer.cornerRadius = 10
-                strongSelf.userInfo.avatarImageView.clipsToBounds = true
             }
         }
     }

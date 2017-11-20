@@ -20,10 +20,7 @@ class CustomImageView {
         NetworkServise.shared.getData(url: url) { (data) in
             
             DispatchQueue.main.async {
-                guard let image = UIImage(data: data) else {
-                    completion(UIImage(named: "flickr.png")!)
-                    return
-                }
+                guard let image = UIImage(data: data) else {return}
                 completion(image)
             }
         }
