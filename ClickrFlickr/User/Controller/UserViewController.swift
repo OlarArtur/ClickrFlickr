@@ -51,7 +51,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         userInfo.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         userInfo.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         userInfo.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        userInfo.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        userInfo.heightAnchor.constraint(equalToConstant: 70).isActive = true
         userInfo.view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
         

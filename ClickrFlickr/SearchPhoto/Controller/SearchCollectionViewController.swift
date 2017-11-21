@@ -80,6 +80,8 @@ class SearchCollectionViewController: UICollectionViewController {
                 
 //                strongSelf.layout.delegate = self
 //                collectionView.setCollectionViewLayout(strongSelf.layout, animated: false)
+//                strongSelf.layout.prepare()
+                
                 collectionView.collectionViewLayout.invalidateLayout()
                 
                 cell.spinnerActivityIndicator.stopAnimating()
@@ -181,13 +183,13 @@ extension SearchCollectionViewController: UISearchBarDelegate {
     
 }
 
-extension SearchCollectionViewController: WaterfallLayoutDelegate {
-    func collectionView(collectionView: UICollectionView, heightForPhotoAt indexPath: IndexPath, with width: CGFloat) -> CGFloat? {
-//        let height: CGFloat = photo[indexPath.item].height!
-//            / photo[indexPath.item].height!
-        return 100
-    }
-}
+//extension SearchCollectionViewController: WaterfallLayoutDelegate {
+//    func collectionView(collectionView: UICollectionView, heightForPhotoAt indexPath: IndexPath, with width: CGFloat) -> CGFloat? {
+////        let height: CGFloat = photo[indexPath.item].height!
+////            / photo[indexPath.item].height!
+//        return 100
+//    }
+//}
 
 
 

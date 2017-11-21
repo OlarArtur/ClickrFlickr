@@ -97,7 +97,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vsD-QS-P71">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="MRU-rC-Hne">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -170,26 +170,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6u2-XU-vSe">
-                                <rect key="frame" x="0.0" y="100" width="375" height="267"/>
+                                <rect key="frame" x="0.0" y="70" width="375" height="267"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="6u2-XU-vSe" secondAttribute="height" multiplier="125:89" id="hJb-uJ-rmI"/>
+                                    <constraint firstAttribute="width" secondItem="6u2-XU-vSe" secondAttribute="height" multiplier="125:89" id="Ana-Fo-RVc"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cuh-Mu-mye" customClass="UserInfo" customModule="ClickrFlickr" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="tTT-AL-AQS"/>
+                                    <constraint firstAttribute="height" constant="70" id="h6w-0z-wkw"/>
                                 </constraints>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Cuh-Mu-mye" firstAttribute="trailing" secondItem="DLe-iN-qZp" secondAttribute="trailingMargin" constant="16" id="EWD-TG-RIE"/>
-                            <constraint firstItem="6u2-XU-vSe" firstAttribute="top" secondItem="Cuh-Mu-mye" secondAttribute="bottom" id="TCn-0X-yzP"/>
+                            <constraint firstItem="6u2-XU-vSe" firstAttribute="leading" secondItem="DLe-iN-qZp" secondAttribute="leading" id="N3g-Sv-1QY"/>
                             <constraint firstItem="6u2-XU-vSe" firstAttribute="centerX" secondItem="DLe-iN-qZp" secondAttribute="centerX" id="Zrr-Lv-o9w"/>
                             <constraint firstItem="Cuh-Mu-mye" firstAttribute="top" secondItem="aUH-Ed-RL5" secondAttribute="bottom" id="b3x-W5-6Y1"/>
+                            <constraint firstItem="6u2-XU-vSe" firstAttribute="top" secondItem="Cuh-Mu-mye" secondAttribute="bottom" id="dVe-hL-MGs"/>
+                            <constraint firstAttribute="trailing" secondItem="6u2-XU-vSe" secondAttribute="trailing" id="mVr-fd-eM2"/>
                             <constraint firstItem="Cuh-Mu-mye" firstAttribute="leading" secondItem="DLe-iN-qZp" secondAttribute="leadingMargin" constant="-16" id="vTa-cH-ALK"/>
-                            <constraint firstItem="6u2-XU-vSe" firstAttribute="width" secondItem="DLe-iN-qZp" secondAttribute="width" id="z5e-Tq-7AX"/>
                         </constraints>
                     </view>
                     <connections>
