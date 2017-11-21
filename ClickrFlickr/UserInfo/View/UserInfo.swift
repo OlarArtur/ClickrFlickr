@@ -75,7 +75,7 @@ import UIKit
     
     func setup() {
         view = loadFromNib()
-        avatarImageView.layer.cornerRadius = 35
+        avatarImageView.layer.cornerRadius = 40
         avatarImageView.layer.masksToBounds = true
         view.frame = bounds
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]

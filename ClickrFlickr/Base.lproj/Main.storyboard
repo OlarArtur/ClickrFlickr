@@ -170,16 +170,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6u2-XU-vSe">
-                                <rect key="frame" x="0.0" y="90" width="375" height="267"/>
+                                <rect key="frame" x="0.0" y="100" width="375" height="267"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="6u2-XU-vSe" secondAttribute="height" multiplier="125:89" id="hJb-uJ-rmI"/>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cuh-Mu-mye" customClass="UserInfo" customModule="ClickrFlickr" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="tTT-AL-AQS"/>
+                                    <constraint firstAttribute="height" constant="100" id="tTT-AL-AQS"/>
                                 </constraints>
                             </view>
                         </subviews>
