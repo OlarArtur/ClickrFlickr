@@ -10,8 +10,36 @@ import UIKit
 
 class UserCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var titlePhoto: UILabel!
-    @IBOutlet weak var photo: UIImageView!
+    var titlePhoto: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+    
+    var photo: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFit
+        return image
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addViews()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func addViews() {
+        addSubview(titlePhoto)
+        
+        addSubview(photo)
+        photo.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        photo.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        photo.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        photo.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+    }
     
     func configure(with photo: Photo) {
         self.photo.image = photo.image

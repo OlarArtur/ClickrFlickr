@@ -20,6 +20,8 @@ class InterestingnessPhotoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        collectionView?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
         InterestingnessPhotoNetworkservice.getJsonForSearchPhoto() {[weak self] photo in
             guard let strongSelf = self else {return}
             strongSelf.photo = photo.searchPhoto
