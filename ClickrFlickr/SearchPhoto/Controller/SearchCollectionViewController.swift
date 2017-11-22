@@ -76,7 +76,9 @@ class SearchCollectionViewController: UICollectionViewController {
                 strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
                 
                 strongSelf.photo[indexPath.item].image = image
-                cell.configure(with: (strongSelf.photo[indexPath.item]))
+                if let cell = collectionView.cellForItem(at: indexPath) as? SearchCollectionViewCell {
+                    cell.configure(with: (strongSelf.photo[indexPath.item]))
+                }
                 
 //                strongSelf.layout.delegate = self
 //                collectionView.setCollectionViewLayout(strongSelf.layout, animated: false)

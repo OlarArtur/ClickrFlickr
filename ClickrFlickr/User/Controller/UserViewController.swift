@@ -52,8 +52,6 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         userInfo.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         userInfo.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         userInfo.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        userInfo.view.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        
         
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -159,10 +157,16 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
             strongSelf.photo[indexPath.item].height = image.size.height
             collectionView.collectionViewLayout.invalidateLayout()
             strongSelf.photo[indexPath.item].image = image
-            cell.configure(with: (strongSelf.photo[indexPath.item]))
+            if let cell = collectionView.cellForItem(at: indexPath) as? UserCollectionViewCell {
+                cell.configure(with: (strongSelf.photo[indexPath.item]))
+            }
         }
         cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
         return cell
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
 }

@@ -60,8 +60,9 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
                 collectionView.collectionViewLayout.invalidateLayout()
                 
                 strongSelf.photo[indexPath.item].image = image
-                cell.configure(with: (strongSelf.photo[indexPath.item]))
-
+                if let cell = collectionView.cellForItem(at: indexPath) as? InterstingnessPhotoCollectionViewCell {
+                    cell.configure(with: (strongSelf.photo[indexPath.item]))
+                }
             }
         }
         return cell

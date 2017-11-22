@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SpriteKit
 
 
 class NotAuthorizedViewController: UIViewController {
@@ -27,10 +28,28 @@ class NotAuthorizedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         clickrFlickrLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         pleaseAuthorizeLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         authorizeButton.layer.cornerRadius = 15
+        animateBackground()
+    }
+    
+    func animateBackground() {
+        
+        let backgroundView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 2053, height: 1460))
+        backgroundView.layer.zPosition = -20
+        backgroundView.image = UIImage(named: "background.jpg")
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.alpha = 0.95
+        blurEffectView.frame = backgroundView.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        backgroundView.addSubview(blurEffectView)
+        view.addSubview(backgroundView)
+        
+        UIView.animate(withDuration: 100.0, delay: 0, options: [.curveLinear, .repeat, .autoreverse], animations: {
+            backgroundView.frame.origin.x = -(backgroundView.frame.width - self.view.frame.width)
+        }, completion: nil)
     }
     
 }
