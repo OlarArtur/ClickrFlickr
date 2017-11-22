@@ -114,7 +114,7 @@ extension SearchCollectionViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        var width = (UIScreen.main.bounds.width - (2 * spacingItem))
+        var width = (collectionView.bounds.size.width - (2 * spacingItem))
 
         guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
             let height = width

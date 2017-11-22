@@ -73,7 +73,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        var width = (UIScreen.main.bounds.width - (2 * spacingItem))
+        var width = (collectionView.bounds.size.width - (2 * spacingItem))
         
         guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
             let height = width
@@ -93,11 +93,11 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return spacingItem
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: spacingItem, left: spacingItem, bottom: spacingItem, right: spacingItem)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return spacingItem
     }

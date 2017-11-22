@@ -10,17 +10,19 @@ import UIKit
 
 class UserCollectionViewCell: UICollectionViewCell {
     
-    var titlePhoto: UILabel = {
-        let label = UILabel()
-        return label
-    }()
+    var titlePhoto: UILabel!
+//        = {
+//        let label = UILabel()
+//        return label
+//    }()
     
-    var photo: UIImageView = {
-        let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleAspectFit
-        return image
-    }()
+    var photo: UIImageView!
+//        = {
+//        let image = UIImageView()
+//        image.translatesAutoresizingMaskIntoConstraints = false
+//        image.contentMode = .scaleAspectFit
+//        return image
+//    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,8 +34,12 @@ class UserCollectionViewCell: UICollectionViewCell {
     }
     
     func addViews() {
+        titlePhoto = UILabel()
         addSubview(titlePhoto)
         
+        photo = UIImageView()
+        photo.translatesAutoresizingMaskIntoConstraints = false
+        photo.contentMode = .scaleAspectFit
         addSubview(photo)
         photo.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         photo.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true

@@ -15,19 +15,10 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let spacingItem: CGFloat = 2
     var menuIsVisible = false
     
-    let userInfo = UserInfo()
-    let sideBarContainerView:UIView = UIView()
+    var userInfo: UserInfo!
+    var sideBarContainerView: UIView!
     
-    var collectionView: UICollectionView = {
-        let collectionViewLayout = UICollectionViewFlowLayout.init()
-        collectionViewLayout.scrollDirection = .vertical
-        let collectionView = UICollectionView(frame: CGRect.init() , collectionViewLayout: collectionViewLayout)
-        collectionView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.setCollectionViewLayout(collectionViewLayout, animated: true)
-        collectionView.register(UserCollectionViewCell.self, forCellWithReuseIdentifier: "CellUser")
-        return collectionView
-    }()
+    var collectionView: UICollectionView!
     
     var photo = [Photo]()
     var user: User?
@@ -35,26 +26,37 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     override func loadView() {
         super.loadView()
         
-        sideBarContainerView.frame = CGRect(x: UIScreen.main.bounds.width, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        sideBarContainerView = UIView(frame: CGRect(x: UIScreen.main.bounds.width, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         sideBarContainerView.backgroundColor = #colorLiteral(red: 0.1234010687, green: 0.1234010687, blue: 0.1234010687, alpha: 1)
         let logOutButton = UIButton()
         logOutButton.setTitle("Log Out", for: .normal)
         logOutButton.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
+        logOutButton.translatesAutoresizingMaskIntoConstraints = false
         sideBarContainerView.addSubview(logOutButton)
         logOutButton.addTarget(self, action: #selector(logOutPressed), for: .touchUpInside)
-        logOutButton.translatesAutoresizingMaskIntoConstraints = false
         logOutButton.topAnchor.constraint(equalTo: sideBarContainerView.topAnchor, constant: 5).isActive = true
         logOutButton.leftAnchor.constraint(equalTo: sideBarContainerView.leftAnchor, constant: 10).isActive = true
     
-        view.addSubview(userInfo)
+        userInfo = UserInfo(frame: CGRect(x: view.bounds.origin.x, y: view.bounds.origin.y, width: view.bounds.size.width, height: 70))
         userInfo.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(userInfo)
         userInfo.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
         userInfo.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         userInfo.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
         userInfo.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        userInfo.fullNameLabel.text = ""
+        userInfo.userNameLabel.text = ""
+        userInfo.photoCountLabel.text = ""
         
-        view.addSubview(collectionView)
+        let collectionViewLayout = UICollectionViewFlowLayout.init()
+        collectionViewLayout.scrollDirection = .vertical
+        collectionView = UICollectionView(frame: CGRect.init() , collectionViewLayout: collectionViewLayout)
+        collectionView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.setCollectionViewLayout(collectionViewLayout, animated: true)
+        collectionView.register(UserCollectionViewCell.self, forCellWithReuseIdentifier: "CellUser")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(collectionView)
         collectionView.topAnchor.constraint(equalTo: userInfo.bottomAnchor, constant: 0).isActive = true
         collectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         collectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
@@ -84,10 +86,6 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        userInfo.fullNameLabel.text = ""
-        userInfo.userNameLabel.text = ""
-        userInfo.photoCountLabel.text = ""
         
         let userId = UserDefaults.standard.object(forKey: "usernsid")
         if let userId = userId as? String {
@@ -161,7 +159,6 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 cell.configure(with: (strongSelf.photo[indexPath.item]))
             }
         }
-        cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
         return cell
     }
     
@@ -176,7 +173,7 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        var width = (UIScreen.main.bounds.width - (CGFloat(itemsPerRow + 1.0) * spacingItem)) / CGFloat(itemsPerRow)
+        var width = (collectionView.bounds.size.width - (CGFloat(itemsPerRow + 1.0) * spacingItem)) / CGFloat(itemsPerRow)
 
         guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
             let height = width
