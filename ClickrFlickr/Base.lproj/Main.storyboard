@@ -97,12 +97,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="MRU-rC-Hne">
-                            <size key="itemSize" width="50" height="50"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
+                        <collectionViewLayout key="collectionViewLayout" id="g3D-8g-rGK" customClass="WaterfallLayout" customModule="ClickrFlickr" customModuleProvider="target"/>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="2B2-5y-ZLQ" customClass="SearchCollectionViewCell" customModule="ClickrFlickr" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -118,9 +113,9 @@
                                             <rect key="frame" x="15" y="15" width="20" height="20"/>
                                         </activityIndicatorView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="vvvv" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="90S-S9-TlX">
-                                            <rect key="frame" x="0.0" y="35.5" width="50" height="14.5"/>
+                                            <rect key="frame" x="0.0" y="38" width="50" height="12"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.22213358274647887" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="10"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -148,7 +143,6 @@
                         <connections>
                             <outlet property="dataSource" destination="c0d-Rf-fo1" id="eJT-7q-fFr"/>
                             <outlet property="delegate" destination="c0d-Rf-fo1" id="Oij-rG-PQn"/>
-                            <outlet property="prefetchDataSource" destination="c0d-Rf-fo1" id="Wje-em-mAd"/>
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="txJ-b5-A3t"/>
@@ -207,7 +201,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="3Ef-XO-ytD">
             <objects>
-                <tabBarController id="6ZA-as-NYi" sceneMemberID="viewController">
+                <tabBarController extendedLayoutIncludesOpaqueBars="YES" id="6ZA-as-NYi" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="Bf9-Tg-8D1">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>

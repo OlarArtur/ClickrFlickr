@@ -17,19 +17,16 @@ class SearchDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         userInfo.fullNameLabel.text = ""
         userInfo.userNameLabel.text = ""
         userInfo.photoCountLabel.text = ""
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         guard let photo = photo else {return}
-        CustomImageView.loadImageUsingUrlString(urlString: photo.url) { [weak self] image in
-            guard let strongSelf = self else {return}
-            strongSelf.detailImageView.image = image
-        }
+        detailImageView.image = photo.image
+        detailImageView.bounds.size.width = view.bounds.width
+        detailImageView.bounds.size.height = detailImageView.bounds.size.width * CGFloat(photo.aspectSize)
+
     }
     
     func configUserInfo() {

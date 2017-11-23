@@ -21,6 +21,7 @@ class WaterfallLayout: UICollectionViewLayout {
     var numberOfColumns: CGFloat = 2
     var cellPadding: CGFloat = 2.5
 
+    private var oldBounds = CGRect.zero
     private var contentHeight: CGFloat = 0.0
     private var contentWidth: CGFloat {
         let insets = collectionView!.contentInset
@@ -32,43 +33,42 @@ class WaterfallLayout: UICollectionViewLayout {
     override func prepare() {
         super.prepare()
 
-        if attributesCache.isEmpty {
-            let columWidth = contentWidth / numberOfColumns
-            var xOffsets = [CGFloat]()
-            for column in 0 ..< Int(numberOfColumns) {
-                xOffsets.append(CGFloat(column) * columWidth)
-            }
-
-            var column = 0
-            var yOffsets = [CGFloat](repeatElement(0, count: Int(numberOfColumns)))
-
-            for item in 0 ..< collectionView!.numberOfItems(inSection: 0) {
-                let indexPath = IndexPath(item: item, section: 0)
-
-                let width = columWidth - cellPadding * 2
-                let height = width
-
-//                if let photoHeight: CGFloat = delegate?.collectionView(collectionView: collectionView!, heightForPhotoAt: indexPath, with: width) {
-//                    height = cellPadding + photoHeight + cellPadding
-//                }
-
-                let frame = CGRect(x: xOffsets[column], y: yOffsets[column], width: columWidth, height: height)
-
-                let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
-
-                let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
-                attribute.frame = insetFrame
-                attributesCache.append(attribute)
-
-                contentHeight = max(contentHeight, frame.maxX)
-
-                yOffsets[column] = yOffsets[column] + height
-
-                if column >= (Int(numberOfColumns) - 1) {
-                    column = 0
-                } else {
-                    column += 1
-                }
+        guard attributesCache.isEmpty, let collectionView = collectionView else {return}
+        
+        oldBounds = collectionView.bounds
+        
+        let columWidth = contentWidth / numberOfColumns
+        var xOffsets = [CGFloat]()
+        for column in 0 ..< Int(numberOfColumns) {
+            xOffsets.append(CGFloat(column) * columWidth)
+        }
+        var column = 0
+        var yOffsets = [CGFloat](repeatElement(0, count: Int(numberOfColumns)))
+        
+        for item in 0 ..< collectionView.numberOfItems(inSection: 0) {
+            let indexPath = IndexPath(item: item, section: 0)
+            
+            let width = columWidth - cellPadding * 2
+            
+            let photoHeight: CGFloat = delegate!.collectionView(collectionView: collectionView, heightForPhotoAt: indexPath, with: width)!
+            let height = cellPadding + photoHeight + cellPadding
+            
+            let frame = CGRect(x: xOffsets[column], y: yOffsets[column], width: columWidth, height: height)
+            
+            let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
+            
+            let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+            attribute.frame = insetFrame
+            attributesCache.append(attribute)
+            
+            contentHeight = max(contentHeight, frame.maxY)
+            
+            yOffsets[column] = yOffsets[column] + height
+            
+            if column >= (Int(numberOfColumns) - 1) {
+                column = 0
+            } else {
+                column += 1
             }
         }
     }
@@ -88,8 +88,10 @@ class WaterfallLayout: UICollectionViewLayout {
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        if oldBounds.size != newBounds.size {
+            attributesCache.removeAll(keepingCapacity: true)
+        }
         return true
     }
-    
 }
 

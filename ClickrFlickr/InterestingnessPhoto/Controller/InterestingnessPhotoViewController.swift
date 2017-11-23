@@ -28,6 +28,11 @@ class InterestingnessPhotoViewController: UIViewController {
             strongSelf.collectionView?.reloadData()
         }
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        guard let collectionView = collectionView else {return}
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
 
 }
 
@@ -45,8 +50,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
             self.photo[indexPath.item].image = imageFromCache
             cell.configure(with: self.photo[indexPath.item])
             
-            collectionView.collectionViewLayout.invalidateLayout()
-            
         } else {
             
             CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
@@ -56,9 +59,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
                 strongSelf.photo[indexPath.item].width = image.size.width
                 strongSelf.photo[indexPath.item].height = image.size.height
                 strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
-                
-                collectionView.collectionViewLayout.invalidateLayout()
-                
+
                 strongSelf.photo[indexPath.item].image = image
                 if let cell = collectionView.cellForItem(at: indexPath) as? InterstingnessPhotoCollectionViewCell {
                     cell.configure(with: (strongSelf.photo[indexPath.item]))
@@ -67,25 +68,17 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         }
         return cell
     }
+
 }
 
 extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        var width = (collectionView.bounds.size.width - (2 * spacingItem))
-        
-        guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
-            let height = width
-            return CGSize(width: width, height: height)
-        }
-        
-        if imageWidth < width {
-            width = imageWidth
-        }
-        
-        let squareInd = imageHeight/imageWidth
-        let height = width * squareInd
+        let width = (collectionView.bounds.size.width - (2 * spacingItem))
+
+        let squareInd = photo[indexPath.item].aspectSize
+        let height = width * CGFloat(squareInd)
         
         return CGSize(width: width, height: height)
     }
@@ -113,10 +106,9 @@ extension InterestingnessPhotoViewController: UICollectionViewDataSourcePrefetch
             } else {
                 CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
                     guard let strongSelf = self else {return}
-                    strongSelf.photo[indexPath.item].width = image.size.width
-                    strongSelf.photo[indexPath.item].height = image.size.height
                     strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
                     strongSelf.photo[indexPath.item].image = image
+                    collectionView.reloadItems(at: [indexPath])
                 }
             }
         }

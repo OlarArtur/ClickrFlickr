@@ -16,6 +16,8 @@ class NotAuthorizedViewController: UIViewController {
     @IBOutlet weak var pleaseAuthorizeLabel: UILabel!
     @IBOutlet weak var authorizeButton: UIButton!
     
+    var authBackgroundView: UIImageView!
+    
     @IBAction func authorize(_ sender: UIButton) {
         sender.pulsate()
         FlickrUserAuthentication.authorize()
@@ -32,27 +34,29 @@ class NotAuthorizedViewController: UIViewController {
         clickrFlickrLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         pleaseAuthorizeLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         authorizeButton.layer.cornerRadius = 15
+        createBackground()
+    }
+    
+    func createBackground() {
+        
+        authBackgroundView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 2053, height: 1460))
+        
+        authBackgroundView.image = UIImage(named: "background.jpg")
+        self.view.insertSubview(authBackgroundView, at: 0)
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.alpha = 0.95
+        blurEffectView.frame = authBackgroundView.bounds
+        authBackgroundView.addSubview(blurEffectView)
         
     }
     
     func animateBackground() {
-        
-        let backgroundView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 2053, height: 1460))
-        backgroundView.layer.zPosition = -20
-        backgroundView.image = UIImage(named: "background.jpg")
-        
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.alpha = 0.95
-        blurEffectView.frame = backgroundView.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        backgroundView.addSubview(blurEffectView)
-        
-        view.addSubview(backgroundView)
-        
-        UIView.animate(withDuration: 100.0, delay: 0, options: [.curveLinear, .repeat, .autoreverse], animations: {
-            backgroundView.frame.origin.x = -(backgroundView.frame.width - self.view.frame.width)
-        }, completion: nil)
+        guard let authBackgroundView = authBackgroundView else {return}
+        UIView.animate(withDuration: 100.0, delay: 0, options: [.curveLinear, .repeat, .autoreverse], animations: { [weak self] in
+            guard let weakSelf = self else {return}
+            authBackgroundView.frame.origin.x = weakSelf.view.bounds.size.width - authBackgroundView.frame.width
+            }, completion: nil)
     }
     
 }

@@ -16,4 +16,8 @@ class InterstingnessPhotoCollectionViewCell: UICollectionViewCell {
         self.photo.image = photo.image
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.photo.image = nil
+    }
 }

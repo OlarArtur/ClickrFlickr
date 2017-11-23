@@ -20,4 +20,12 @@ class SearchCollectionViewCell: UICollectionViewCell {
         self.titlePhoto.text = photo.title
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.photo.image = nil
+        self.titlePhoto.text = ""
+        self.spinnerActivityIndicator.isHidden = false
+        self.spinnerActivityIndicator.startAnimating()
+    }
+    
 }

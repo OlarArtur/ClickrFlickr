@@ -79,7 +79,8 @@ class CallingFlickrAPIwithOauth {
                           ParametersConstants.oauthVersion: Constants.version,
                           ParametersConstants.oauthFormat: Constants.format,
                           ParametersConstants.oauthMethod: Constants.methodInterestingnessGetList,
-                          ParametersConstants.oauthNoJsonCallback: Constants.noJsonCallback]
+                          ParametersConstants.oauthNoJsonCallback: Constants.noJsonCallback,
+                          ParametersConstants.oauthExtras: Constants.extras]
         
         if let oauthConsumerKey = CallingFlickrAPIwithOauth.apiKey {
             dictionary[ParametersConstants.oauthConsumerKey] = oauthConsumerKey
@@ -98,6 +99,7 @@ class CallingFlickrAPIwithOauth {
             dictionary[ParametersConstants.oauthMethod] = Constants.methodPhotosSearch
             dictionary[ParametersConstants.oauthSort] = Constants.sort
         }
+        
         guard let isIdForPhoto = isUserIdForPhoto else {return dictionary}
         
         if let oauthUserId = oauthUserId {
@@ -105,6 +107,7 @@ class CallingFlickrAPIwithOauth {
                 dictionary[ParametersConstants.oauthUserId] = oauthUserId
                 dictionary[ParametersConstants.oauthMethod] = Constants.methodPeopleGetPhotos
             } else {
+                dictionary.removeValue(forKey: ParametersConstants.oauthSort)
                 dictionary[ParametersConstants.oauthUserId] = oauthUserId
                 dictionary[ParametersConstants.oauthMethod] = Constants.methodPeopleGetInfo
             }

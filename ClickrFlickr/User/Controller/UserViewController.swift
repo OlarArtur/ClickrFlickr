@@ -26,16 +26,21 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     override func loadView() {
         super.loadView()
         
-        sideBarContainerView = UIView(frame: CGRect(x: UIScreen.main.bounds.width, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        sideBarContainerView = UIView(frame: CGRect(x: view.bounds.width, y: 0, width: 140, height: view.bounds.height))
         sideBarContainerView.backgroundColor = #colorLiteral(red: 0.1234010687, green: 0.1234010687, blue: 0.1234010687, alpha: 1)
+//        sideBarContainerView.translatesAutoresizingMaskIntoConstraints = false
+//        sideBarContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+//        sideBarContainerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -100).isActive = true
+//        sideBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         let logOutButton = UIButton()
         logOutButton.setTitle("Log Out", for: .normal)
-        logOutButton.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
+        logOutButton.setImage(#imageLiteral(resourceName: "exit"), for: .normal)
+        logOutButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         logOutButton.translatesAutoresizingMaskIntoConstraints = false
         sideBarContainerView.addSubview(logOutButton)
         logOutButton.addTarget(self, action: #selector(logOutPressed), for: .touchUpInside)
         logOutButton.topAnchor.constraint(equalTo: sideBarContainerView.topAnchor, constant: 5).isActive = true
-        logOutButton.leftAnchor.constraint(equalTo: sideBarContainerView.leftAnchor, constant: 10).isActive = true
+        logOutButton.centerXAnchor.constraint(equalTo: sideBarContainerView.centerXAnchor).isActive = true
     
         userInfo = UserInfo(frame: CGRect(x: view.bounds.origin.x, y: view.bounds.origin.y, width: view.bounds.size.width, height: 70))
         userInfo.translatesAutoresizingMaskIntoConstraints = false
@@ -81,6 +86,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let safariView = SFSafariViewController(url: url, entersReaderIfAvailable: true)
         present(safariView, animated: true, completion: nil)
         safariView.delegate = self
+        
         navigationController?.navigationController?.popToRootViewController(animated: true)
     }
 
@@ -109,17 +115,21 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @objc func menuPressed() {
-
-        view.addSubview(sideBarContainerView)
-        
+     
         if menuIsVisible {
+            
             UIView.animate(withDuration: 0.4, animations: {
-                self.sideBarContainerView.frame.origin.x = UIScreen.main.bounds.width
+                self.sideBarContainerView.frame.origin.x = self.view.bounds.width + 140
+            }, completion: { success in
+                guard success else {return}
+                self.sideBarContainerView.removeFromSuperview()
             })
             menuIsVisible = false
         } else {
+            view.addSubview(sideBarContainerView)
+            
             UIView.animate(withDuration: 0.4, animations: {
-                self.sideBarContainerView.frame.origin.x = UIScreen.main.bounds.width / 2
+                self.sideBarContainerView.frame.origin.x = self.view.bounds.width - 140
             })
             menuIsVisible = true
         }
@@ -163,6 +173,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        guard let collectionView = collectionView else {return}
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
