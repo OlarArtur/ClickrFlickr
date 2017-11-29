@@ -144,7 +144,5 @@ extension SearchCollectionViewController: WaterfallLayoutDelegate {
         let height = width * CGFloat(squareInd)
         return height
     }
+    
 }
-
-
-

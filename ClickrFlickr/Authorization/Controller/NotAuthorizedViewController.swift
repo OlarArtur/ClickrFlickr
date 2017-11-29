@@ -23,18 +23,24 @@ class NotAuthorizedViewController: UIViewController {
         FlickrUserAuthentication.authorize()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        authBackgroundView.removeFromSuperview()
+        view.layer.removeAllAnimations()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         authorizeButton.transform = CGAffineTransform(scaleX: 1.0,y: 1.0)
+        createBackground()
         animateBackground()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        clickrFlickrLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        clickrFlickrLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         pleaseAuthorizeLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        authorizeButton.layer.cornerRadius = 15
-        createBackground()
+        authorizeButton.layer.cornerRadius = 8
     }
     
     func createBackground() {

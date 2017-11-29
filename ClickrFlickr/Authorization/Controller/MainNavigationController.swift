@@ -13,7 +13,8 @@ class MainNavigationController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.isNavigationBarHidden = true
+        self.hidesBottomBarWhenPushed = true
         FlickrUserAuthentication.delegate = self
         isAuthorized()
     }

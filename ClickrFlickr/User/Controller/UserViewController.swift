@@ -15,43 +15,20 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let spacingItem: CGFloat = 2
     var menuIsVisible = false
     
-    var userInfo: UserInfo!
     var sideBarContainerView: UIView!
-    
+
     var collectionView: UICollectionView!
     
     var photo = [Photo]()
-    var user: User?
     
     override func loadView() {
         super.loadView()
         
-        sideBarContainerView = UIView(frame: CGRect(x: view.bounds.width, y: 0, width: 140, height: view.bounds.height))
-        sideBarContainerView.backgroundColor = #colorLiteral(red: 0.1234010687, green: 0.1234010687, blue: 0.1234010687, alpha: 1)
-//        sideBarContainerView.translatesAutoresizingMaskIntoConstraints = false
-//        sideBarContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-//        sideBarContainerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -100).isActive = true
-//        sideBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
-        let logOutButton = UIButton()
-        logOutButton.setTitle("Log Out", for: .normal)
-        logOutButton.setImage(#imageLiteral(resourceName: "exit"), for: .normal)
-        logOutButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        logOutButton.translatesAutoresizingMaskIntoConstraints = false
-        sideBarContainerView.addSubview(logOutButton)
-        logOutButton.addTarget(self, action: #selector(logOutPressed), for: .touchUpInside)
-        logOutButton.topAnchor.constraint(equalTo: sideBarContainerView.topAnchor, constant: 5).isActive = true
-        logOutButton.centerXAnchor.constraint(equalTo: sideBarContainerView.centerXAnchor).isActive = true
+        addCollectionView()
     
-        userInfo = UserInfo(frame: CGRect(x: view.bounds.origin.x, y: view.bounds.origin.y, width: view.bounds.size.width, height: 70))
-        userInfo.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(userInfo)
-        userInfo.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
-        userInfo.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
-        userInfo.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        userInfo.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        userInfo.fullNameLabel.text = ""
-        userInfo.userNameLabel.text = ""
-        userInfo.photoCountLabel.text = ""
+    }
+    
+    private func addCollectionView() {
         
         let collectionViewLayout = UICollectionViewFlowLayout.init()
         collectionViewLayout.scrollDirection = .vertical
@@ -62,14 +39,77 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         collectionView.register(UserCollectionViewCell.self, forCellWithReuseIdentifier: "CellUser")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
-        collectionView.topAnchor.constraint(equalTo: userInfo.bottomAnchor, constant: 0).isActive = true
-        collectionView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
-        collectionView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        
+        let topConstraint = NSLayoutConstraint(item: collectionView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0)
+        let leadingConstraint = NSLayoutConstraint(item: collectionView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0)
+        let trailingConstraint = NSLayoutConstraint(item: collectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
+        let bottomConstraint = NSLayoutConstraint(item: collectionView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+        view.addConstraints([topConstraint, leadingConstraint, trailingConstraint, bottomConstraint])
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        collectionView.register(UserHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
+    }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        fetchUserPhotos()
+        
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu"), style: .plain, target: self, action: #selector(menuPressed))
+        navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        
+    }
+    
+    @objc func menuPressed() {
+        
+        if menuIsVisible {
+            
+            UIView.animate(withDuration: 0.4, animations: {
+                self.sideBarContainerView.frame.origin.x = self.view.bounds.width + 140
+            }, completion: { success in
+                guard success else {return}
+                self.sideBarContainerView.removeFromSuperview()
+            })
+            menuIsVisible = false
+        } else {
+            addSideBarMenu()
+            
+            sideBarContainerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
+            
+            UIView.animate(withDuration: 0.4, animations: {
+                self.view.layoutIfNeeded()
+            })
+            menuIsVisible = true
+        }
+    }
+    
+    private func addSideBarMenu() {
+        
+        sideBarContainerView = UIView(frame: CGRect(x: view.bounds.width, y: 0, width: 140, height: view.bounds.height))
+        sideBarContainerView.backgroundColor = #colorLiteral(red: 0.1234010687, green: 0.1234010687, blue: 0.1234010687, alpha: 1)
+        
+        sideBarContainerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(sideBarContainerView)
+        
+        let widthMenuConstrait = sideBarContainerView.widthAnchor.constraint(equalToConstant: 140)
+        let topMenuConstrait = sideBarContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
+        let bottomMenuConstrait = sideBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        NSLayoutConstraint.activate([widthMenuConstrait, topMenuConstrait, bottomMenuConstrait])
+        
+        let logOutButton = UIButton()
+        logOutButton.setTitle("Log Out", for: .normal)
+        logOutButton.setImage(#imageLiteral(resourceName: "exit"), for: .normal)
+        logOutButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        logOutButton.translatesAutoresizingMaskIntoConstraints = false
+        sideBarContainerView.addSubview(logOutButton)
+        logOutButton.addTarget(self, action: #selector(logOutPressed), for: .touchUpInside)
+        let topLogOutConstrait = logOutButton.topAnchor.constraint(equalTo: sideBarContainerView.topAnchor, constant: 5)
+        let centerXLogOutConstrait = logOutButton.centerXAnchor.constraint(equalTo: sideBarContainerView.centerXAnchor)
+        NSLayoutConstraint.activate([topLogOutConstrait, centerXLogOutConstrait])
+        
     }
     
     @objc func logOutPressed(sender: UIButton) {
@@ -89,10 +129,13 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         navigationController?.navigationController?.popToRootViewController(animated: true)
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        super.viewWillTransition(to: size, with: coordinator)
+//        view.layoutIfNeeded()
+//    }
+    
+    private func fetchUserPhotos() {
         let userId = UserDefaults.standard.object(forKey: "usernsid")
         if let userId = userId as? String {
             GetPhotoNetworkservice.getJsonForSearchPhoto(userId: userId) {[weak self] photo in
@@ -100,55 +143,28 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 strongSelf.photo = photo.searchPhoto
                 strongSelf.collectionView.reloadData()
             }
-            DispatchQueue.global().async {
-                UserInfoNetworkservice.getUserInfo(for: userId) { [weak self] user in
-                    guard let strongSelf = self else {return}
-                    strongSelf.user = user
-                    strongSelf.configUserInfo()
+        }
+        
+    }
+    
+    private func fetchUserInfo(completion: @escaping (UserInfo) ->()) {
+        let userId = UserDefaults.standard.object(forKey: "usernsid")
+        if let userId = userId as? String {
+            UserInfoNetworkservice.getUserInfo(for: userId) { user in
+                let userInfo = UserInfo()
+                userInfo.fullNameLabel.text = user.realName
+                userInfo.userNameLabel.text = user.userName
+                userInfo.photoCountLabel.text = "\(user.photoCount) photos"
+                
+                CustomImageView.loadImageUsingUrlString(urlString: user.urlAvatar) { image in
+                    DispatchQueue.main.async {
+                        userInfo.avatarImageView.image = image
+                        completion(userInfo)
+                    }
                 }
             }
         }
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu"), style: .plain, target: self, action: #selector(menuPressed))
-        navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
-    }
-    
-    @objc func menuPressed() {
-     
-        if menuIsVisible {
-            
-            UIView.animate(withDuration: 0.4, animations: {
-                self.sideBarContainerView.frame.origin.x = self.view.bounds.width + 140
-            }, completion: { success in
-                guard success else {return}
-                self.sideBarContainerView.removeFromSuperview()
-            })
-            menuIsVisible = false
-        } else {
-            view.addSubview(sideBarContainerView)
-            
-            UIView.animate(withDuration: 0.4, animations: {
-                self.sideBarContainerView.frame.origin.x = self.view.bounds.width - 140
-            })
-            menuIsVisible = true
-        }
-    }
-    
-    func configUserInfo() {
-        guard let user = user else {return}
-        DispatchQueue.main.async {
-            self.userInfo.fullNameLabel.text = user.realName
-            self.userInfo.userNameLabel.text = user.userName
-            self.userInfo.photoCountLabel.text = "\(user.photoCount) photos"
-        }
-        
-        CustomImageView.loadImageUsingUrlString(urlString: user.urlAvatar) { [weak self] image in
-            guard let strongSelf = self else {return}
-            DispatchQueue.main.async {
-                strongSelf.userInfo.avatarImageView.image = image
-            }
-        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -172,9 +188,15 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return cell
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        guard let collectionView = collectionView else {return}
-        collectionView.collectionViewLayout.invalidateLayout()
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", for: indexPath) as! UserHeaderCollectionReusableView
+        
+        fetchUserInfo { userInfo in
+            headerView.configerUserInfo(userInfo: userInfo)
+            collectionView.collectionViewLayout.invalidateLayout()
+        }
+        
+        return headerView
     }
     
 }
@@ -205,16 +227,12 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: height)
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return spacingItem
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: spacingItem, left: spacingItem, bottom: spacingItem, right: spacingItem)
-    }
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return spacingItem
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: 70)
     }
 
 }

@@ -16,7 +16,7 @@ import UIKit
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var photoCountLabel: UILabel!
     
-    var avatar: UIImage {
+    @IBInspectable var avatar: UIImage {
         get {
             return avatarImageView.image!
         }
@@ -25,7 +25,7 @@ import UIKit
         }
     }
     
-    var userName: String {
+    @IBInspectable var userName: String {
         get {
             return userNameLabel.text!
         }
@@ -34,7 +34,7 @@ import UIKit
         }
     }
     
-    var fullName: String {
+    @IBInspectable var fullName: String {
         get {
             return fullNameLabel.text!
         }
@@ -43,7 +43,7 @@ import UIKit
         }
     }
     
-    var photoCount: String {
+     @IBInspectable var photoCount: String {
         get {
             return photoCountLabel.text!
         }

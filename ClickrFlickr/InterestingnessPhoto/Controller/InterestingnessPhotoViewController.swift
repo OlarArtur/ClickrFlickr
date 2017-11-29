@@ -30,9 +30,16 @@ class InterestingnessPhotoViewController: UIViewController {
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         guard let collectionView = collectionView else {return}
         collectionView.collectionViewLayout.invalidateLayout()
     }
+    
+//    override func viewWillLayoutSubviews() {
+//        super.viewWillLayoutSubviews()
+//        guard let collectionView = collectionView else {return}
+//        collectionView.collectionViewLayout.invalidateLayout()
+//    }
 
 }
 
@@ -68,6 +75,26 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         }
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .vertical
+            collectionView.setCollectionViewLayout(layout, animated: true)
+            self.navigationController?.isNavigationBarHidden = false
+            self.navigationController?.toolbar.isHidden = false
+            collectionView.collectionViewLayout.invalidateLayout()
+        }
+        
+        let layout = CenterCellCollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        collectionView.setCollectionViewLayout(layout, animated: true)
+        collectionView.decelerationRate = UIScrollViewDecelerationRateFast
+        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.toolbar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+    }
 
 }
 
@@ -75,10 +102,19 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = (collectionView.bounds.size.width - (2 * spacingItem))
+        if collectionViewLayout is CenterCellCollectionViewFlowLayout {
+            return CGSize(width: collectionView.bounds.width - 2 * spacingItem, height: collectionView.bounds.height - 2 * spacingItem)
+        }
+        
+        var width = collectionView.bounds.size.width - 2 * spacingItem
 
         let squareInd = photo[indexPath.item].aspectSize
-        let height = width * CGFloat(squareInd)
+        var height = width * CGFloat(squareInd)
+        
+        if height > collectionView.bounds.size.height {
+            height = collectionView.bounds.size.height  - 2 * spacingItem
+            width = height / CGFloat(squareInd)
+        }
         
         return CGSize(width: width, height: height)
     }

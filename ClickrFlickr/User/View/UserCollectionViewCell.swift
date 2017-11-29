@@ -11,18 +11,7 @@ import UIKit
 class UserCollectionViewCell: UICollectionViewCell {
     
     var titlePhoto: UILabel!
-//        = {
-//        let label = UILabel()
-//        return label
-//    }()
-    
     var photo: UIImageView!
-//        = {
-//        let image = UIImageView()
-//        image.translatesAutoresizingMaskIntoConstraints = false
-//        image.contentMode = .scaleAspectFit
-//        return image
-//    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
