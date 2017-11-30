@@ -48,8 +48,8 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return mostRecentOffset
     }
     
-    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return true
-    }
+//    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+//        return true
+//    }
     
 }

@@ -26,7 +26,7 @@ struct Constants {
     static let methodPeopleGetInfo = "flickr.people.getInfo"
     static let methodInterestingnessGetList = "flickr.interestingness.getList"
     static let sort = "interestingness-desc"
-    static let extras = "url_s"
+    static let extras = "description%2C+url_s"
 }
 
 

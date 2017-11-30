@@ -25,7 +25,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         collectionView?.collectionViewLayout = layout
         layout.delegate = self
         
-        collectionView?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        collectionView?.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         createSearchBar()
         
         SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) {[weak self] photo in

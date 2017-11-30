@@ -16,6 +16,7 @@ struct Photo {
     let id: String
     let secret: String
     let owner: String
+    let description: String
     
     var aspectSize: Float
     
@@ -37,7 +38,9 @@ struct Photo {
             let server = dict["server"] as? String,
             let id = dict["id"] as? String,
             let secret = dict["secret"] as? String,
-            let owner = dict["owner"] as? String else { return nil }
+            let owner = dict["owner"] as? String,
+            let descriptionDict = dict["description"] as? [String: Any],
+            let description = descriptionDict["_content"] as? String else { return nil }
         
         self.aspectSize = Float(heightS)! / Float(widthS)!
         
@@ -47,5 +50,6 @@ struct Photo {
         self.id = id
         self.secret = secret
         self.owner = owner
+        self.description = description
     }
 }

@@ -20,8 +20,8 @@ class InterestingnessPhotoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        
+        collectionView?.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+
         InterestingnessPhotoNetworkservice.getJsonForSearchPhoto() {[weak self] photo in
             guard let strongSelf = self else {return}
             strongSelf.photo = photo.searchPhoto
@@ -29,11 +29,11 @@ class InterestingnessPhotoViewController: UIViewController {
         }
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        guard let collectionView = collectionView else {return}
-        collectionView.collectionViewLayout.invalidateLayout()
-    }
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        super.viewWillTransition(to: size, with: coordinator)
+//        guard let collectionView = collectionView else {return}
+//        collectionView.collectionViewLayout.invalidateLayout()
+//    }
     
 //    override func viewWillLayoutSubviews() {
 //        super.viewWillLayoutSubviews()
@@ -50,50 +50,78 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellInterestingnessPhoto", for: indexPath) as! InterstingnessPhotoCollectionViewCell
-        
-        if let imageFromCache = self.imageCache.object(forKey: self.photo[indexPath.item].url as NSString) {
-            
-            self.photo[indexPath.item].image = imageFromCache
-            cell.configure(with: self.photo[indexPath.item])
-            
-        } else {
-            
-            CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
-                
-                guard let strongSelf = self else {return}
-                
-                strongSelf.photo[indexPath.item].width = image.size.width
-                strongSelf.photo[indexPath.item].height = image.size.height
-                strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
 
-                strongSelf.photo[indexPath.item].image = image
-                if let cell = collectionView.cellForItem(at: indexPath) as? InterstingnessPhotoCollectionViewCell {
-                    cell.configure(with: (strongSelf.photo[indexPath.item]))
+        var reusIdentifier = "CellInterestingnessPhoto"
+        
+        if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
+            reusIdentifier = "CellOnlyInterestingnessPhoto"
+            
+             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusIdentifier, for: indexPath) as! OnlyPhotoViewCell
+            
+            if let imageFromCache = self.imageCache.object(forKey: self.photo[indexPath.item].url as NSString) {
+                
+                self.photo[indexPath.item].image = imageFromCache
+                cell.configure(with: self.photo[indexPath.item])
+            } else {
+                CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
+                    guard let strongSelf = self else {return}
+                    
+                    strongSelf.photo[indexPath.item].width = image.size.width
+                    strongSelf.photo[indexPath.item].height = image.size.height
+                    strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
+                    
+                    strongSelf.photo[indexPath.item].image = image
+                    if let cell = collectionView.cellForItem(at: indexPath) as? InterstingnessPhotoCollectionViewCell {
+                        cell.configure(with: (strongSelf.photo[indexPath.item]))
+                    }
                 }
             }
+            return cell
+            
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
+            
+            if let imageFromCache = self.imageCache.object(forKey: self.photo[indexPath.item].url as NSString) {
+                self.photo[indexPath.item].image = imageFromCache
+                cell.configure(with: self.photo[indexPath.item])
+            } else {
+                CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
+                    guard let strongSelf = self else {return}
+                    
+                    strongSelf.photo[indexPath.item].width = image.size.width
+                    strongSelf.photo[indexPath.item].height = image.size.height
+                    strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
+                    
+                    strongSelf.photo[indexPath.item].image = image
+                    if let cell = collectionView.cellForItem(at: indexPath) as? InterstingnessPhotoCollectionViewCell {
+                        cell.configure(with: (strongSelf.photo[indexPath.item]))
+                    }
+                }
+            }
+            return cell
+            
         }
-        return cell
+        
+     
+//        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+
         if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
             collectionView.setCollectionViewLayout(layout, animated: true)
-            self.navigationController?.isNavigationBarHidden = false
-            self.navigationController?.toolbar.isHidden = false
-            collectionView.collectionViewLayout.invalidateLayout()
+            collectionView.reloadData()
+            collectionView.decelerationRate = UIScrollViewDecelerationRateNormal
+        } else {
+            let layout = CenterCellCollectionViewFlowLayout()
+            layout.scrollDirection = .horizontal
+            collectionView.setCollectionViewLayout(layout, animated: true)
+            collectionView.reloadData()
+            collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         }
-        
-        let layout = CenterCellCollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        collectionView.setCollectionViewLayout(layout, animated: true)
-        collectionView.decelerationRate = UIScrollViewDecelerationRateFast
-        self.navigationController?.isNavigationBarHidden = true
-        self.navigationController?.toolbar.isHidden = true
-        self.tabBarController?.tabBar.isHidden = true
+
     }
 
 }
@@ -103,18 +131,41 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if collectionViewLayout is CenterCellCollectionViewFlowLayout {
-            return CGSize(width: collectionView.bounds.width - 2 * spacingItem, height: collectionView.bounds.height - 2 * spacingItem)
+            return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
         }
         
-        var width = collectionView.bounds.size.width - 2 * spacingItem
+        let width = collectionView.bounds.size.width
 
         let squareInd = photo[indexPath.item].aspectSize
         var height = width * CGFloat(squareInd)
+//        print("start height: \(height)")
+
+        let description = photo[indexPath.item].description
         
-        if height > collectionView.bounds.size.height {
-            height = collectionView.bounds.size.height  - 2 * spacingItem
-            width = height / CGFloat(squareInd)
-        }
+//        print(description)
+//        if let htmlData = description.data(using: String.Encoding.utf16, allowLossyConversion: false) {
+//        let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
+//            DispatchQueue.main.async {
+//                let attributedString = try? NSAttributedString(data: htmlData, options: options, documentAttributes: nil)
+//                 print(attributedString)
+//            }
+//        }
+        
+        let font: UIFont = UIFont.systemFont(ofSize: 13, weight: .regular)
+        
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let descriptionTemp = description.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSAttributedStringKey.font: font], context: nil)
+        let descriptionHeight = descriptionTemp.height
+    
+//        print("description height: \(descriptionHeight)")
+        height = height + descriptionHeight
+//        print("finish height: \(height)")
+//        print("__________")
+    
+//        if height > collectionView.bounds.size.height {
+//            height = collectionView.bounds.size.height  - 2 * spacingItem
+//            width = height / CGFloat(squareInd)
+//        }
         
         return CGSize(width: width, height: height)
     }
@@ -124,7 +175,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: spacingItem, left: spacingItem, bottom: spacingItem, right: spacingItem)
+        return UIEdgeInsets(top: spacingItem, left: 0, bottom: spacingItem, right: 0)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -144,7 +195,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDataSourcePrefetch
                     guard let strongSelf = self else {return}
                     strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
                     strongSelf.photo[indexPath.item].image = image
-                    collectionView.reloadItems(at: [indexPath])
                 }
             }
         }
