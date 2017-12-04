@@ -15,6 +15,7 @@ class SearchDetailViewController: UIViewController {
     var photo: Photo?
     var user: User?
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,6 +28,14 @@ class SearchDetailViewController: UIViewController {
         detailImageView.bounds.size.width = view.bounds.width
         detailImageView.bounds.size.height = detailImageView.bounds.size.width * CGFloat(photo.aspectSize)
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.hidesBarsOnSwipe = false
+        if navigationController?.isNavigationBarHidden == true {
+            navigationController?.isNavigationBarHidden = false
+        }
     }
     
     func configUserInfo() {

@@ -35,6 +35,12 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.hidesBarsOnSwipe = true
+    }
+    
     private func createSearchBar() {
         let searchBar: UISearchBar = UISearchBar()
         searchBar.searchBarStyle = .default
@@ -52,7 +58,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SearchCollectionViewCell
         
-        cell.spinnerActivityIndicator.color = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        cell.spinnerActivityIndicator.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         cell.spinnerActivityIndicator.startAnimating()
         
         if let imageFromCache = self.imageCache.object(forKey: self.photo[indexPath.item].url as NSString) {
@@ -74,7 +80,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
                 strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
                 
                 strongSelf.photo[indexPath.item].image = image
-                if let cell = collectionView.cellForItem(at: indexPath) as? SearchCollectionViewCell {
+                if cell == collectionView.cellForItem(at: indexPath) {
                     cell.configure(with: (strongSelf.photo[indexPath.item]))
                 }
                 cell.spinnerActivityIndicator.stopAnimating()

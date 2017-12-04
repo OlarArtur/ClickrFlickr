@@ -28,7 +28,7 @@ class UserHeaderCollectionReusableView: UICollectionReusableView {
         userInfo.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
         userInfo.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
         userInfo.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
-        userInfo.heightAnchor.constraint(equalToConstant: 70).isActive = true
+        userInfo.heightAnchor.constraint(equalToConstant: 180).isActive = true
         userInfo.fullNameLabel.text = ""
         userInfo.userNameLabel.text = ""
         userInfo.photoCountLabel.text = ""

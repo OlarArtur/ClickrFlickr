@@ -56,7 +56,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
             reusIdentifier = "CellOnlyInterestingnessPhoto"
             
-             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusIdentifier, for: indexPath) as! OnlyPhotoViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusIdentifier, for: indexPath) as! OnlyPhotoViewCell
             
             if let imageFromCache = self.imageCache.object(forKey: self.photo[indexPath.item].url as NSString) {
                 
@@ -71,7 +71,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
                     strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
                     
                     strongSelf.photo[indexPath.item].image = image
-                    if let cell = collectionView.cellForItem(at: indexPath) as? InterstingnessPhotoCollectionViewCell {
+                    if cell == collectionView.cellForItem(at: indexPath) {
                         cell.configure(with: (strongSelf.photo[indexPath.item]))
                     }
                 }
@@ -93,17 +93,14 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
                     strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
                     
                     strongSelf.photo[indexPath.item].image = image
-                    if let cell = collectionView.cellForItem(at: indexPath) as? InterstingnessPhotoCollectionViewCell {
+                    if cell == collectionView.cellForItem(at: indexPath) {
                         cell.configure(with: (strongSelf.photo[indexPath.item]))
                     }
                 }
             }
             return cell
-            
         }
         
-     
-//        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -112,16 +109,15 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
             let layout = UICollectionViewFlowLayout()
             layout.scrollDirection = .vertical
             collectionView.setCollectionViewLayout(layout, animated: true)
-            collectionView.reloadData()
+            collectionView.reloadItems(at: [indexPath])
             collectionView.decelerationRate = UIScrollViewDecelerationRateNormal
         } else {
             let layout = CenterCellCollectionViewFlowLayout()
             layout.scrollDirection = .horizontal
             collectionView.setCollectionViewLayout(layout, animated: true)
-            collectionView.reloadData()
+            collectionView.reloadItems(at: [indexPath])
             collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         }
-
     }
 
 }
@@ -138,7 +134,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
 
         let squareInd = photo[indexPath.item].aspectSize
         var height = width * CGFloat(squareInd)
-//        print("start height: \(height)")
 
         let description = photo[indexPath.item].description
         
@@ -157,15 +152,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
         let descriptionTemp = description.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSAttributedStringKey.font: font], context: nil)
         let descriptionHeight = descriptionTemp.height
     
-//        print("description height: \(descriptionHeight)")
         height = height + descriptionHeight
-//        print("finish height: \(height)")
-//        print("__________")
-    
-//        if height > collectionView.bounds.size.height {
-//            height = collectionView.bounds.size.height  - 2 * spacingItem
-//            width = height / CGFloat(squareInd)
-//        }
         
         return CGSize(width: width, height: height)
     }
@@ -179,7 +166,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return spacingItem
+        return 2 * spacingItem
     }
     
 }
@@ -201,4 +188,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDataSourcePrefetch
     }
     
 }
+
+
 

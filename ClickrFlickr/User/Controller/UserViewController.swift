@@ -13,11 +13,15 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     let itemsPerRow: CGFloat = 2
     let spacingItem: CGFloat = 2
+    
+    var headerViewHeight: CGFloat = 0
+    var isHeaderVisible: Bool = true
+    
     var menuIsVisible = false
     
     var sideBarContainerView: UIView!
-
     var collectionView: UICollectionView!
+    var userInfo: UserInfo!
     
     var photo = [Photo]()
     
@@ -45,6 +49,8 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let trailingConstraint = NSLayoutConstraint(item: collectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
         let bottomConstraint = NSLayoutConstraint(item: collectionView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
         view.addConstraints([topConstraint, leadingConstraint, trailingConstraint, bottomConstraint])
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -94,6 +100,9 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         sideBarContainerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(sideBarContainerView)
         
+        sideBarContainerView.layer.shadowOpacity = 1
+        sideBarContainerView.layer.shadowRadius = 6
+        
         let widthMenuConstrait = sideBarContainerView.widthAnchor.constraint(equalToConstant: 140)
         let topMenuConstrait = sideBarContainerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)
         let bottomMenuConstrait = sideBarContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
@@ -102,11 +111,12 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let logOutButton = UIButton()
         logOutButton.setTitle("Log Out", for: .normal)
         logOutButton.setImage(#imageLiteral(resourceName: "exit"), for: .normal)
-        logOutButton.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        logOutButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         logOutButton.translatesAutoresizingMaskIntoConstraints = false
         sideBarContainerView.addSubview(logOutButton)
         logOutButton.addTarget(self, action: #selector(logOutPressed), for: .touchUpInside)
-        let topLogOutConstrait = logOutButton.topAnchor.constraint(equalTo: sideBarContainerView.topAnchor, constant: 5)
+        guard let navigationController = navigationController else {return}
+        let topLogOutConstrait = logOutButton.topAnchor.constraint(equalTo: navigationController.navigationBar.bottomAnchor, constant: 10)
         let centerXLogOutConstrait = logOutButton.centerXAnchor.constraint(equalTo: sideBarContainerView.centerXAnchor)
         NSLayoutConstraint.activate([topLogOutConstrait, centerXLogOutConstrait])
         
@@ -147,26 +157,6 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
-    private func fetchUserInfo(completion: @escaping (UserInfo) ->()) {
-        let userId = UserDefaults.standard.object(forKey: "usernsid")
-        if let userId = userId as? String {
-            UserInfoNetworkservice.getUserInfo(for: userId) { user in
-                let userInfo = UserInfo()
-                userInfo.fullNameLabel.text = user.realName
-                userInfo.userNameLabel.text = user.userName
-                userInfo.photoCountLabel.text = "\(user.photoCount) photos"
-                
-                CustomImageView.loadImageUsingUrlString(urlString: user.urlAvatar) { image in
-                    DispatchQueue.main.async {
-                        userInfo.avatarImageView.image = image
-                        completion(userInfo)
-                    }
-                }
-            }
-        }
-        
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photo.count
     }
@@ -190,17 +180,68 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView", for: indexPath) as! UserHeaderCollectionReusableView
+        headerViewHeight = headerView.bounds.height
         
         fetchUserInfo { userInfo in
             headerView.configerUserInfo(userInfo: userInfo)
-            collectionView.collectionViewLayout.invalidateLayout()
         }
-        
         return headerView
+    }
+    
+    private func fetchUserInfo(completion: @escaping (UserInfo) ->()) {
+        let userId = UserDefaults.standard.object(forKey: "usernsid")
+        if let userId = userId as? String {
+            UserInfoNetworkservice.getUserInfo(for: userId) { [weak self] user in
+                guard let strongSelf = self else {return}
+                strongSelf.userInfo = UserInfo()
+                strongSelf.userInfo.fullNameLabel.text = user.realName
+                strongSelf.userInfo.userNameLabel.text = user.userName
+                strongSelf.userInfo.photoCountLabel.text = "\(user.photoCount) photos"
+                
+                CustomImageView.loadImageUsingUrlString(urlString: user.urlAvatar) { [weak self] image in
+                    guard let strongSelf = self else {return}
+                    DispatchQueue.main.async {
+                        strongSelf.userInfo.avatarImageView.image = image
+                        completion(strongSelf.userInfo)
+                    }
+                }
+            }
+        }
     }
     
 }
 
+extension UserViewController: UIScrollViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+
+        guard let navigationController = navigationController else {return}
+
+        let navBarY = navigationController.navigationBar.frame.origin.y
+        let navBarHeight = navigationController.navigationBar.frame.height
+        
+        let offsetY = scrollView.contentOffset.y + (navBarY + navBarHeight)
+//        print(offsetY)
+        
+        if offsetY > headerViewHeight {
+            if isHeaderVisible {
+                self.navigationItem.titleView = self.userInfo
+                self.userInfo.topStackView.axis = .horizontal
+                self.userInfo.fullNameLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                self.userInfo.userNameLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                
+                isHeaderVisible = false
+            }
+        } else {
+            if !isHeaderVisible {
+                self.navigationItem.titleView = nil
+                isHeaderVisible = true
+            }
+            
+        }
+    }
+    
+}
 
 extension UserViewController: UICollectionViewDelegateFlowLayout {
 
@@ -232,8 +273,10 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 70)
+        return CGSize(width: collectionView.bounds.width, height: 180)
     }
+    
+    
 
 }
 

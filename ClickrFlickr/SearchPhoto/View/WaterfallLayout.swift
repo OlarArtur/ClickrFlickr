@@ -24,8 +24,9 @@ class WaterfallLayout: UICollectionViewLayout {
     private var oldBounds = CGRect.zero
     private var contentHeight: CGFloat = 0.0
     private var contentWidth: CGFloat {
-        let insets = collectionView!.contentInset
-        return (collectionView?.bounds.width)! - (insets.left + insets.right)
+//        let insets = collectionView!.contentInset
+        return (collectionView?.bounds.width)!
+//            - (insets.left + insets.right)
     }
 
     private var attributesCache = [UICollectionViewLayoutAttributes]()
@@ -48,10 +49,10 @@ class WaterfallLayout: UICollectionViewLayout {
         for item in 0 ..< collectionView.numberOfItems(inSection: 0) {
             let indexPath = IndexPath(item: item, section: 0)
             
-            let width = columWidth - cellPadding * 2
+            let width = columWidth
             
             let photoHeight: CGFloat = delegate!.collectionView(collectionView: collectionView, heightForPhotoAt: indexPath, with: width)!
-            let height = cellPadding + photoHeight + cellPadding
+            let height = photoHeight
             
             let frame = CGRect(x: xOffsets[column], y: yOffsets[column], width: columWidth, height: height)
             

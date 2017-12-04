@@ -11,11 +11,9 @@ import UIKit
 class OnlyPhotoViewCell: UICollectionViewCell {
     @IBOutlet weak var photo: UIImageView!
     
-    @IBOutlet weak var descriptionLabel: UILabel!
-    
     func configure(with photo: Photo) {
         self.photo.image = photo.image
-        self.photo.contentMode = .scaleAspectFit
+        print(self.bounds)
     }
     
     override func prepareForReuse() {

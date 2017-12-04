@@ -16,6 +16,8 @@ import UIKit
     @IBOutlet weak var fullNameLabel: UILabel!
     @IBOutlet weak var photoCountLabel: UILabel!
     
+    @IBOutlet weak var topStackView: UIStackView!
+    
     @IBInspectable var avatar: UIImage {
         get {
             return avatarImageView.image!
@@ -79,7 +81,9 @@ import UIKit
         avatarImageView.layer.masksToBounds = true
         view.frame = bounds
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
         addSubview(view)
+        
     }
     
     
