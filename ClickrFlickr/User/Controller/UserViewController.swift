@@ -140,11 +140,6 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         navigationController?.navigationController?.popToRootViewController(animated: true)
     }
     
-//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        super.viewWillTransition(to: size, with: coordinator)
-//        view.layoutIfNeeded()
-//    }
-    
     private func fetchUserPhotos() {
         let userId = UserDefaults.standard.object(forKey: "usernsid")
         if let userId = userId as? String {
@@ -221,7 +216,6 @@ extension UserViewController: UIScrollViewDelegate {
         let navBarHeight = navigationController.navigationBar.frame.height
         
         let offsetY = scrollView.contentOffset.y + (navBarY + navBarHeight)
-//        print(offsetY)
         
         if offsetY > headerViewHeight {
             if isHeaderVisible {

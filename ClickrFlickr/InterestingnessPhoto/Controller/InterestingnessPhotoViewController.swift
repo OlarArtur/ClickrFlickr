@@ -164,20 +164,41 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
-            let layout = UICollectionViewFlowLayout()
-            layout.scrollDirection = .vertical
-            collectionView.setCollectionViewLayout(layout, animated: true)
-            collectionView.reloadItems(at: [indexPath])
-            collectionView.decelerationRate = UIScrollViewDecelerationRateNormal
-        } else {
             
+            guard let navigationController = navigationController, let tabBarController = tabBarController else {return}
+            
+            if navigationController.isNavigationBarHidden {
+                navigationController.isNavigationBarHidden = false
+                tabBarController.tabBar.isHidden = false
+            } else {
+                navigationController.isNavigationBarHidden = true
+                tabBarController.tabBar.isHidden = true
+            }
+            
+        } else {
             let layout = CenterCellCollectionViewFlowLayout()
             layout.scrollDirection = .horizontal
             collectionView.setCollectionViewLayout(layout, animated: true)
             collectionView.reloadItems(at: [indexPath])
             collectionView.decelerationRate = UIScrollViewDecelerationRateFast
+            
+            let closeItem = UIBarButtonItem(image: #imageLiteral(resourceName: "cancel"), style: .plain , target: self , action: #selector(closeButtonPressed))
+            closeItem.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            navigationItem.rightBarButtonItem = closeItem
         }
     }
+    
+    @objc func closeButtonPressed() {
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        collectionView.setCollectionViewLayout(layout, animated: true)
+        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.decelerationRate = UIScrollViewDecelerationRateNormal
+        navigationItem.rightBarButtonItem = nil
+    }
+    
+    
 
 }
 
