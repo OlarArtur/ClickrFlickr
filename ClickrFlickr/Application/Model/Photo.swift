@@ -10,6 +10,7 @@ import UIKit
 
 
 struct Photo {
+    
     let title: String
     let farm: Int
     let server: String
@@ -22,7 +23,6 @@ struct Photo {
     
     var width: CGFloat?
     var height: CGFloat?
-    
     
     var image: UIImage?
     
@@ -52,4 +52,5 @@ struct Photo {
         self.owner = owner
         self.description = description
     }
+    
 }

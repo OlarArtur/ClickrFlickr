@@ -9,10 +9,12 @@
 import UIKit
 
 class OnlyPhotoViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var photo: UIImageView!
     
     func configure(with photo: Photo) {
         self.photo.image = photo.image
+        self.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         print(self.bounds)
     }
     
