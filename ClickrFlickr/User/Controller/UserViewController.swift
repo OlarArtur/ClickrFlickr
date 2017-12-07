@@ -76,26 +76,25 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
             UIView.animate(withDuration: 0.4, animations: {
                 self.sideBarContainerView.frame.origin.x = self.view.bounds.width + 140
             }, completion: { success in
-                guard success else {return}
+                guard success else { return }
                 self.sideBarContainerView.removeFromSuperview()
+                self.menuIsVisible = false
             })
-            menuIsVisible = false
         } else {
             addSideBarMenu()
-            
             sideBarContainerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-            
             UIView.animate(withDuration: 0.4, animations: {
                 self.view.layoutIfNeeded()
             })
             menuIsVisible = true
         }
+        
     }
     
     private func addSideBarMenu() {
         
         sideBarContainerView = UIView(frame: CGRect(x: view.bounds.width, y: 0, width: 140, height: view.bounds.height))
-        sideBarContainerView.backgroundColor = #colorLiteral(red: 0.1234010687, green: 0.1234010687, blue: 0.1234010687, alpha: 1)
+        sideBarContainerView.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
         
         sideBarContainerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(sideBarContainerView)

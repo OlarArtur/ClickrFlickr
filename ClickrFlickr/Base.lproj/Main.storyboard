@@ -399,33 +399,42 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Aiy-pE-GQx">
-                                                    <rect key="frame" x="0.0" y="21" width="222" height="238"/>
+                                                    <rect key="frame" x="0.0" y="40.5" width="222" height="198.5"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XDH-xB-Vhh">
-                                                    <rect key="frame" x="0.0" y="259" width="222" height="16"/>
-                                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
-                                                    <nil key="textColor"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XDH-xB-Vhh">
+                                                    <rect key="frame" x="0.0" y="249" width="222" height="16"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Label">
+                                                            <attributes>
+                                                                <font key="NSFont" size="13" name=".AppleSystemUIFont"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" firstLineHeadIndent="10" headIndent="5" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uer-45-2em">
-                                                    <rect key="frame" x="0.0" y="0.0" width="222" height="21"/>
+                                                    <rect key="frame" x="0.0" y="10" width="222" height="20.5"/>
+                                                    <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
                                             </subviews>
                                         </view>
-                                        <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" red="0.83958231754253565" green="0.83958231754253565" blue="0.83958231754253565" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="Aiy-pE-GQx" secondAttribute="trailing" id="7jN-ak-Hjd"/>
                                             <constraint firstItem="uer-45-2em" firstAttribute="leading" secondItem="ifg-3Z-Ud1" secondAttribute="leading" id="C8J-3d-rJA"/>
-                                            <constraint firstItem="XDH-xB-Vhh" firstAttribute="top" secondItem="Aiy-pE-GQx" secondAttribute="bottom" id="FNh-7g-tnG"/>
-                                            <constraint firstAttribute="bottom" secondItem="XDH-xB-Vhh" secondAttribute="bottom" id="Geo-LJ-c0R"/>
+                                            <constraint firstItem="XDH-xB-Vhh" firstAttribute="top" secondItem="Aiy-pE-GQx" secondAttribute="bottom" constant="10" id="FNh-7g-tnG"/>
+                                            <constraint firstAttribute="bottom" secondItem="XDH-xB-Vhh" secondAttribute="bottom" constant="10" id="Geo-LJ-c0R"/>
                                             <constraint firstItem="Aiy-pE-GQx" firstAttribute="leading" secondItem="ifg-3Z-Ud1" secondAttribute="leading" id="Uwm-ui-1jC"/>
                                             <constraint firstAttribute="trailing" secondItem="XDH-xB-Vhh" secondAttribute="trailing" id="jJL-oY-VLZ"/>
                                             <constraint firstAttribute="trailing" secondItem="uer-45-2em" secondAttribute="trailing" id="mpq-KE-mzF"/>
-                                            <constraint firstItem="uer-45-2em" firstAttribute="top" secondItem="ifg-3Z-Ud1" secondAttribute="top" id="o9u-kv-r3w"/>
-                                            <constraint firstItem="Aiy-pE-GQx" firstAttribute="top" secondItem="uer-45-2em" secondAttribute="bottom" id="qAe-rB-yJa"/>
+                                            <constraint firstItem="uer-45-2em" firstAttribute="top" secondItem="ifg-3Z-Ud1" secondAttribute="top" constant="10" id="o9u-kv-r3w"/>
+                                            <constraint firstItem="Aiy-pE-GQx" firstAttribute="top" secondItem="uer-45-2em" secondAttribute="bottom" constant="10" id="qAe-rB-yJa"/>
                                             <constraint firstItem="XDH-xB-Vhh" firstAttribute="leading" secondItem="ifg-3Z-Ud1" secondAttribute="leading" id="wCS-kF-QB4"/>
                                         </constraints>
                                         <connections>

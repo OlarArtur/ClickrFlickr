@@ -2,7 +2,7 @@
 //  PhotoEntitie+CoreDataProperties.swift
 //  ClickrFlickr
 //
-//  Created by Artur Olar on 12/5/17.
+//  Created by Artur Olar on 12/7/17.
 //  Copyright © 2017 Artur Olar. All rights reserved.
 //
 //
@@ -17,9 +17,10 @@ extension PhotoEntitie {
         return NSFetchRequest<PhotoEntitie>(entityName: "PhotoEntitie")
     }
 
-    @NSManaged public var image: NSData?
-    @NSManaged public var index: Int16
+    @NSManaged public var imageID: String?
+    @NSManaged public var imageURL: String?
     @NSManaged public var photoDescription: String?
     @NSManaged public var title: String?
+    @NSManaged public var aspectRatio: String?
 
 }

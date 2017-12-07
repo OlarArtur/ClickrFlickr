@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct SearchPhotos {
+class SearchPhotos {
     
     var searchPhoto: [Photo]
     

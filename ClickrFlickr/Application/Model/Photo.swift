@@ -42,8 +42,9 @@ struct Photo {
             let descriptionDict = dict["description"] as? [String: Any],
             let description = descriptionDict["_content"] as? String else { return nil }
         
-        self.aspectSize = Float(heightS)! / Float(widthS)!
+        guard let height = Float(heightS), let width = Float(widthS) else { return nil }
         
+        self.aspectSize = height / width
         self.title = title
         self.farm = farm
         self.server = server

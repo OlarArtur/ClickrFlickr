@@ -14,8 +14,12 @@ class InterestingnessPhotoViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var photo = [Photo]()
-    let imageCache = NSCache<NSString, UIImage>()
     var photoEntities: [PhotoEntitie]?
+    
+    let imageCache = NSCache<NSString, UIImage>()
+
+    
+    var stack = CoreDatastack()
     
     let spacingItem: CGFloat = 2
     
@@ -34,41 +38,35 @@ class InterestingnessPhotoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+//        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         
         collectionView?.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+    
+        InterestingnessPhotoNetworkservice.getJsonForSearchPhoto() { [weak self] (success) in
+    
+            guard success else { return }
+            
+            guard let strongSelf = self else { return }
 
-        InterestingnessPhotoNetworkservice.getJsonForSearchPhoto() {[weak self] photo in
-            
-            guard let photo = photo else {
-                guard let strongSelf = self else {return}
-                let sort = NSSortDescriptor(key: #keyPath(PhotoEntitie.index) , ascending: true)
-                let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
-                 fetchRequest.sortDescriptors = [sort]
-                do {
-                    let photoEntities = try PersistentService.context.fetch(fetchRequest)
-                    strongSelf.photoEntities = photoEntities
-                    strongSelf.collectionView?.reloadData()
-                } catch {
-                    fatalError("Failure to fetch context: \(error)")
-                }
-                return
+            let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
+            do {
+                let photoEntitiesd = try strongSelf.stack.mainManagedObjectContext.fetch(fetchRequest)
+
+                strongSelf.photoEntities = photoEntitiesd
+                strongSelf.collectionView?.reloadData()
+            } catch {
+                print("Error fetch request \(error)")
             }
-            
-            guard let strongSelf = self else {return}
-            strongSelf.photo = photo.searchPhoto
-            strongSelf.collectionView?.reloadData()
         }
     }
-
-
+    
 }
 
 extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let photoEntities = photoEntities else {
-            return photo.count
+            return 0
         }
         return photoEntities.count
         
@@ -76,88 +74,62 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        var reusIdentifier = "CellInterestingnessPhoto"
-    
+        let reusIdentifier = "CellInterestingnessPhoto"
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
+        
+        guard let photoEntities = photoEntities else {return cell}
+        
+        guard let imageURL = photoEntities[indexPath.item].imageURL else {return cell}
+        
+        guard let imageID = photoEntities[indexPath.item].imageID else {return cell}
+        
         if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
-            reusIdentifier = "CellOnlyInterestingnessPhoto"
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusIdentifier, for: indexPath) as! OnlyPhotoViewCell
-            
-            if let photoEntities = photoEntities {
-                guard let imageData = photoEntities[indexPath.item].image else {return cell}
-                guard let image = UIImage(data: imageData as Data) else {return cell}
-                cell.photo.image = image
-                return cell
+            CustomImageView.loadImageUsingUrlString(urlString: imageURL) {/*[weak self]*/ image in
+                // guard let strongSelf = self else {return}
+                cell.configerOnlePhoto(image: image)
             }
-            
-            configerCell (indexPath: indexPath, completion: { [weak self] (success) in
-                if success {
-                    guard let strongSelf = self else {return}
-                    cell.configure(with: (strongSelf.photo[indexPath.item]))
-                }
-            })
-            return cell
-            
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
-            
-            if let photoEntities = photoEntities {
-                guard let title = photoEntities[indexPath.item].title, let description = photoEntities[indexPath.item].photoDescription, let imageData = photoEntities[indexPath.item].image else {return cell}
-                cell.descriptionLabel.text = description
-                cell.titleLabel.text = title
-                guard let image = UIImage(data: imageData as Data) else {return cell}
-                cell.photo.image = image
-                return cell
-            }
-            
-            configerCell (indexPath: indexPath, completion: { [weak self] (success) in
-                if success {
-                    guard let strongSelf = self else {return}
-                    cell.configure(with: (strongSelf.photo[indexPath.item]))
-                }
-            })
             return cell
         }
         
-    }
-    
-    private func configerCell (indexPath: IndexPath, completion: @escaping (Bool) -> ()) {
-        
-        if let imageFromCache = self.imageCache.object(forKey: self.photo[indexPath.item].url as NSString) {
-            self.photo[indexPath.item].image = imageFromCache
-            completion(true)
+        if let image = getImageFromDocumentDirectory(key: imageID) {
+            cell.configure (with: (photoEntities[indexPath.item]), image: image)
+//            print(" get image \(image), index path \(indexPath)")
         } else {
-            CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
+            CustomImageView.loadImageUsingUrlString(urlString: imageURL) { [weak self] image in
                 guard let strongSelf = self else {return}
-                
-                strongSelf.photo[indexPath.item].width = image.size.width
-                strongSelf.photo[indexPath.item].height = image.size.height
-                strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
-                strongSelf.photo[indexPath.item].image = image
-                
-                strongSelf.fetchPhotoEntitie(for: indexPath)
-                
-                completion(true)
+                cell.configure (with: (photoEntities[indexPath.item]), image: image)
+                strongSelf.saveImageToDocumentDirectory(image: image, key: imageID)
+//                print(" save image \(image), index path \(indexPath)")
             }
+        }
+        return cell
+        
+    }
+    
+    private func saveImageToDocumentDirectory(image: UIImage, key: String) {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        guard let data = UIImagePNGRepresentation(image) else {return}
+        
+        let fileName = paths.appendingPathComponent("\(key).png")
+        do {
+            try data.write(to: fileName)
+        } catch {
+            print("Error write image to document directory: \(error)")
         }
         
     }
     
-    private func fetchPhotoEntitie(for indexPath: IndexPath) {
-        let photoEntitie = PhotoEntitie(context: PersistentService.context)
-        photoEntitie.index = Int16(indexPath.item)
-        photoEntitie.photoDescription = photo[indexPath.item].description
-        photoEntitie.title = photo[indexPath.item].title
+    private func getImageFromDocumentDirectory(key: String) -> UIImage? {
         
-        guard let image = photo[indexPath.item].image else {
-            PersistentService.saveContext()
-            return
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let fileManager = FileManager.default
+        let fileName = paths.appendingPathComponent("\(key).png")
+
+        if fileManager.fileExists(atPath: fileName.path) {
+            return UIImage(contentsOfFile: fileName.path)
         }
-        
-        let imageData = UIImagePNGRepresentation(image)! as NSData
-        photoEntitie.image = imageData
-        
-        PersistentService.saveContext()
+        return nil
         
     }
     
@@ -198,8 +170,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         navigationItem.rightBarButtonItem = nil
     }
     
-    
-
 }
 
 extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout {
@@ -211,31 +181,15 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
         }
 
         let width = collectionView.bounds.size.width
-        var description = String()
-        var title = String()
-        var height = CGFloat()
-        
-        if let photoEntities = photoEntities {
-            guard let entitieTitle = photoEntities[indexPath.item].title, let entitieDescription = photoEntities[indexPath.item].photoDescription, let imageData = photoEntities[indexPath.item].image else {return CGSize()}
-            guard let image = UIImage(data: imageData as Data) else {return CGSize()}
-            height = image.size.height
-            description = entitieDescription
-            title = entitieTitle
-        } else {
-            let aspectSize = photo[indexPath.item].aspectSize
-            height = width * CGFloat(aspectSize)
-            description = photo[indexPath.item].description
-            title = photo[indexPath.item].title
-        }
 
-//        print(description)
-//        if let htmlData = description.data(using: String.Encoding.utf16, allowLossyConversion: false) {
-//        let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
-//            DispatchQueue.main.async {
-//                let attributedString = try? NSAttributedString(data: htmlData, options: options, documentAttributes: nil)
-//                 print(attributedString)
-//            }
-//        }
+        var height = CGFloat()
+
+        guard let photoEntities = photoEntities, let description = photoEntities[indexPath.item].photoDescription, let title = photoEntities[indexPath.item].title, let aspectSize = photoEntities[indexPath.item].aspectRatio, let aspectSizeFloat = Float(aspectSize) else {
+            return CGSize(width: 0, height: 0)
+        }
+        
+        height = width * CGFloat(aspectSizeFloat)
+
 
         let fontDescription: UIFont = UIFont.systemFont(ofSize: 13, weight: .regular)
         let fontTitle: UIFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
@@ -243,7 +197,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let descriptionTemp = description.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSAttributedStringKey.font: fontDescription], context: nil)
         let titleTemp = title.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSAttributedStringKey.font: fontTitle], context: nil)
-        
+
         let descriptionHeight = descriptionTemp.height
         let titleHeight = titleTemp.height
 
@@ -261,21 +215,21 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2 * spacingItem
-    }
-
-}
-
-extension InterestingnessPhotoViewController: UICollectionViewDataSourcePrefetching {
-
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        guard photoEntities != nil else {return}
-        for indexPath in indexPaths {
-            configerCell(indexPath: indexPath, completion: { (success) in })
+        if collectionViewLayout is CenterCellCollectionViewFlowLayout {
+            return 0
         }
+        return 20
     }
 
 }
 
-
-
+//extension InterestingnessPhotoViewController: UICollectionViewDataSourcePrefetching {
+//
+//    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+//        guard photoEntitie != nil else {return}
+//        for indexPath in indexPaths {
+//            configerCell(indexPath: indexPath, completion: { (success) in })
+//        }
+//    }
+//
+//}

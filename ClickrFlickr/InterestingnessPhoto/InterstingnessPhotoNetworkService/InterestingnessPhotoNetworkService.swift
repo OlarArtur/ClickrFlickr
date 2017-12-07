@@ -12,17 +12,17 @@ class InterestingnessPhotoNetworkservice {
     
     private init() {}
     
-    static func getJsonForSearchPhoto(completion: @escaping (SearchPhotos?)->()) {
+    static func getJsonForSearchPhoto(completion: @escaping (Bool)->()) {
         guard let string = CallingFlickrAPIwithOauth.methodInterestingnessGetList() else {return}
         
         FetchJSON.fetchJson(fromUrl: string) { (json) in
             
             guard let json = json else {return}
             do {
-                let searchPhoto = try SearchPhotos(json: json)
-                completion(searchPhoto)
+                let parsePhotos = try ParsePhotos(json: json)
+                completion(true)
             } catch {
-                completion(nil)
+                completion(false)
                 let error = ErrorAlertController()
                 error.showErrorAlertController(title: "ERROR! Fetching JSON for search Photo", message: "Try again?")
             }
