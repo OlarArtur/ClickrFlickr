@@ -51,7 +51,15 @@ struct Photo {
         self.id = id
         self.secret = secret
         self.owner = owner
-        self.description = description
+        self.description = {
+            guard let htmlData = description.data(using: String.Encoding.utf16, allowLossyConversion: false) else {return description}
+            let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
+                
+            guard let attributedString = try? NSAttributedString(data: htmlData, options: options, documentAttributes: nil) else {return description}
+            let result = attributedString.string
+            return result
+        } ()
+        
     }
     
 }

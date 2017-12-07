@@ -35,7 +35,6 @@ public class PhotoEntitie: NSManagedObject {
         self.photoDescription = description
         self.imageID = id
         self.title = title
-        
     }
-
+    
 }

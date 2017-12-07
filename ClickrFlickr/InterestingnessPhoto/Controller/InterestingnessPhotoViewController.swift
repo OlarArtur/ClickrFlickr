@@ -77,6 +77,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         let reusIdentifier = "CellInterestingnessPhoto"
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
+        cell.prepareForReuse()
         
         guard let photoEntities = photoEntities else {return cell}
         
@@ -94,13 +95,13 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         
         if let image = getImageFromDocumentDirectory(key: imageID) {
             cell.configure (with: (photoEntities[indexPath.item]), image: image)
-//            print(" get image \(image), index path \(indexPath)")
+            print(" get image \(image), index path \(indexPath)")
         } else {
             CustomImageView.loadImageUsingUrlString(urlString: imageURL) { [weak self] image in
                 guard let strongSelf = self else {return}
                 cell.configure (with: (photoEntities[indexPath.item]), image: image)
                 strongSelf.saveImageToDocumentDirectory(image: image, key: imageID)
-//                print(" save image \(image), index path \(indexPath)")
+                print(" save image \(image), index path \(indexPath)")
             }
         }
         return cell
@@ -180,28 +181,24 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
             return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
         }
 
-        let width = collectionView.bounds.size.width
+        let width = collectionView.bounds.size.width - 16
 
-        var height = CGFloat()
-
-        guard let photoEntities = photoEntities, let description = photoEntities[indexPath.item].photoDescription, let title = photoEntities[indexPath.item].title, let aspectSize = photoEntities[indexPath.item].aspectRatio, let aspectSizeFloat = Float(aspectSize) else {
+        guard let photoEntities = photoEntities, let description = photoEntities[indexPath.item].photoDescription, let aspectSize = photoEntities[indexPath.item].aspectRatio, let aspectSizeFloat = Float(aspectSize) else {
             return CGSize(width: 0, height: 0)
         }
         
-        height = width * CGFloat(aspectSizeFloat)
-
+        let photoHeight = (width - 8) * CGFloat(aspectSizeFloat)
+        print("content image \(width) \(photoHeight), index path \(indexPath)")
 
         let fontDescription: UIFont = UIFont.systemFont(ofSize: 13, weight: .regular)
-        let fontTitle: UIFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
 
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let descriptionTemp = description.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSAttributedStringKey.font: fontDescription], context: nil)
-        let titleTemp = title.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSAttributedStringKey.font: fontTitle], context: nil)
 
-        let descriptionHeight = descriptionTemp.height
-        let titleHeight = titleTemp.height
+        let descriptionHeight = descriptionTemp.height + 10
 
-        height = height + descriptionHeight + titleHeight
+        
+        let height = photoHeight + descriptionHeight
 
         return CGSize(width: width, height: height)
     }
@@ -211,7 +208,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: spacingItem, left: 0, bottom: spacingItem, right: 0)
+        return UIEdgeInsets(top: spacingItem, left: 8, bottom: spacingItem, right: 8)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

@@ -16,11 +16,11 @@ class InterstingnessPhotoCollectionViewCell: UICollectionViewCell {
     
     func configure(with photoEntitie: PhotoEntitie, image: UIImage) {
         
+        self.titleLabel.text = photoEntitie.title
         self.photo.image = image
         self.descriptionLabel.text = photoEntitie.photoDescription
-        self.titleLabel.text = photoEntitie.title
         
-        makeAppearanceViews()
+//        makeAppearanceViews()
         
     }
     
@@ -33,15 +33,8 @@ class InterstingnessPhotoCollectionViewCell: UICollectionViewCell {
         
     }
     
-    private func makeAppearanceViews() {
-        
-        self.photo.layer.shadowRadius = 2
-        self.photo.layer.shadowOpacity = 0.8
-        self.descriptionLabel.layer.shadowOpacity = 0.8
-        self.descriptionLabel.layer.shadowRadius = 2
-        self.titleLabel.layer.shadowOpacity = 0.8
-        self.titleLabel.layer.shadowRadius = 2
-        
+    private func decodeStringToHTML() {
+    
         guard let description = self.descriptionLabel.text else {return}
         if let htmlData = description.data(using: String.Encoding.utf16, allowLossyConversion: false) {
             let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
