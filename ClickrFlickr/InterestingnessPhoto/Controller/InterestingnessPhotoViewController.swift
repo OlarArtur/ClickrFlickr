@@ -34,7 +34,14 @@ class InterestingnessPhotoViewController: UIViewController {
 //    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
 //        return .portrait
 //    }
-//
+    
+    
+    var statusBarShouldBeHidden = false
+    
+    override var prefersStatusBarHidden: Bool {
+        return statusBarShouldBeHidden
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -72,11 +79,22 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.8, delay: 0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
+            cell.contentView.layer.opacity = 1
+        }, completion: nil)
+      
+    }
+    
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let reusIdentifier = "CellInterestingnessPhoto"
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
+        
+        cell.contentView.layer.opacity = 0
+        
         cell.prepareForReuse()
         
         guard let photoEntities = photoEntities else {return cell}
@@ -85,23 +103,28 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         
         guard let imageID = photoEntities[indexPath.item].imageID else {return cell}
         
+        cell.descriptionLabel.text = photoEntities[indexPath.item].photoDescription
+        cell.titleLabel.text = photoEntities[indexPath.item].title
+        
         if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
             CustomImageView.loadImageUsingUrlString(urlString: imageURL) {/*[weak self]*/ image in
                 // guard let strongSelf = self else {return}
-                cell.configerOnlePhoto(image: image)
+                guard let image = image else {return}
+                cell.photo.image = image
             }
             return cell
         }
         
         if let image = getImageFromDocumentDirectory(key: imageID) {
-            cell.configure (with: (photoEntities[indexPath.item]), image: image)
+            cell.photo.image = image
         } else {
             CustomImageView.loadImageUsingUrlString(urlString: imageURL) { [weak self] image in
-                guard let strongSelf = self else {return}
-                cell.configure (with: (photoEntities[indexPath.item]), image: image)
+                guard let strongSelf = self, let image = image else {return}
+                cell.photo.image = image
                 strongSelf.saveImageToDocumentDirectory(image: image, key: imageID)
             }
         }
+        
         return cell
         
     }
@@ -141,9 +164,11 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
             if navigationController.isNavigationBarHidden {
                 navigationController.isNavigationBarHidden = false
                 tabBarController.tabBar.isHidden = false
+                statusBarShouldBeHidden = true
             } else {
                 navigationController.isNavigationBarHidden = true
                 tabBarController.tabBar.isHidden = true
+                statusBarShouldBeHidden = false
             }
             
         } else {
@@ -184,7 +209,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
         guard let photoEntities = photoEntities, let description = photoEntities[indexPath.item].photoDescription, let aspectSize = photoEntities[indexPath.item].aspectRatio, let aspectSizeFloat = Float(aspectSize) else {
             return CGSize(width: 0, height: 0)
         }
-//        description = decodeToString(htmlString: description)
         
         let photoHeight = (width - 8) * CGFloat(aspectSizeFloat)
 
@@ -205,11 +229,11 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return spacingItem
+        return 0
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: spacingItem, left: 0, bottom: spacingItem, right: 0)
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -218,15 +242,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
         }
         return 20
     }
-    
-//    private func decodeToString(htmlString string: String) -> String {
-//        
-//        guard let htmlData = string.data(using: String.Encoding.utf16, allowLossyConversion: false) else { return string }
-//        let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
-//        guard let attributedString = try? NSAttributedString(data: htmlData, options: options, documentAttributes: nil) else { return string }
-//        return attributedString.string
-//        
-//    }
 
 }
 

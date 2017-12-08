@@ -54,12 +54,22 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         return photo.count
     }
     
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
+            cell.contentView.layer.opacity = 1
+        }, completion: nil)
+        
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SearchCollectionViewCell
         
+        cell.contentView.layer.opacity = 0
         cell.spinnerActivityIndicator.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         cell.spinnerActivityIndicator.startAnimating()
+        
+        cell.titlePhoto.text = photo[indexPath.item].title
         
         if let imageFromCache = self.imageCache.object(forKey: self.photo[indexPath.item].url as NSString) {
             
@@ -73,7 +83,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
             
             CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
                 
-                guard let strongSelf = self else {return}
+                guard let strongSelf = self, let image = image else {return}
                 
                 strongSelf.photo[indexPath.item].width = image.size.width
                 strongSelf.photo[indexPath.item].height = image.size.height

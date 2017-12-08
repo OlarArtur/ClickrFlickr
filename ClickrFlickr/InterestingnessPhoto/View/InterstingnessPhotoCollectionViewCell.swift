@@ -20,7 +20,7 @@ class InterstingnessPhotoCollectionViewCell: UICollectionViewCell {
         self.photo.image = image
         self.descriptionLabel.text =  photoEntitie.photoDescription
         
-        decodeHTMLinDescription()
+        makeCellAppearance()
         
     }
     
@@ -32,17 +32,19 @@ class InterstingnessPhotoCollectionViewCell: UICollectionViewCell {
         
     }
     
-    private func decodeHTMLinDescription() {
+    private func makeCellAppearance() {
+        
         guard let htmlString = self.descriptionLabel.text else {return}
         guard let htmlData = htmlString.data(using: String.Encoding.utf16, allowLossyConversion: false) else {return}
         let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
         guard let attributedString = try? NSAttributedString(data: htmlData, options: options, documentAttributes: nil) else {return}
         self.descriptionLabel.text = attributedString.string
-        
+
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+
         self.photo.image = nil
         self.descriptionLabel.text = ""
         self.titleLabel.text = ""

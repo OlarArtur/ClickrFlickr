@@ -400,7 +400,6 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Aiy-pE-GQx">
                                                     <rect key="frame" x="8" y="8" width="206" height="237.5"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.2221335827" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XDH-xB-Vhh">
                                                     <rect key="frame" x="8" y="250.5" width="206" height="14.5"/>

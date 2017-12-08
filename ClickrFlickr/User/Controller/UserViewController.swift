@@ -159,7 +159,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellUser", for: indexPath) as! UserCollectionViewCell
         CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
             
-            guard let strongSelf = self else {return}
+            guard let strongSelf = self, let image = image else {return}
             
             strongSelf.photo[indexPath.item].width = image.size.width
             strongSelf.photo[indexPath.item].height = image.size.height

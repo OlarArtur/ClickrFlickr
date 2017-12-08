@@ -13,11 +13,18 @@ class InterestingnessPhotoNetworkservice {
     private init() {}
     
     static func getJsonForSearchPhoto(completion: @escaping (Bool)->()) {
-        guard let string = CallingFlickrAPIwithOauth.methodInterestingnessGetList() else {return}
+        guard let string = CallingFlickrAPIwithOauth.methodInterestingnessGetList() else {
+            completion(false)
+            return
+            
+        }
         
         FetchJSON.fetchJson(fromUrl: string) { (json) in
             
-            guard let json = json else {return}
+            guard let json = json else {
+                completion(false)
+                return
+            }
             do {
                 let parsePhotos = try ParsePhotos(json: json)
                 completion(true)
