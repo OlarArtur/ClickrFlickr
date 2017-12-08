@@ -37,4 +37,5 @@ public class PhotoEntitie: NSManagedObject {
         self.title = title
     }
     
+    
 }

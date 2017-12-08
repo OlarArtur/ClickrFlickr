@@ -18,30 +18,26 @@ class InterstingnessPhotoCollectionViewCell: UICollectionViewCell {
         
         self.titleLabel.text = photoEntitie.title
         self.photo.image = image
-        self.descriptionLabel.text = photoEntitie.photoDescription
+        self.descriptionLabel.text =  photoEntitie.photoDescription
         
-//        makeAppearanceViews()
+        decodeHTMLinDescription()
         
     }
     
     func configerOnlePhoto (image: UIImage) {
         self.photo.image = image
         self.photo.contentMode = .scaleAspectFit
-        self.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         self.descriptionLabel.text = ""
         self.titleLabel.text = ""
         
     }
     
-    private func decodeStringToHTML() {
-    
-        guard let description = self.descriptionLabel.text else {return}
-        if let htmlData = description.data(using: String.Encoding.utf16, allowLossyConversion: false) {
-            let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
-            
-            guard let attributedString = try? NSAttributedString(data: htmlData, options: options, documentAttributes: nil) else {return}
-            self.descriptionLabel.text = attributedString.string
-        }
+    private func decodeHTMLinDescription() {
+        guard let htmlString = self.descriptionLabel.text else {return}
+        guard let htmlData = htmlString.data(using: String.Encoding.utf16, allowLossyConversion: false) else {return}
+        let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
+        guard let attributedString = try? NSAttributedString(data: htmlData, options: options, documentAttributes: nil) else {return}
+        self.descriptionLabel.text = attributedString.string
         
     }
     

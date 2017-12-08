@@ -95,13 +95,11 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         
         if let image = getImageFromDocumentDirectory(key: imageID) {
             cell.configure (with: (photoEntities[indexPath.item]), image: image)
-            print(" get image \(image), index path \(indexPath)")
         } else {
             CustomImageView.loadImageUsingUrlString(urlString: imageURL) { [weak self] image in
                 guard let strongSelf = self else {return}
                 cell.configure (with: (photoEntities[indexPath.item]), image: image)
                 strongSelf.saveImageToDocumentDirectory(image: image, key: imageID)
-                print(" save image \(image), index path \(indexPath)")
             }
         }
         return cell
@@ -181,22 +179,25 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
             return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
         }
 
-        let width = collectionView.bounds.size.width - 16
+        let width = collectionView.bounds.size.width
 
         guard let photoEntities = photoEntities, let description = photoEntities[indexPath.item].photoDescription, let aspectSize = photoEntities[indexPath.item].aspectRatio, let aspectSizeFloat = Float(aspectSize) else {
             return CGSize(width: 0, height: 0)
         }
+//        description = decodeToString(htmlString: description)
         
         let photoHeight = (width - 8) * CGFloat(aspectSizeFloat)
-        print("content image \(width) \(photoHeight), index path \(indexPath)")
 
-        let fontDescription: UIFont = UIFont.systemFont(ofSize: 13, weight: .regular)
+        let fontDescription: UIFont = UIFont.systemFont(ofSize: 12, weight: .regular)
 
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let descriptionTemp = description.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSAttributedStringKey.font: fontDescription], context: nil)
 
-        let descriptionHeight = descriptionTemp.height + 10
-
+        var descriptionHeight = descriptionTemp.height + 5
+        
+        if descriptionHeight > 40 {
+            descriptionHeight = 45
+        }
         
         let height = photoHeight + descriptionHeight
 
@@ -208,7 +209,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: spacingItem, left: 8, bottom: spacingItem, right: 8)
+        return UIEdgeInsets(top: spacingItem, left: 0, bottom: spacingItem, right: 0)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -217,6 +218,15 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
         }
         return 20
     }
+    
+//    private func decodeToString(htmlString string: String) -> String {
+//        
+//        guard let htmlData = string.data(using: String.Encoding.utf16, allowLossyConversion: false) else { return string }
+//        let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
+//        guard let attributedString = try? NSAttributedString(data: htmlData, options: options, documentAttributes: nil) else { return string }
+//        return attributedString.string
+//        
+//    }
 
 }
 
