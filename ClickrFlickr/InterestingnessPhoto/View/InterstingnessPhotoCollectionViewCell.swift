@@ -14,6 +14,10 @@ class InterstingnessPhotoCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     
+    override func didMoveToWindow() {
+        makeCellAppearance()
+    }
+    
     func configure(with photoEntitie: PhotoEntitie, image: UIImage) {
         
         self.titleLabel.text = photoEntitie.title
@@ -35,9 +39,8 @@ class InterstingnessPhotoCollectionViewCell: UICollectionViewCell {
     private func makeCellAppearance() {
         
         guard let htmlString = self.descriptionLabel.text else {return}
-        guard let htmlData = htmlString.data(using: String.Encoding.utf16, allowLossyConversion: false) else {return}
-        let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
-        guard let attributedString = try? NSAttributedString(data: htmlData, options: options, documentAttributes: nil) else {return}
+        guard let htmlData = htmlString.data(using: String.Encoding.utf8, allowLossyConversion: false) else {return}
+        guard let attributedString = try? NSAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil) else {return}
         self.descriptionLabel.text = attributedString.string
 
     }

@@ -203,6 +203,14 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "UserPhotoDetail" {
+            let detailVC = segue.destination as! UserPhotoDetailViewController
+            
+            
+        }
+    }
+    
 }
 
 extension UserViewController: UIScrollViewDelegate {

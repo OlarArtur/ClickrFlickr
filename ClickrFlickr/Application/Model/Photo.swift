@@ -9,7 +9,7 @@
 import UIKit
 
 
-struct Photo {
+@objc class Photo: NSObject {
     
     let title: String
     let farm: Int
@@ -17,7 +17,7 @@ struct Photo {
     let id: String
     let secret: String
     let owner: String
-    let description: String
+    let photoDescription: String
     
     var aspectSize: Float
     
@@ -51,14 +51,7 @@ struct Photo {
         self.id = id
         self.secret = secret
         self.owner = owner
-        self.description = {
-            guard let htmlData = description.data(using: String.Encoding.utf16, allowLossyConversion: false) else {return description}
-            let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
-                
-            guard let attributedString = try? NSAttributedString(data: htmlData, options: options, documentAttributes: nil) else {return description}
-            let result = attributedString.string
-            return result
-        } ()
+        self.photoDescription = description
         
     }
     

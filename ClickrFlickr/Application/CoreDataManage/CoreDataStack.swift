@@ -11,6 +11,9 @@ import CoreData
 
 class CoreDatastack: NSObject {
     
+    static let `default` = CoreDatastack()
+    private override init() {}
+    
     private let modelName = "ClickrFlickr"
     
     private lazy var managedObjectModel: NSManagedObjectModel = {
@@ -24,18 +27,13 @@ class CoreDatastack: NSObject {
         return managedObjectModel
     } ()
     
-    private lazy var getDocumentsDirectory: URL = {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        let documentsDirectory = paths[0]
-        return documentsDirectory
-    } ()
-    
     private lazy var coordinator: NSPersistentStoreCoordinator = {
         
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let persistantStoreURL = self.getDocumentsDirectory.appendingPathComponent("ClickrFlickr.sqlite")
+        
+        let persistantStoreURL = self.getDocumentsDirectory?.appendingPathComponent("ClickrFlickr.sqlite")
         do {
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: persistantStoreURL, options: [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: false])
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: persistantStoreURL, options: [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true])
         } catch {
             fatalError("Error adding persistent store \(error)")
         }
@@ -43,41 +41,48 @@ class CoreDatastack: NSObject {
         
     } ()
     
+    private lazy var getDocumentsDirectory: URL? = {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        guard let documentsDirectory = paths.first else {return nil}
+        return documentsDirectory
+    } ()
+    
     private(set) lazy var mainManagedObjectContext: NSManagedObjectContext = {
         
         let mangedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        mangedObjectContext.parent = self.privateManagedObjectContext
+        mangedObjectContext.parent = writeManagedObjectContext
         mangedObjectContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         return mangedObjectContext
         
     } ()
     
-    private lazy var privateManagedObjectContext: NSManagedObjectContext = {
+    private(set) lazy var writeManagedObjectContext: NSManagedObjectContext = {
 
         let mangedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        mangedObjectContext.persistentStoreCoordinator = self.coordinator
+        mangedObjectContext.persistentStoreCoordinator = coordinator
         mangedObjectContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         return mangedObjectContext
         
     } ()
     
-    func saveMainContext() {
+    func saveContext() {
         
-        if mainManagedObjectContext.hasChanges || privateManagedObjectContext.hasChanges {
-           
+        if mainManagedObjectContext.hasChanges {
             mainManagedObjectContext.performAndWait {
                 do {
                     try mainManagedObjectContext.save()
-//                    print("Save")
+                    print("Save")
                 } catch {
                     fatalError("Error saving main context \(error)")
                 }
             }
-            
-            privateManagedObjectContext.perform {
+        }
+        
+        if writeManagedObjectContext.hasChanges {
+            writeManagedObjectContext.perform {
                 do {
-                    try self.privateManagedObjectContext.save()
-//                    print("Private Save")
+                    try self.writeManagedObjectContext.save()
+                    print("Private Save")
                 } catch {
                     fatalError("Error saving private context \(error)")
                 }
@@ -85,5 +90,5 @@ class CoreDatastack: NSObject {
         }
         
     }
-    
+
 }

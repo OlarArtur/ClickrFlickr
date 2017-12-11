@@ -11,8 +11,6 @@ import Foundation
 class ParsePhotos {
     
     var parsePhoto: [PhotoEntitie]
-    
-    var stack = CoreDatastack()
 
     init (json: AnyObject) throws {
         
@@ -24,8 +22,8 @@ class ParsePhotos {
         
         for element in photo {
             
-            guard let photoEntitie = PhotoEntitie(dict: element, context: stack.mainManagedObjectContext) else { throw FlickOauthError.NetworkServiseError }
-            stack.saveMainContext()
+            guard let photoEntitie = PhotoEntitie(dict: element, context: CoreDatastack.default.writeManagedObjectContext) else { throw FlickOauthError.NetworkServiseError }
+            CoreDatastack.default.saveContext()
             
             parsePhoto.append(photoEntitie)
         }

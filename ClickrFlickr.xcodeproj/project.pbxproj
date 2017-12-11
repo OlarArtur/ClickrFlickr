@@ -25,6 +25,7 @@
 		B22D38311F604AA300FCC371 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D38301F604AA300FCC371 /* AppDelegate.swift */; };
 		B22D38391F604AA300FCC371 /* ClickrFlickr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B22D38371F604AA300FCC371 /* ClickrFlickr.xcdatamodeld */; };
 		B22D383B1F604AA300FCC371 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B22D383A1F604AA300FCC371 /* Assets.xcassets */; };
+		B235E8331FDEBB6500D95D45 /* SearchDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B235E8321FDEBB6500D95D45 /* SearchDetailViewCell.swift */; };
 		B241069A1F724BBA006F9E53 /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24106991F724BBA006F9E53 /* Structures.swift */; };
 		B249AD121F7A92FC004A7AD0 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AD111F7A92FC004A7AD0 /* CustomImageView.swift */; };
 		B249F76F1F7A2E310036FAB7 /* FlickrOauthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249F76E1F7A2E310036FAB7 /* FlickrOauthError.swift */; };
@@ -78,6 +79,7 @@
 		B22D383D1F604AA300FCC371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B22D383F1F604AA300FCC371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/Info.plist"; sourceTree = "<group>"; };
 		B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ClickrFlickr-Bridging-Header.h"; path = "Supporting Files/ClickrFlickr-Bridging-Header.h"; sourceTree = "<group>"; };
+		B235E8321FDEBB6500D95D45 /* SearchDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchDetailViewCell.swift; path = SearchPhotoDetail/View/SearchDetailViewCell.swift; sourceTree = "<group>"; };
 		B24106991F724BBA006F9E53 /* Structures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Structures.swift; path = Application/Model/Structures.swift; sourceTree = "<group>"; };
 		B249AD111F7A92FC004A7AD0 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		B249F76E1F7A2E310036FAB7 /* FlickrOauthError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrOauthError.swift; path = "Error Handle/FlickrOauthError.swift"; sourceTree = "<group>"; };
@@ -173,6 +175,8 @@
 		B21EAAB61FD59022007BA9B8 /* CoreDataManage */ = {
 			isa = PBXGroup;
 			children = (
+				B278969A1FD8121A002D2B90 /* PhotoEntitie+CoreDataClass.swift */,
+				B216474E1FD9207500E3F4DD /* PhotoEntitie+CoreDataProperties.swift */,
 				B21EAAB71FD5916D007BA9B8 /* PersistentService.swift */,
 				B278969E1FD81434002D2B90 /* CoreDataStack.swift */,
 			);
@@ -192,8 +196,6 @@
 		B22D38241F604AA300FCC371 = {
 			isa = PBXGroup;
 			children = (
-				B278969A1FD8121A002D2B90 /* PhotoEntitie+CoreDataClass.swift */,
-				B216474E1FD9207500E3F4DD /* PhotoEntitie+CoreDataProperties.swift */,
 				B22D382F1F604AA300FCC371 /* ClickrFlickr */,
 				B22D38341F604AA300FCC371 /* Main.storyboard */,
 				B22D383C1F604AA300FCC371 /* LaunchScreen.storyboard */,
@@ -289,6 +291,7 @@
 		B25AA1CF1FAB33600063E7AC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B235E8321FDEBB6500D95D45 /* SearchDetailViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -611,6 +614,7 @@
 				B2202C0F1F7BBBCE002D33C2 /* UserViewController.swift in Sources */,
 				B249AD121F7A92FC004A7AD0 /* CustomImageView.swift in Sources */,
 				B21EAAB81FD5916D007BA9B8 /* PersistentService.swift in Sources */,
+				B235E8331FDEBB6500D95D45 /* SearchDetailViewCell.swift in Sources */,
 				B22B8B3A1FBC20E500A21401 /* GetPhotoNetworkService.swift in Sources */,
 				B2F7EBAE1F7A860400300C74 /* FetchJSON.swift in Sources */,
 				B29A9FEF1F7276C000567FD5 /* SearchCollectionViewCell.swift in Sources */,

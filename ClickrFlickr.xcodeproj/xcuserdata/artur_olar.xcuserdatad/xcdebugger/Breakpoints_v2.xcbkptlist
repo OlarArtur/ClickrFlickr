@@ -51,13 +51,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ClickrFlickr/SearchPhoto/Controller/SearchCollectionViewController.swift"
-            timestampString = "534417997.344412"
+            filePath = "ClickrFlickr/SearchPhotoDetail/Controller/SearchDetailViewController.swift"
+            timestampString = "534692675.34379"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "configUserInfo()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

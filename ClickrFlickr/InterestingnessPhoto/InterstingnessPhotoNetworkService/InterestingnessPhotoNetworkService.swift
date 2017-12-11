@@ -26,7 +26,7 @@ class InterestingnessPhotoNetworkservice {
                 return
             }
             do {
-                let parsePhotos = try ParsePhotos(json: json)
+                _ = try ParsePhotos(json: json)
                 completion(true)
             } catch {
                 completion(false)

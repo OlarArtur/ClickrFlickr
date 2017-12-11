@@ -10,13 +10,18 @@
 #import "UserPhotoDetailCell.h"
 #import <ClickrFlickr-Swift.h>
 
-@interface UserPhotoDetailViewController ()
+@interface UserPhotoDetailViewController () {
+    NSMutableArray *photo;
+}
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+//@property NSMutableArray *photo;
 
 @end
 
 @implementation UserPhotoDetailViewController
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

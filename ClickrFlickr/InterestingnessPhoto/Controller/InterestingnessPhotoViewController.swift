@@ -17,9 +17,6 @@ class InterestingnessPhotoViewController: UIViewController {
     var photoEntities: [PhotoEntitie]?
     
     let imageCache = NSCache<NSString, UIImage>()
-
-    
-    var stack = CoreDatastack()
     
     let spacingItem: CGFloat = 2
     
@@ -57,9 +54,9 @@ class InterestingnessPhotoViewController: UIViewController {
 
             let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
             do {
-                let photoEntitiesd = try strongSelf.stack.mainManagedObjectContext.fetch(fetchRequest)
+                let photoEntities = try CoreDatastack.default.mainManagedObjectContext.fetch(fetchRequest)
 
-                strongSelf.photoEntities = photoEntitiesd
+                strongSelf.photoEntities = photoEntities
                 strongSelf.collectionView?.reloadData()
             } catch {
                 print("Error fetch request \(error)")
