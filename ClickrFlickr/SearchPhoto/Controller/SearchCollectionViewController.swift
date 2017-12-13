@@ -25,7 +25,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         collectionView?.collectionViewLayout = layout
         layout.delegate = self
         
-        collectionView?.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        collectionView?.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         createSearchBar()
         
         SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) {[weak self] photo in
@@ -90,7 +90,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
                 strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
                 
                 strongSelf.photo[indexPath.item].image = image
-                if cell == collectionView.cellForItem(at: indexPath) {
+                if collectionView.indexPath(for: cell) == indexPath {
                     cell.configure(with: (strongSelf.photo[indexPath.item]))
                 }
                 cell.spinnerActivityIndicator.stopAnimating()

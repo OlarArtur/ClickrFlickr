@@ -22,6 +22,7 @@
 		B22AE49E1F7A67DC001D6D0C /* ErrorAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22AE49D1F7A67DC001D6D0C /* ErrorAlertController.swift */; };
 		B22B8B371FBC19A200A21401 /* UserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B8B361FBC19A200A21401 /* UserCollectionViewCell.swift */; };
 		B22B8B3A1FBC20E500A21401 /* GetPhotoNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B8B391FBC20E500A21401 /* GetPhotoNetworkService.swift */; };
+		B22C6FD41FE1079B0087FF0D /* CoverFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B22C6FD31FE1079B0087FF0D /* CoverFlowLayout.m */; };
 		B22D38311F604AA300FCC371 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D38301F604AA300FCC371 /* AppDelegate.swift */; };
 		B22D38391F604AA300FCC371 /* ClickrFlickr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B22D38371F604AA300FCC371 /* ClickrFlickr.xcdatamodeld */; };
 		B22D383B1F604AA300FCC371 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B22D383A1F604AA300FCC371 /* Assets.xcassets */; };
@@ -71,6 +72,8 @@
 		B22AE49D1F7A67DC001D6D0C /* ErrorAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorAlertController.swift; path = "Error Handle/ErrorAlertController.swift"; sourceTree = "<group>"; };
 		B22B8B361FBC19A200A21401 /* UserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserCollectionViewCell.swift; path = User/View/UserCollectionViewCell.swift; sourceTree = "<group>"; };
 		B22B8B391FBC20E500A21401 /* GetPhotoNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPhotoNetworkService.swift; sourceTree = "<group>"; };
+		B22C6FD21FE1079B0087FF0D /* CoverFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CoverFlowLayout.h; path = SearchPhotoDetail/View/CoverFlowLayout.h; sourceTree = "<group>"; };
+		B22C6FD31FE1079B0087FF0D /* CoverFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CoverFlowLayout.m; path = SearchPhotoDetail/View/CoverFlowLayout.m; sourceTree = "<group>"; };
 		B22D382D1F604AA300FCC371 /* ClickrFlickr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClickrFlickr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22D38301F604AA300FCC371 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Application/Controller/AppDelegate.swift; sourceTree = "<group>"; };
 		B22D38351F604AA300FCC371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -292,6 +295,8 @@
 			isa = PBXGroup;
 			children = (
 				B235E8321FDEBB6500D95D45 /* SearchDetailViewCell.swift */,
+				B22C6FD21FE1079B0087FF0D /* CoverFlowLayout.h */,
+				B22C6FD31FE1079B0087FF0D /* CoverFlowLayout.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -629,6 +634,7 @@
 				B278969F1FD81434002D2B90 /* CoreDataStack.swift in Sources */,
 				B21603591FB42EF700AFA5F3 /* SearchNetworkService.swift in Sources */,
 				B29439231FBD885300006CE6 /* UserInfo.swift in Sources */,
+				B22C6FD41FE1079B0087FF0D /* CoverFlowLayout.m in Sources */,
 				B291E4071FC714C300EB3419 /* UserPhotoDetailViewController.m in Sources */,
 				B26CF1691F697653006D7EF0 /* MainNavigationController.swift in Sources */,
 				B241069A1F724BBA006F9E53 /* Structures.swift in Sources */,

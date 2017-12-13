@@ -166,16 +166,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6u2-XU-vSe">
-                                <rect key="frame" x="0.0" y="224" width="375" height="276"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="224" width="375" height="284"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cuh-Mu-mye" customClass="UserInfo" customModule="ClickrFlickr" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="375" height="160"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="160" id="h6w-0z-wkw"/>
-                                </constraints>
-                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lT6-Bi-Nwb">
                                 <rect key="frame" x="0.0" y="508" width="375" height="110"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -190,7 +183,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SearchDetailCell" id="sID-Mx-9RG" customClass="SearchDetailViewCell" customModule="ClickrFlickr" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="16.5" width="85" height="86"/>
+                                        <rect key="frame" x="0.0" y="12" width="85" height="86"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="85" height="86"/>
@@ -217,19 +210,26 @@
                                     <outlet property="delegate" destination="F34-d3-uhg" id="31y-DM-B5d"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cuh-Mu-mye" customClass="UserInfo" customModule="ClickrFlickr" customModuleProvider="target">
+                                <rect key="frame" x="16" y="64" width="343" height="160"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="160" id="h6w-0z-wkw"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Cuh-Mu-mye" firstAttribute="trailing" secondItem="DLe-iN-qZp" secondAttribute="trailingMargin" constant="16" id="EWD-TG-RIE"/>
+                            <constraint firstItem="Cuh-Mu-mye" firstAttribute="leading" secondItem="DLe-iN-qZp" secondAttribute="leadingMargin" id="2rC-Se-HTI"/>
                             <constraint firstItem="6u2-XU-vSe" firstAttribute="leading" secondItem="DLe-iN-qZp" secondAttribute="leading" id="N3g-Sv-1QY"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Cuh-Mu-mye" secondAttribute="trailing" id="Pvq-eg-ns6"/>
                             <constraint firstItem="6u2-XU-vSe" firstAttribute="centerX" secondItem="DLe-iN-qZp" secondAttribute="centerX" id="Zrr-Lv-o9w"/>
                             <constraint firstAttribute="trailing" secondItem="lT6-Bi-Nwb" secondAttribute="trailing" id="ahZ-QY-fMh"/>
                             <constraint firstItem="Cuh-Mu-mye" firstAttribute="top" secondItem="aUH-Ed-RL5" secondAttribute="bottom" id="b3x-W5-6Y1"/>
                             <constraint firstItem="6u2-XU-vSe" firstAttribute="top" secondItem="Cuh-Mu-mye" secondAttribute="bottom" id="dVe-hL-MGs"/>
                             <constraint firstItem="MnX-OV-onn" firstAttribute="top" secondItem="lT6-Bi-Nwb" secondAttribute="bottom" id="etf-HK-cvw"/>
-                            <constraint firstItem="lT6-Bi-Nwb" firstAttribute="top" secondItem="6u2-XU-vSe" secondAttribute="bottom" constant="8" id="fTa-OF-tY0"/>
+                            <constraint firstItem="lT6-Bi-Nwb" firstAttribute="top" secondItem="6u2-XU-vSe" secondAttribute="bottom" id="fTa-OF-tY0"/>
                             <constraint firstAttribute="trailing" secondItem="6u2-XU-vSe" secondAttribute="trailing" id="mVr-fd-eM2"/>
-                            <constraint firstItem="Cuh-Mu-mye" firstAttribute="leading" secondItem="DLe-iN-qZp" secondAttribute="leadingMargin" constant="-16" id="vTa-cH-ALK"/>
                             <constraint firstItem="lT6-Bi-Nwb" firstAttribute="leading" secondItem="DLe-iN-qZp" secondAttribute="leading" id="zRC-zX-DcC"/>
                         </constraints>
                     </view>
@@ -414,7 +414,7 @@
         <!--Most Popular-->
         <scene sceneID="3bU-7o-o3l">
             <objects>
-                <viewController id="hAH-Um-JvC" customClass="InterestingnessPhotoViewController" customModule="ClickrFlickr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="hAH-Um-JvC" customClass="InterestingnessPhotoViewController" customModule="ClickrFlickr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="92g-MH-9nH"/>
                         <viewControllerLayoutGuide type="bottom" id="HXk-uj-gGc"/>
@@ -426,7 +426,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AOs-uu-6ED">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gGR-HP-TV0">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="gGR-HP-TV0">
                                     <size key="itemSize" width="222" height="275"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -447,7 +447,7 @@
                                                     <rect key="frame" x="8" y="250.5" width="206" height="14.5"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="40" id="bji-uk-Iol"/>
+                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="50" id="bji-uk-Iol"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="12"/>
                                                     <nil key="textColor"/>
