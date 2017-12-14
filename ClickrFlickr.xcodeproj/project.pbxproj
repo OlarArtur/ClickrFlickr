@@ -35,8 +35,9 @@
 		B25AA1DC1FAB40420063E7AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22D383C1F604AA300FCC371 /* LaunchScreen.storyboard */; };
 		B25AA1DD1FAB404C0063E7AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B22D38341F604AA300FCC371 /* Main.storyboard */; };
 		B26A92CA1FBF11F70058C336 /* WaterfallLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26A92C91FBF11F70058C336 /* WaterfallLayout.swift */; };
-		B26CF1691F697653006D7EF0 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26CF1681F697653006D7EF0 /* MainNavigationController.swift */; };
 		B2754A9C1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2754A9B1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift */; };
+		B277D78D1FE28CAD00BA81FF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B277D78C1FE28CAD00BA81FF /* MainViewController.swift */; };
+		B277D7901FE2B21000BA81FF /* MainSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B277D78F1FE2B21000BA81FF /* MainSegue.swift */; };
 		B278902F1FCC294600CEBB48 /* CenterCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B278902E1FCC294600CEBB48 /* CenterCollectionFlowLayout.swift */; };
 		B278969C1FD8121A002D2B90 /* PhotoEntitie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B278969A1FD8121A002D2B90 /* PhotoEntitie+CoreDataClass.swift */; };
 		B278969F1FD81434002D2B90 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B278969E1FD81434002D2B90 /* CoreDataStack.swift */; };
@@ -89,8 +90,9 @@
 		B2523AA31F67B766006DFA50 /* String+HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HMAC.swift"; sourceTree = "<group>"; };
 		B25AA1C81FAB1E0C0063E7AC /* NetworkServise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkServise.swift; path = "Application/Network Service/NetworkServise.swift"; sourceTree = "<group>"; };
 		B26A92C91FBF11F70058C336 /* WaterfallLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WaterfallLayout.swift; path = SearchPhoto/View/WaterfallLayout.swift; sourceTree = "<group>"; };
-		B26CF1681F697653006D7EF0 /* MainNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainNavigationController.swift; path = Authorization/Controller/MainNavigationController.swift; sourceTree = "<group>"; };
 		B2754A9B1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallingFlickrAPIwithOauth.swift; path = "Application/Network Service/CallingFlickrAPIwithOauth.swift"; sourceTree = "<group>"; };
+		B277D78C1FE28CAD00BA81FF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = Authorization/Controller/MainViewController.swift; sourceTree = "<group>"; };
+		B277D78F1FE2B21000BA81FF /* MainSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSegue.swift; sourceTree = "<group>"; };
 		B278902E1FCC294600CEBB48 /* CenterCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		B278969A1FD8121A002D2B90 /* PhotoEntitie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoEntitie+CoreDataClass.swift"; sourceTree = "<group>"; };
 		B278969E1FD81434002D2B90 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
@@ -346,8 +348,8 @@
 		B25AA1D51FAB33D80063E7AC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				B26CF1681F697653006D7EF0 /* MainNavigationController.swift */,
 				B29A9FF41F72869600567FD5 /* NotAuthorizedViewController.swift */,
+				B277D78C1FE28CAD00BA81FF /* MainViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -385,6 +387,15 @@
 				B2BC9C1E1FCEB0CC00A4C900 /* UserHeaderCollectionReusableView.swift */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		B277D78E1FE2B1AE00BA81FF /* Segues */ = {
+			isa = PBXGroup;
+			children = (
+				B277D78F1FE2B21000BA81FF /* MainSegue.swift */,
+			);
+			name = Segues;
+			path = Application/Segues;
 			sourceTree = "<group>";
 		};
 		B291E4011FC7134A00EB3419 /* UserPhotoDetail */ = {
@@ -472,6 +483,7 @@
 		B2A27F031FAB0C5C00EE7A97 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				B277D78E1FE2B1AE00BA81FF /* Segues */,
 				B21EAAB61FD59022007BA9B8 /* CoreDataManage */,
 				B25AA1C71FAB1DD30063E7AC /* Network Service */,
 				B2A27F041FAB0C6600EE7A97 /* Model */,
@@ -622,6 +634,7 @@
 				B235E8331FDEBB6500D95D45 /* SearchDetailViewCell.swift in Sources */,
 				B22B8B3A1FBC20E500A21401 /* GetPhotoNetworkService.swift in Sources */,
 				B2F7EBAE1F7A860400300C74 /* FetchJSON.swift in Sources */,
+				B277D7901FE2B21000BA81FF /* MainSegue.swift in Sources */,
 				B29A9FEF1F7276C000567FD5 /* SearchCollectionViewCell.swift in Sources */,
 				B29A9FF51F72869600567FD5 /* NotAuthorizedViewController.swift in Sources */,
 				B2FA800D1FBD905100D1279F /* User.swift in Sources */,
@@ -636,7 +649,7 @@
 				B29439231FBD885300006CE6 /* UserInfo.swift in Sources */,
 				B22C6FD41FE1079B0087FF0D /* CoverFlowLayout.m in Sources */,
 				B291E4071FC714C300EB3419 /* UserPhotoDetailViewController.m in Sources */,
-				B26CF1691F697653006D7EF0 /* MainNavigationController.swift in Sources */,
+				B277D78D1FE28CAD00BA81FF /* MainViewController.swift in Sources */,
 				B241069A1F724BBA006F9E53 /* Structures.swift in Sources */,
 				B26A92CA1FBF11F70058C336 /* WaterfallLayout.swift in Sources */,
 				B29A9FF11F72778C00567FD5 /* SearchCollectionViewController.swift in Sources */,

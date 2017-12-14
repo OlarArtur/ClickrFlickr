@@ -37,6 +37,7 @@ class UserCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with photo: Photo) {
+        self.photo.bounds.size = (photo.image?.size)!
         self.photo.image = photo.image
         self.titlePhoto.text = photo.title
     }
@@ -48,3 +49,4 @@ class UserCollectionViewCell: UICollectionViewCell {
     }
     
 }
+

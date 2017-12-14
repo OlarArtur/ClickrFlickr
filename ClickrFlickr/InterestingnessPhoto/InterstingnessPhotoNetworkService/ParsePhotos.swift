@@ -7,28 +7,40 @@
 //
 
 import Foundation
+import CoreData
 
 class ParsePhotos {
-    
-    var parsePhoto: [PhotoEntitie]
 
-    init (json: AnyObject) throws {
+    static func newPhotos(json: AnyObject) throws {
         
         guard let photos = json["photos"] as? [String: Any] else { throw FlickOauthError.NetworkServiseError }
         
         guard let photo = photos["photo"] as? [[String: Any]] else { throw FlickOauthError.NetworkServiseError }
         
-        var parsePhoto = [PhotoEntitie]()
+        var uniques = [String]()
         
-        for element in photo {
-            
-            guard let photoEntitie = PhotoEntitie(dict: element, context: CoreDatastack.default.writeManagedObjectContext) else { throw FlickOauthError.NetworkServiseError }
-            CoreDatastack.default.saveContext()
-            
-            parsePhoto.append(photoEntitie)
+        let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
+        do {
+            let photoEntities = try CoreDatastack.default.mainManagedObjectContext.fetch(fetchRequest)
+            uniques = photoEntities.flatMap({ $0.imageID }).sorted()
+        } catch {
+            print("Error fetch request \(error)")
         }
         
-        self.parsePhoto = parsePhoto
+        let uniquesFlickr = photo.flatMap({ $0["id"] as? String}).sorted()
+        
+        let uniquesSet = Set(uniques)
+        var news = Set(uniquesFlickr)
+        
+        news.subtract(uniquesSet)
+        
+        for unic in news {
+            if let index = photo.index(where: { $0["id"] as? String == unic }) {
+                _ = PhotoEntitie(dict: photo[index], context: CoreDatastack.default.mainManagedObjectContext)
+                CoreDatastack.default.saveContext()
+            }
+        }
+
     }
     
 }

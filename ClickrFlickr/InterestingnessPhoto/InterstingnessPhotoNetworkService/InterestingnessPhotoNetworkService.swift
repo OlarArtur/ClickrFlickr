@@ -16,7 +16,6 @@ class InterestingnessPhotoNetworkservice {
         guard let string = CallingFlickrAPIwithOauth.methodInterestingnessGetList() else {
             completion(false)
             return
-            
         }
         
         FetchJSON.fetchJson(fromUrl: string) { (json) in
@@ -26,7 +25,7 @@ class InterestingnessPhotoNetworkservice {
                 return
             }
             do {
-                _ = try ParsePhotos(json: json)
+                try ParsePhotos.newPhotos(json: json)
                 completion(true)
             } catch {
                 completion(false)

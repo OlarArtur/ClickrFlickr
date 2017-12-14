@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct CreateUserInfo {
+class CreateUserInfo {
     
     var userInfo: User
     

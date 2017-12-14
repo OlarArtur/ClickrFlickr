@@ -19,14 +19,14 @@ class SearchPhotos {
         
         guard let photo = photos["photo"] as? [[String: Any]] else { throw FlickOauthError.NetworkServiseError }
         
-        var searchPhoto = [Photo]()
+        self.searchPhoto = photo.flatMap(Photo.init(dict:))
         
-        for element in photo {
-            guard let photo = Photo(dict: element) else { throw FlickOauthError.NetworkServiseError }
-            searchPhoto.append(photo)
-        }
-        
-        self.searchPhoto = searchPhoto
+//        var searchPhoto = [Photo]()
+//        for element in photo {
+//            guard let photo = Photo(dict: element) else { throw FlickOauthError.NetworkServiseError }
+//            searchPhoto.append(photo)
+//        }
+//        self.searchPhoto = searchPhoto
     }
     
 }

@@ -24,9 +24,7 @@ class WaterfallLayout: UICollectionViewLayout {
     private var oldBounds = CGRect.zero
     private var contentHeight: CGFloat = 0.0
     private var contentWidth: CGFloat {
-//        let insets = collectionView!.contentInset
         return (collectionView?.bounds.width)!
-//            - (insets.left + insets.right)
     }
 
     private var attributesCache = [UICollectionViewLayoutAttributes]()

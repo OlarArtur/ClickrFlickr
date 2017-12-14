@@ -27,7 +27,6 @@ class CustomImageView {
                 guard let image = UIImage(data: data) else {
                     completion(nil)
                     return
-                    
                 }
                 completion(image)
             }

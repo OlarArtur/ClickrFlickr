@@ -13,38 +13,20 @@ class InterestingnessPhotoViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var photo = [Photo]()
-    var photoEntities: [PhotoEntitie]?
+    var photoEntities = [PhotoEntitie]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     let imageCache = NSCache<NSString, UIImage>()
     
     let spacingItem: CGFloat = 2
     
-//    override var shouldAutorotate: Bool {
-//        return false
-//    }
-//
-//    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-//        return .portrait
-//    }
-//
-//    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-//        return .portrait
-//    }
-    
-    
-    var statusBarShouldBeHidden = false
-    
-    override var prefersStatusBarHidden: Bool {
-        return statusBarShouldBeHidden
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     
-//        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
-        
-        collectionView?.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        collectionView?.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
     
         InterestingnessPhotoNetworkservice.getJsonForSearchPhoto() { [weak self] (success) in
     
@@ -55,9 +37,7 @@ class InterestingnessPhotoViewController: UIViewController {
             let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
             do {
                 let photoEntities = try CoreDatastack.default.mainManagedObjectContext.fetch(fetchRequest)
-
                 strongSelf.photoEntities = photoEntities
-                strongSelf.collectionView?.reloadData()
             } catch {
                 print("Error fetch request \(error)")
             }
@@ -69,72 +49,85 @@ class InterestingnessPhotoViewController: UIViewController {
 extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let photoEntities = photoEntities else {
-            return 0
-        }
         return photoEntities.count
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         UIView.animate(withDuration: 0.8, delay: 0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
             cell.contentView.layer.opacity = 1
         }, completion: nil)
-      
+        
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         let reusIdentifier = "CellInterestingnessPhoto"
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
-        
         cell.contentView.layer.opacity = 0
         
-        cell.prepareForReuse()
-        
-        guard let photoEntities = photoEntities else {return cell}
-        
         guard let imageURL = photoEntities[indexPath.item].imageURL else {return cell}
-        
         guard let imageID = photoEntities[indexPath.item].imageID else {return cell}
         
-        cell.descriptionLabel.text = photoEntities[indexPath.item].photoDescription
-        cell.titleLabel.text = photoEntities[indexPath.item].title
-        
         if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
-            CustomImageView.loadImageUsingUrlString(urlString: imageURL) {/*[weak self]*/ image in
-                // guard let strongSelf = self else {return}
+            cell.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
+            CustomImageView.loadImageUsingUrlString(urlString: imageURL) { image in
                 guard let image = image else {return}
-                cell.photo.image = image
+                if collectionView.indexPath(for: cell) == indexPath {
+                    cell.configerOnlyPhoto(image: image)
+                }
             }
             return cell
         }
+            
+        cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        cell.configure(with: photoEntities[indexPath.item], image: nil)
+        cell.photo.tag = indexPath.item
         
         if let image = getImageFromDocumentDirectory(key: imageID) {
             cell.photo.image = image
         } else {
             CustomImageView.loadImageUsingUrlString(urlString: imageURL) { [weak self] image in
                 guard let strongSelf = self, let image = image else {return}
-                cell.photo.image = image
-                strongSelf.saveImageToDocumentDirectory(image: image, key: imageID)
+                if cell.photo.tag == indexPath.item {
+                    cell.configure(with: strongSelf.photoEntities[indexPath.item], image: image)
+                    strongSelf.saveImageToDocumentDirectory(image: image, key: imageID)
+                }
             }
         }
-        
         return cell
         
     }
     
+//    private func configerCell(image: UIImage?) {
+//        if let image = getImageFromDocumentDirectory(key: imageID) {
+//            cell.photo.image = image
+//        } else {
+//            CustomImageView.loadImageUsingUrlString(urlString: imageURL) { [weak self] image in
+//                guard let strongSelf = self, let image = image else {return}
+//                if collectionView.indexPath(for: cell) == indexPath {
+//                    cell.configure(with: photoEntities[indexPath.item], image: image)
+//                    strongSelf.saveImageToDocumentDirectory(image: image, key: imageID)
+//                }
+//            }
+//        }
+//
+//    }
+    
     private func saveImageToDocumentDirectory(image: UIImage, key: String) {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        guard let data = UIImagePNGRepresentation(image) else {return}
         
-        let fileName = paths.appendingPathComponent("\(key).png")
-        do {
-            try data.write(to: fileName)
-        } catch {
-            print("Error write image to document directory: \(error)")
+        DispatchQueue.global().async {
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            guard let data = UIImagePNGRepresentation(image) else {return}
+            
+            let fileName = paths.appendingPathComponent("\(key).png")
+            do {
+                try data.write(to: fileName)
+            } catch {
+                print("Error write image to document directory: \(error)")
+            }
         }
         
     }
@@ -144,7 +137,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let fileManager = FileManager.default
         let fileName = paths.appendingPathComponent("\(key).png")
-
+        
         if fileManager.fileExists(atPath: fileName.path) {
             return UIImage(contentsOfFile: fileName.path)
         }
@@ -161,20 +154,21 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
             if navigationController.isNavigationBarHidden {
                 navigationController.isNavigationBarHidden = false
                 tabBarController.tabBar.isHidden = false
-                statusBarShouldBeHidden = true
             } else {
                 navigationController.isNavigationBarHidden = true
                 tabBarController.tabBar.isHidden = true
-                statusBarShouldBeHidden = false
             }
             
         } else {
             let layout = CenterCellCollectionViewFlowLayout()
             layout.scrollDirection = .horizontal
-            collectionView.setCollectionViewLayout(layout, animated: true)
-            collectionView.reloadItems(at: [indexPath])
+            collectionView.setCollectionViewLayout(layout, animated: false) { [weak self] (success) in
+                guard let strongSelf = self else {return}
+                if success {
+                    strongSelf.collectionView.reloadItems(at: [indexPath])
+                }
+            }
             collectionView.decelerationRate = UIScrollViewDecelerationRateFast
-            
             let closeItem = UIBarButtonItem(image: #imageLiteral(resourceName: "cancel"), style: .plain , target: self , action: #selector(closeButtonPressed))
             closeItem.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             navigationItem.rightBarButtonItem = closeItem
@@ -185,8 +179,13 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        collectionView.setCollectionViewLayout(layout, animated: true)
-        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.setCollectionViewLayout(layout, animated: true) { [weak self] (success) in
+            guard let strongSelf = self else {return}
+            if success {
+                let visibleCells = strongSelf.collectionView.indexPathsForVisibleItems
+                strongSelf.collectionView.reloadItems(at: visibleCells)
+            }
+        }
         collectionView.decelerationRate = UIScrollViewDecelerationRateNormal
         navigationItem.rightBarButtonItem = nil
     }
@@ -198,12 +197,12 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         if collectionViewLayout is CenterCellCollectionViewFlowLayout {
-            return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+            return collectionView.frame.size
         }
 
         let width = collectionView.bounds.size.width
 
-        guard let photoEntities = photoEntities, let description = photoEntities[indexPath.item].photoDescription, let aspectSize = photoEntities[indexPath.item].aspectRatio, let aspectSizeFloat = Float(aspectSize) else {
+        guard let description = photoEntities[indexPath.item].photoDescription, let aspectSize = photoEntities[indexPath.item].aspectRatio, let aspectSizeFloat = Float(aspectSize) else {
             return CGSize(width: 0, height: 0)
         }
         
@@ -216,8 +215,8 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
 
         var descriptionHeight = descriptionTemp.height + 5
         
-        if descriptionHeight > 40 {
-            descriptionHeight = 45
+        if descriptionHeight > 50 {
+            descriptionHeight = 55
         }
         
         let height = photoHeight + descriptionHeight

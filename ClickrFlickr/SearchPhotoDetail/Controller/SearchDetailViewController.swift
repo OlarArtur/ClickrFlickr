@@ -14,6 +14,7 @@ class SearchDetailViewController: UIViewController {
     
     @IBOutlet weak var detailImageView: UIImageView!
     @IBOutlet weak var userInfo: UserInfo!
+    
     var photo: Photo?
     var photos = [Photo]()
     var user: User?
@@ -22,15 +23,29 @@ class SearchDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let layout = CoverFlowLayout()
+        collectionView.collectionViewLayout = layout
+        
+        customViews()
+
+    }
+    
+    private func customViews() {
         userInfo.fullNameLabel.text = ""
         userInfo.userNameLabel.text = ""
         userInfo.photoCountLabel.text = ""
+        userInfo.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        userInfo.fullNameLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        userInfo.userNameLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        userInfo.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
+        
+        self.view.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
+        self.navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
         guard let photo = photo else {return}
         detailImageView.image = photo.image
-        detailImageView.bounds.size.width = view.bounds.width
-        detailImageView.bounds.size.height = detailImageView.bounds.size.width * CGFloat(photo.aspectSize)
-
+        detailImageView.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,6 +62,7 @@ class SearchDetailViewController: UIViewController {
             self.userInfo.fullNameLabel.text = user.realName
             self.userInfo.userNameLabel.text = user.userName
             self.userInfo.photoCountLabel.text = "\(user.photoCount) photos"
+            
         }
         
         GetPhotoNetworkservice.getJsonForSearchPhoto(userId: user.id) {[weak self] photo in
@@ -82,7 +98,9 @@ extension SearchDetailViewController: UICollectionViewDelegate, UICollectionView
             
             collectionView.collectionViewLayout.invalidateLayout()
             strongSelf.photos[indexPath.item].image = image
-            cell.configure(with: (strongSelf.photos[indexPath.item]))
+            if collectionView.indexPath(for: cell) == indexPath {
+                cell.configure(with: (strongSelf.photos[indexPath.item]))
+            }
         }
         
         return cell

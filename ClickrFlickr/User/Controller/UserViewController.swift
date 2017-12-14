@@ -37,7 +37,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let collectionViewLayout = UICollectionViewFlowLayout.init()
         collectionViewLayout.scrollDirection = .vertical
         collectionView = UICollectionView(frame: CGRect.init() , collectionViewLayout: collectionViewLayout)
-        collectionView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        collectionView.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.setCollectionViewLayout(collectionViewLayout, animated: true)
         collectionView.register(UserCollectionViewCell.self, forCellWithReuseIdentifier: "CellUser")
@@ -94,7 +94,12 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     private func addSideBarMenu() {
         
         sideBarContainerView = UIView(frame: CGRect(x: view.bounds.width, y: 0, width: 140, height: view.bounds.height))
-        sideBarContainerView.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        let gradient = CAGradientLayer()
+        gradient.frame =  sideBarContainerView.bounds
+        gradient.colors = [UIColor.black.cgColor, UIColor.white.cgColor, UIColor.black.cgColor]
+        gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradient.endPoint = CGPoint(x: 0.0, y: 1.0)
+        sideBarContainerView.layer.insertSublayer(gradient, at: 0)
         
         sideBarContainerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(sideBarContainerView)
@@ -137,6 +142,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         safariView.delegate = self
         
         navigationController?.navigationController?.popToRootViewController(animated: true)
+        
     }
     
     private func fetchUserPhotos() {
@@ -165,7 +171,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
             strongSelf.photo[indexPath.item].height = image.size.height
             collectionView.collectionViewLayout.invalidateLayout()
             strongSelf.photo[indexPath.item].image = image
-            if let cell = collectionView.cellForItem(at: indexPath) as? UserCollectionViewCell {
+            if collectionView.indexPath(for: cell) == indexPath {
                 cell.configure(with: (strongSelf.photo[indexPath.item]))
             }
         }
@@ -238,8 +244,8 @@ extension UserViewController: UIScrollViewDelegate {
                 self.navigationItem.titleView = nil
                 isHeaderVisible = true
             }
-            
         }
+        
     }
     
 }
@@ -248,22 +254,13 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        var width = (collectionView.bounds.size.width - (CGFloat(itemsPerRow + 1.0) * spacingItem)) / CGFloat(itemsPerRow)
+        let width = collectionView.bounds.size.width - spacingItem
 
         guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
             let height = width
             return CGSize(width: width, height: height)
         }
-
-        if imageWidth < width {
-            width = imageWidth
-        }
         let squareInd = imageHeight/imageWidth
-
-        if imageWidth > UIScreen.main.bounds.width {
-            width = (UIScreen.main.bounds.width - (2 * spacingItem))
-        }
-
         let height = width * squareInd
 
         return CGSize(width: width, height: height)
@@ -277,7 +274,5 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: collectionView.bounds.width, height: 180)
     }
     
-    
-
 }
 
