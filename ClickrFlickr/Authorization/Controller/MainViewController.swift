@@ -20,8 +20,14 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        isAuthorized()
+        
         FlickrUserAuthentication.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        isAuthorized()
     }
     
     func isAuthorized() {
