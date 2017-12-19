@@ -10,4 +10,6 @@
 
 @interface UserPhotoDetailViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate>
 
+//@property (strong, nonatomic) NSArray *photos;
+
 @end

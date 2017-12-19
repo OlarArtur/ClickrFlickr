@@ -95,13 +95,10 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DetailSegue" {
-            if let cell = sender as? UICollectionViewCell, let indexPath = self.collectionView?.indexPath(for: cell) {
-                let detailVC = segue.destination as! SearchDetailViewController
-                detailVC.photo = self.photo[indexPath.item]
-            }
-        }
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailVC = DetailPhotoViewController()
+        detailVC.photo = self.photo[indexPath.item]
+        show(detailVC, sender: self)
     }
     
 }

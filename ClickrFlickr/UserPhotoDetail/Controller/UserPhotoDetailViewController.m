@@ -8,26 +8,24 @@
 
 #import "UserPhotoDetailViewController.h"
 #import "UserPhotoDetailCell.h"
-#import <ClickrFlickr-Swift.h>
+#import "ClickrFlickr-Swift.h"
 
-@interface UserPhotoDetailViewController () {
-    NSMutableArray *photo;
-}
+@interface UserPhotoDetailViewController()
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-//@property NSMutableArray *photo;
+//@property (strong, nonatomic) NSArray *photos;
+@property Photo *photo;
+
 
 @end
 
 @implementation UserPhotoDetailViewController
-
-
+{
+    NSMutableArray *photos;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    
     // Do any additional setup after loading the view.
 }
 
@@ -36,7 +34,7 @@
 
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 10;
+    return photos.count;
 }
 
 - (__kindof UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath

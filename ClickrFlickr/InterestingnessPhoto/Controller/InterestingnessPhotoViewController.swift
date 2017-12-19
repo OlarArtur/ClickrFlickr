@@ -70,7 +70,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let reuseIdentifier = "CellInterestingnessPhoto"
@@ -268,7 +267,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDataSourcePrefetch
                 guard let strongSelf = self, let image = image else {return}
                 strongSelf.saveImageToDocumentDirectory(image: image, key: imageID)
             })
-
         }
     }
 
