@@ -22,49 +22,66 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ClickrFlickr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hiJ-uq-I9r">
-                                <rect key="frame" x="65" y="185.5" width="245" height="56.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="47"/>
-                                <color key="textColor" red="0.12340106865284972" green="0.12340106865284972" blue="0.12340106865284972" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please, authorize" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYs-TR-CsT">
-                                <rect key="frame" x="121.5" y="392" width="131" height="21"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q5w-5f-vEK">
-                                <rect key="frame" x="122" y="423" width="131" height="34"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="kxB-yb-pOH"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <state key="normal" title="Authorize">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="authorize:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NfY-vm-uoP"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Jac-1D-fBV">
+                                <rect key="frame" x="65" y="150" width="245" height="367"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HfN-88-Zzg">
+                                        <rect key="frame" x="0.0" y="0.0" width="245" height="56.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clickr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hiJ-uq-I9r">
+                                                <rect key="frame" x="0.0" y="0.0" width="126.5" height="56.5"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="47"/>
+                                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flickr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izY-sv-NMV">
+                                                <rect key="frame" x="126.5" y="0.0" width="118.5" height="56.5"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="47"/>
+                                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="KNQ-6c-VCU">
+                                        <rect key="frame" x="57" y="307.5" width="131" height="59.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please, authorize" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYs-TR-CsT">
+                                                <rect key="frame" x="0.0" y="0.0" width="131" height="20.5"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q5w-5f-vEK">
+                                                <rect key="frame" x="0.0" y="25.5" width="131" height="34"/>
+                                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="34" id="cJt-Hf-nma"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="kxB-yb-pOH"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                <state key="normal" title="Authorize">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="authorize:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NfY-vm-uoP"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="hiJ-uq-I9r" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0Qs-z6-7H1"/>
-                            <constraint firstItem="hiJ-uq-I9r" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-120" id="3Hm-hx-qPB"/>
-                            <constraint firstItem="Q5w-5f-vEK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="937-ZY-wCZ"/>
-                            <constraint firstItem="Q5w-5f-vEK" firstAttribute="width" secondItem="YYs-TR-CsT" secondAttribute="width" id="CId-Rf-h0F"/>
-                            <constraint firstItem="YYs-TR-CsT" firstAttribute="centerX" secondItem="hiJ-uq-I9r" secondAttribute="centerX" id="ZFn-GO-G8h"/>
-                            <constraint firstItem="Q5w-5f-vEK" firstAttribute="top" secondItem="YYs-TR-CsT" secondAttribute="bottom" constant="10" id="gU4-oB-L2L"/>
-                            <constraint firstItem="YYs-TR-CsT" firstAttribute="top" secondItem="hiJ-uq-I9r" secondAttribute="bottom" constant="150" id="tSx-jk-nbE"/>
+                            <constraint firstAttribute="bottomMargin" relation="lessThanOrEqual" secondItem="Jac-1D-fBV" secondAttribute="bottom" constant="150" id="2fh-vT-8xY"/>
+                            <constraint firstItem="Jac-1D-fBV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jmD-eE-Z1t"/>
+                            <constraint firstItem="Jac-1D-fBV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="sS9-UL-Uga"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aoe-3j-bAi"/>
                     <connections>
                         <outlet property="authorizeButton" destination="Q5w-5f-vEK" id="rsE-se-SMO"/>
-                        <outlet property="clickrFlickrLabel" destination="hiJ-uq-I9r" id="m6O-IU-XxC"/>
                         <outlet property="pleaseAuthorizeLabel" destination="YYs-TR-CsT" id="BnU-gr-USH"/>
                     </connections>
                 </viewController>

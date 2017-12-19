@@ -13,7 +13,7 @@ class UserInfoNetworkservice {
     
     private init() {}
     
-    static func getUserInfo (for userId: String, completion: @escaping (User)->()) {
+    static func getUserInfo (for userId: String, completion: @escaping (User?)->()) {
         guard let string = CallingFlickrAPIwithOauth.methodPeopleGetInfo(userId: userId) else {return}
         
         FetchJSON.fetchJson(fromUrl: string) { (json) in
@@ -26,6 +26,7 @@ class UserInfoNetworkservice {
                     completion(user)
                 }
             } catch {
+                completion(nil)
                 let error = ErrorAlertController()
                 error.showErrorAlertController(title: "ERROR! Fetching JSON for search Photo", message: "Try again?")
             }

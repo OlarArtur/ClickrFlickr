@@ -11,7 +11,7 @@ import CoreData
 
 class ParsePhotos {
 
-    static func newPhotos(json: AnyObject) throws {
+    static func parsePhotoEntities(json: AnyObject) throws {
         
         guard let photos = json["photos"] as? [String: Any] else { throw FlickOauthError.NetworkServiseError }
         
@@ -19,9 +19,11 @@ class ParsePhotos {
         
         var uniques = [String]()
         
+        let context = CoreDatastack.default.writeManagedObjectContext
+        
         let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
         do {
-            let photoEntities = try CoreDatastack.default.mainManagedObjectContext.fetch(fetchRequest)
+            let photoEntities = try context.fetch(fetchRequest)
             uniques = photoEntities.flatMap({ $0.imageID }).sorted()
         } catch {
             print("Error fetch request \(error)")
@@ -36,11 +38,10 @@ class ParsePhotos {
         
         for unic in news {
             if let index = photo.index(where: { $0["id"] as? String == unic }) {
-                _ = PhotoEntitie(dict: photo[index], context: CoreDatastack.default.mainManagedObjectContext)
-                CoreDatastack.default.saveContext()
+                _ = PhotoEntitie(dict: photo[index], context: context)
             }
         }
-
+        CoreDatastack.default.saveContext()
     }
     
 }

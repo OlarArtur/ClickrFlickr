@@ -12,7 +12,8 @@ import SpriteKit
 
 class NotAuthorizedViewController: UIViewController {
     
-    @IBOutlet weak var clickrFlickrLabel: UILabel!
+    @IBOutlet weak var clickrLabel: UILabel!
+    @IBOutlet weak var flickrLabel: UILabel!
     @IBOutlet weak var pleaseAuthorizeLabel: UILabel!
     @IBOutlet weak var authorizeButton: UIButton!
     
@@ -38,7 +39,6 @@ class NotAuthorizedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        clickrFlickrLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         pleaseAuthorizeLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         authorizeButton.layer.cornerRadius = 8
     }

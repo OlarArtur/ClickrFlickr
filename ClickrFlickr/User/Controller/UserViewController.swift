@@ -82,9 +82,9 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
             })
         } else {
             addSideBarMenu()
-            sideBarContainerView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
             UIView.animate(withDuration: 0.4, animations: {
-                self.view.layoutIfNeeded()
+                self.sideBarContainerView.frame.origin.x = self.view.bounds.width - 140
+                self.sideBarContainerView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
             })
             menuIsVisible = true
         }
@@ -118,11 +118,12 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         logOutButton.tintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         logOutButton.translatesAutoresizingMaskIntoConstraints = false
         sideBarContainerView.addSubview(logOutButton)
-        logOutButton.addTarget(self, action: #selector(logOutPressed), for: .touchUpInside)
+
         guard let navigationController = navigationController else {return}
         let topLogOutConstrait = logOutButton.topAnchor.constraint(equalTo: navigationController.navigationBar.bottomAnchor, constant: 10)
         let centerXLogOutConstrait = logOutButton.centerXAnchor.constraint(equalTo: sideBarContainerView.centerXAnchor)
         NSLayoutConstraint.activate([topLogOutConstrait, centerXLogOutConstrait])
+        logOutButton.addTarget(self, action: #selector(logOutPressed), for: .touchUpInside)
         
     }
     
@@ -163,16 +164,15 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellUser", for: indexPath) as! UserCollectionViewCell
-        CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
-            
-            guard let strongSelf = self, let image = image else {return}
-            
-            strongSelf.photo[indexPath.item].width = image.size.width
-            strongSelf.photo[indexPath.item].height = image.size.height
-            collectionView.collectionViewLayout.invalidateLayout()
-            strongSelf.photo[indexPath.item].image = image
+        
+        if let image = ImageLoader.imageFromCashe(for: photo[indexPath.item].url) {
+            cell.photo.image = image
+            return cell
+        }
+        ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { image in
+            guard let image = image else {return}
             if collectionView.indexPath(for: cell) == indexPath {
-                cell.configure(with: (strongSelf.photo[indexPath.item]))
+                cell.photo.image = image
             }
         }
         return cell
@@ -183,31 +183,42 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         headerViewHeight = headerView.bounds.height
         
         fetchUserInfo { userInfo in
+            guard let userInfo = userInfo else { return }
             headerView.configerUserInfo(userInfo: userInfo)
         }
         return headerView
     }
     
-    private func fetchUserInfo(completion: @escaping (UserInfo) ->()) {
+    private func fetchUserInfo(completion: @escaping (UserInfo?) ->()) {
         let userId = UserDefaults.standard.object(forKey: "usernsid")
         if let userId = userId as? String {
             UserInfoNetworkservice.getUserInfo(for: userId) { [weak self] user in
-                guard let strongSelf = self else {return}
+                guard let strongSelf = self, let user = user else {
+                    completion(nil)
+                    return
+                }
                 strongSelf.userInfo = UserInfo()
                 strongSelf.userInfo.fullNameLabel.text = user.realName
                 strongSelf.userInfo.userNameLabel.text = user.userName
                 strongSelf.userInfo.photoCountLabel.text = "\(user.photoCount) photos"
                 
-                CustomImageView.loadImageUsingUrlString(urlString: user.urlAvatar) { [weak self] image in
-                    guard let strongSelf = self else {return}
-                    DispatchQueue.main.async {
-                        strongSelf.userInfo.avatarImageView.image = image
-                        completion(strongSelf.userInfo)
-                    }
+                if let imageFromcashe = ImageLoader.imageFromCashe(for: user.urlAvatar) {
+                    strongSelf.userInfo.avatarImageView.image = imageFromcashe
+                    completion(strongSelf.userInfo)
                 }
+                
+                ImageLoader.loadImageUsingUrlString(urlString: user.urlAvatar, completion: { image in
+                    guard let image = image else {
+                        completion(nil)
+                        return
+                    }
+                    strongSelf.userInfo.avatarImageView.image = image
+                    completion(strongSelf.userInfo)
+                })
             }
         }
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "UserPhotoDetail" {
@@ -218,6 +229,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
 }
+
 
 extension UserViewController: UIScrollViewDelegate {
 
@@ -256,12 +268,12 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
 
         let width = collectionView.bounds.size.width - spacingItem
 
-        guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
-            let height = width
-            return CGSize(width: width, height: height)
-        }
-        let squareInd = imageHeight/imageWidth
-        let height = width * squareInd
+//        guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
+//            let height = width
+//            return CGSize(width: width, height: height)
+//        }
+        let aspectSize = photo[indexPath.item].aspectSize
+        let height = width * CGFloat(aspectSize)
 
         return CGSize(width: width, height: height)
     }

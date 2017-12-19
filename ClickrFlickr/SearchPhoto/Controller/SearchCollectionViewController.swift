@@ -66,38 +66,33 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SearchCollectionViewCell
         
         cell.contentView.layer.opacity = 0
-        cell.spinnerActivityIndicator.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        cell.spinnerActivityIndicator.startAnimating()
-        
         cell.titlePhoto.text = photo[indexPath.item].title
         
-        if let imageFromCache = self.imageCache.object(forKey: self.photo[indexPath.item].url as NSString) {
-            
-            self.photo[indexPath.item].image = imageFromCache
-            cell.configure(with: self.photo[indexPath.item])
+        if let image = ImageLoader.imageFromCashe(for: photo[indexPath.item].url) {
+            cell.photo.image = image
             
             cell.spinnerActivityIndicator.stopAnimating()
             cell.spinnerActivityIndicator.isHidden = true
-
-        } else {
             
-            CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
+            return cell
+        }
+        cell.spinnerActivityIndicator.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        cell.spinnerActivityIndicator.startAnimating()
+        cell.spinnerActivityIndicator.isHidden = false
+        
+        ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { image in
+            guard let image = image else {return}
+            if collectionView.indexPath(for: cell) == indexPath {
                 
-                guard let strongSelf = self, let image = image else {return}
-                
-                strongSelf.photo[indexPath.item].width = image.size.width
-                strongSelf.photo[indexPath.item].height = image.size.height
-                strongSelf.imageCache.setObject(image, forKey: strongSelf.photo[indexPath.item].url as NSString)
-                
-                strongSelf.photo[indexPath.item].image = image
                 if collectionView.indexPath(for: cell) == indexPath {
-                    cell.configure(with: (strongSelf.photo[indexPath.item]))
+                    cell.photo.image = image
                 }
                 cell.spinnerActivityIndicator.stopAnimating()
                 cell.spinnerActivityIndicator.isHidden = true
             }
         }
         return cell
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -105,12 +100,6 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
             if let cell = sender as? UICollectionViewCell, let indexPath = self.collectionView?.indexPath(for: cell) {
                 let detailVC = segue.destination as! SearchDetailViewController
                 detailVC.photo = self.photo[indexPath.item]
-                DispatchQueue.global().async {
-                    UserInfoNetworkservice.getUserInfo(for: self.photo[indexPath.item].owner) { user in
-                        detailVC.user = user
-                        detailVC.configUserInfo()
-                    }
-                }
             }
         }
     }
@@ -121,17 +110,16 @@ extension SearchCollectionViewController: UICollectionViewDataSourcePrefetching 
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            if let imageFromCache = self.imageCache.object(forKey: self.photo[indexPath.item].url as NSString) {
-                self.photo[indexPath.item].image = imageFromCache
-            } else {
-                CustomImageView.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
-                    guard let strongSelf = self else {return}
-                    strongSelf.photo[indexPath.item].image = image
-                }
+            
+            guard ImageLoader.imageFromCashe(for: photo[indexPath.item].url) != nil else { return }
+            
+            ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { image in
+                guard image != nil else { return }
+                return
             }
         }
     }
-
+    
 }
 
 extension SearchCollectionViewController: UISearchBarDelegate {

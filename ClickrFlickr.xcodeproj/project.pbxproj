@@ -26,6 +26,7 @@
 		B22D38311F604AA300FCC371 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D38301F604AA300FCC371 /* AppDelegate.swift */; };
 		B22D38391F604AA300FCC371 /* ClickrFlickr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B22D38371F604AA300FCC371 /* ClickrFlickr.xcdatamodeld */; };
 		B22D383B1F604AA300FCC371 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B22D383A1F604AA300FCC371 /* Assets.xcassets */; };
+		B2306D301FE3C23F00DA7DF0 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2306D2F1FE3C23F00DA7DF0 /* ImageLoader.swift */; };
 		B235E8331FDEBB6500D95D45 /* SearchDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B235E8321FDEBB6500D95D45 /* SearchDetailViewCell.swift */; };
 		B241069A1F724BBA006F9E53 /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24106991F724BBA006F9E53 /* Structures.swift */; };
 		B249AD121F7A92FC004A7AD0 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249AD111F7A92FC004A7AD0 /* CustomImageView.swift */; };
@@ -83,6 +84,7 @@
 		B22D383D1F604AA300FCC371 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B22D383F1F604AA300FCC371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/Info.plist"; sourceTree = "<group>"; };
 		B22D38471F604B1D00FCC371 /* ClickrFlickr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ClickrFlickr-Bridging-Header.h"; path = "Supporting Files/ClickrFlickr-Bridging-Header.h"; sourceTree = "<group>"; };
+		B2306D2F1FE3C23F00DA7DF0 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		B235E8321FDEBB6500D95D45 /* SearchDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchDetailViewCell.swift; path = SearchPhotoDetail/View/SearchDetailViewCell.swift; sourceTree = "<group>"; };
 		B24106991F724BBA006F9E53 /* Structures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Structures.swift; path = Application/Model/Structures.swift; sourceTree = "<group>"; };
 		B249AD111F7A92FC004A7AD0 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
@@ -530,6 +532,7 @@
 			isa = PBXGroup;
 			children = (
 				B249AD111F7A92FC004A7AD0 /* CustomImageView.swift */,
+				B2306D2F1FE3C23F00DA7DF0 /* ImageLoader.swift */,
 				B2F7EBAD1F7A860400300C74 /* FetchJSON.swift */,
 			);
 			path = Helpers;
@@ -658,6 +661,7 @@
 				B2754A9C1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift in Sources */,
 				B22AE49E1F7A67DC001D6D0C /* ErrorAlertController.swift in Sources */,
 				B278969C1FD8121A002D2B90 /* PhotoEntitie+CoreDataClass.swift in Sources */,
+				B2306D301FE3C23F00DA7DF0 /* ImageLoader.swift in Sources */,
 				B22D38391F604AA300FCC371 /* ClickrFlickr.xcdatamodeld in Sources */,
 				B2D90FB11FBD9FD700FB0E64 /* CreateUserInfo.swift in Sources */,
 				B20D008E1FBC84E00046004A /* InterestingnessPhotoViewController.swift in Sources */,

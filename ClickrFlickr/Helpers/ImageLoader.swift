@@ -1,15 +1,17 @@
 //
-//  CustomImageView.swift
+//  ImageLoader.swift
 //  ClickrFlickr
 //
-//  Created by Artur Olar on 9/26/17.
+//  Created by Artur Olar on 12/15/17.
 //  Copyright © 2017 Artur Olar. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 
-class CustomImageView {
+class ImageLoader {
+    
+    private static let imageCashe = NSCache<NSString, UIImage>()
     
     private init() {}
     
@@ -20,7 +22,7 @@ class CustomImageView {
             return
         }
         
-        NetworkServise.shared.getData(url: url) { (data, url) in
+        NetworkServise.shared.getData(url: url) { (data, urlForCashe) in
             
             guard let data = data else {
                 completion(nil)
@@ -32,9 +34,21 @@ class CustomImageView {
                     return
                 }
                 completion(image)
+                saveImageToCashe(image: image, for: urlForCashe.absoluteString)
             }
         }
         
+    }
+    
+    private static func saveImageToCashe(image: UIImage, for url: String) {
+        imageCashe.setObject(image, forKey: url as NSString)
+    }
+    
+    static func imageFromCashe(for url: String) -> UIImage? {
+        guard let image = imageCashe.object(forKey: url as NSString) else {
+            return nil
+        }
+        return image
     }
     
 }

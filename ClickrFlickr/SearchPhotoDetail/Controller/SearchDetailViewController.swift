@@ -19,7 +19,6 @@ class SearchDetailViewController: UIViewController {
     var photos = [Photo]()
     var user: User?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,6 +26,7 @@ class SearchDetailViewController: UIViewController {
         collectionView.collectionViewLayout = layout
         
         customViews()
+        configUserInfo()
 
     }
     
@@ -42,9 +42,16 @@ class SearchDetailViewController: UIViewController {
         self.view.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         self.navigationItem.leftBarButtonItem?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
-        guard let photo = photo else {return}
-        detailImageView.image = photo.image
+        guard let photoUrl = photo?.url else {return}
         detailImageView.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
+        if let image = ImageLoader.imageFromCashe(for: photoUrl) {
+            detailImageView.image = image
+        }
+        
+        ImageLoader.loadImageUsingUrlString(urlString: photoUrl) { [weak self] image in
+            guard let strongSelf = self, let image = image else {return}
+            strongSelf.detailImageView.image = image
+        }
         
     }
     
@@ -57,28 +64,32 @@ class SearchDetailViewController: UIViewController {
     }
     
     func configUserInfo() {
-        guard let user = user else {return}
-        DispatchQueue.main.async {
-            self.userInfo.fullNameLabel.text = user.realName
-            self.userInfo.userNameLabel.text = user.userName
-            self.userInfo.photoCountLabel.text = "\(user.photoCount) photos"
-            
-        }
         
-        GetPhotoNetworkservice.getJsonForSearchPhoto(userId: user.id) {[weak self] photo in
+        guard let photo = photo else { return }
+        
+        UserInfoNetworkservice.getUserInfo(for: photo.owner) { [weak self] user in
             guard let strongSelf = self else {return}
-            DispatchQueue.main.async {
+            guard let user = user else {return}
+            
+            strongSelf.userInfo.fullNameLabel.text = user.realName
+            strongSelf.userInfo.userNameLabel.text = user.userName
+            strongSelf.userInfo.photoCountLabel.text = "\(user.photoCount) photos"
+            
+            GetPhotoNetworkservice.getJsonForSearchPhoto(userId: user.id) {photo in
                 strongSelf.photos = photo.searchPhoto
                 strongSelf.collectionView.reloadData()
             }
-        }
-        
-        CustomImageView.loadImageUsingUrlString(urlString: user.urlAvatar) { [weak self] image in
-            guard let strongSelf = self else {return}
-            DispatchQueue.main.async {
+            
+            if let image = ImageLoader.imageFromCashe(for: user.urlAvatar) {
+                strongSelf.userInfo.avatarImageView.image = image
+            }
+            
+            ImageLoader.loadImageUsingUrlString(urlString: user.urlAvatar) { [weak self] image in
+                guard let strongSelf = self, let image = image else {return}
                 strongSelf.userInfo.avatarImageView.image = image
             }
         }
+
     }
 
 }
@@ -92,14 +103,15 @@ extension SearchDetailViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SearchDetailCell", for: indexPath) as! SearchDetailViewCell
         
-        CustomImageView.loadImageUsingUrlString(urlString: photos[indexPath.item].url) {[weak self] image in
-            
-            guard let strongSelf = self, let image = image else {return}
-            
-            collectionView.collectionViewLayout.invalidateLayout()
-            strongSelf.photos[indexPath.item].image = image
+        if let image = ImageLoader.imageFromCashe(for: photos[indexPath.item].url) {
+            cell.photoImage.image = image
+            return cell
+        }
+        
+        ImageLoader.loadImageUsingUrlString(urlString: photos[indexPath.item].url) { image in
+            guard let image = image else {return}
             if collectionView.indexPath(for: cell) == indexPath {
-                cell.configure(with: (strongSelf.photos[indexPath.item]))
+                cell.photoImage.image = image
             }
         }
         
@@ -107,7 +119,7 @@ extension SearchDetailViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let image = photos[indexPath.item].image else {return}
+        guard let image = ImageLoader.imageFromCashe(for: photos[indexPath.item].url) else { return }
         detailImageView.image = image
     }
     

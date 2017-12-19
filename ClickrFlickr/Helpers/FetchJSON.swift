@@ -17,8 +17,12 @@ class FetchJSON {
         
         guard let url = URL(string: stringUrl) else {return}
         
-        NetworkServise.shared.getData(url: url) { (data) in
+        NetworkServise.shared.getData(url: url) { (data, url) in
             
+            guard let data = data else {
+                completion(nil)
+                return
+            }
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
                 DispatchQueue.main.async {

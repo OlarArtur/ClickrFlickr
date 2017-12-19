@@ -15,14 +15,16 @@ class NetworkServise {
     
     static let shared = NetworkServise()
     
-    public func getData(url: URL, completion: @escaping (Data) -> ()) {
+    public func getData(url: URL, completion: @escaping (Data?, URL) -> ()) {
         let session = URLSession.shared
         
         session.dataTask(with: url) { (data, response, error) in
             
-            guard let data = data else {return}
-            
-            completion(data)
+            guard let data = data else {
+                completion(nil, url)
+                return
+            }
+            completion(data, url)
             
         }.resume()
         

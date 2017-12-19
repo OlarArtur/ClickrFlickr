@@ -18,7 +18,11 @@ class FlickrGetResponse {
             return
         }
 
-        NetworkServise.shared.getData(url: url) { (data) in
+        NetworkServise.shared.getData(url: url) { (data, url) in
+            guard let data = data else {
+                completion(nil, nil)
+                return
+            }
         
             guard let responseString = String(data: data, encoding: String.Encoding.utf8) else {
                 completion(nil, nil)

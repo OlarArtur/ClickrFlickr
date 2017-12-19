@@ -52,7 +52,7 @@ class UserHeaderCollectionReusableView: UICollectionReusableView {
         self.userInfo.userNameLabel.text = userInfo.userNameLabel.text
         self.userInfo.photoCountLabel.text = userInfo.photoCountLabel.text
         self.userInfo.avatarImageView.image = userInfo.avatarImageView.image
-        
+
     }
     
 }

@@ -25,7 +25,7 @@ class InterestingnessPhotoNetworkservice {
                 return
             }
             do {
-                try ParsePhotos.newPhotos(json: json)
+                try ParsePhotos.parsePhotoEntities(json: json)
                 completion(true)
             } catch {
                 completion(false)

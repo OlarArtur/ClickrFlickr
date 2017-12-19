@@ -51,6 +51,7 @@ class CoreDatastack: NSObject {
         
         let mangedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         mangedObjectContext.parent = writeManagedObjectContext
+//        mangedObjectContext.persistentStoreCoordinator = coordinator
         mangedObjectContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         return mangedObjectContext
         
@@ -71,7 +72,7 @@ class CoreDatastack: NSObject {
             mainManagedObjectContext.performAndWait {
                 do {
                     try mainManagedObjectContext.save()
-//                    print("Save")
+                    print("Save")
                 } catch {
                     fatalError("Error saving main context \(error)")
                 }
@@ -82,7 +83,7 @@ class CoreDatastack: NSObject {
             writeManagedObjectContext.perform {
                 do {
                     try self.writeManagedObjectContext.save()
-//                    print("Private Save")
+                    print("Private Save")
                 } catch {
                     fatalError("Error saving private context \(error)")
                 }
