@@ -40,7 +40,7 @@ class ImageLoader {
         
     }
     
-    private static func saveImageToCashe(image: UIImage, for url: String) {
+    static func saveImageToCashe(image: UIImage, for url: String) {
         imageCashe.setObject(image, forKey: url as NSString)
     }
     

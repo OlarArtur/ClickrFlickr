@@ -67,7 +67,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         UIView.animate(withDuration: 0.8, delay: 0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
             cell.contentView.layer.opacity = 1
         }, completion: nil)
-        
+
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -97,6 +97,9 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         }
         
         if let imageFromDocument = getImageFromDocumentDirectory(key: imageID) {
+            
+            ImageLoader.saveImageToCashe(image: imageFromDocument, for: imageURL)
+            
             if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
                 cell.configerOnlyPhoto(image: imageFromDocument)
             } else {

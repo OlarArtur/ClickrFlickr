@@ -50,8 +50,8 @@ class CoreDatastack: NSObject {
     private(set) lazy var mainManagedObjectContext: NSManagedObjectContext = {
         
         let mangedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        mangedObjectContext.parent = writeManagedObjectContext
-//        mangedObjectContext.persistentStoreCoordinator = coordinator
+//        mangedObjectContext.parent = writeManagedObjectContext
+        mangedObjectContext.persistentStoreCoordinator = coordinator
         mangedObjectContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         return mangedObjectContext
         

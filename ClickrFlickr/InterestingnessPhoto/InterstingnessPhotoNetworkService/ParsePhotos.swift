@@ -11,11 +11,16 @@ import CoreData
 
 class ParsePhotos {
 
-    static func parsePhotoEntities(json: AnyObject) throws {
+    static func parsePhotoEntities(json: AnyObject, completion: @escaping (Bool)->()) throws {
         
-        guard let photos = json["photos"] as? [String: Any] else { throw FlickOauthError.NetworkServiseError }
-        
-        guard let photo = photos["photo"] as? [[String: Any]] else { throw FlickOauthError.NetworkServiseError }
+        guard let photos = json["photos"] as? [String: Any] else {
+            completion(false)
+            throw FlickOauthError.NetworkServiseError
+        }
+        guard let photo = photos["photo"] as? [[String: Any]] else {
+            completion(false)
+            throw FlickOauthError.NetworkServiseError
+        }
         
         var uniques = [String]()
         
@@ -28,7 +33,6 @@ class ParsePhotos {
         } catch {
             print("Error fetch request \(error)")
         }
-        
         let uniquesFlickr = photo.flatMap({ $0["id"] as? String}).sorted()
         
         let uniquesSet = Set(uniques)
@@ -42,6 +46,7 @@ class ParsePhotos {
             }
         }
         CoreDatastack.default.saveContext()
+        completion(true)
     }
     
 }

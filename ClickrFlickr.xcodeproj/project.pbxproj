@@ -16,7 +16,6 @@
 		B21C862E1F79553B001CBC71 /* FlickrCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21C862D1F79553B001CBC71 /* FlickrCreateRequest.swift */; };
 		B21C86301F795594001CBC71 /* FlickrGetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21C862F1F795594001CBC71 /* FlickrGetResponse.swift */; };
 		B21C86321F79636C001CBC71 /* FlickrUserAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21C86311F79636C001CBC71 /* FlickrUserAuthentication.swift */; };
-		B21EAAB81FD5916D007BA9B8 /* PersistentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21EAAB71FD5916D007BA9B8 /* PersistentService.swift */; };
 		B2202C0F1F7BBBCE002D33C2 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2202C0E1F7BBBCE002D33C2 /* UserViewController.swift */; };
 		B22AE49E1F7A67DC001D6D0C /* ErrorAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22AE49D1F7A67DC001D6D0C /* ErrorAlertController.swift */; };
 		B22B8B371FBC19A200A21401 /* UserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22B8B361FBC19A200A21401 /* UserCollectionViewCell.swift */; };
@@ -69,7 +68,6 @@
 		B21C862D1F79553B001CBC71 /* FlickrCreateRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrCreateRequest.swift; path = "Application/Network Service/FlickrCreateRequest.swift"; sourceTree = "<group>"; };
 		B21C862F1F795594001CBC71 /* FlickrGetResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrGetResponse.swift; path = "Application/Network Service/FlickrGetResponse.swift"; sourceTree = "<group>"; };
 		B21C86311F79636C001CBC71 /* FlickrUserAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FlickrUserAuthentication.swift; path = Authorization/Model/FlickrUserAuthentication.swift; sourceTree = "<group>"; };
-		B21EAAB71FD5916D007BA9B8 /* PersistentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentService.swift; sourceTree = "<group>"; };
 		B2202C0E1F7BBBCE002D33C2 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserViewController.swift; path = User/Controller/UserViewController.swift; sourceTree = "<group>"; };
 		B22AE49D1F7A67DC001D6D0C /* ErrorAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorAlertController.swift; path = "Error Handle/ErrorAlertController.swift"; sourceTree = "<group>"; };
 		B22B8B361FBC19A200A21401 /* UserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserCollectionViewCell.swift; path = User/View/UserCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -186,7 +184,6 @@
 			children = (
 				B278969A1FD8121A002D2B90 /* PhotoEntitie+CoreDataClass.swift */,
 				B216474E1FD9207500E3F4DD /* PhotoEntitie+CoreDataProperties.swift */,
-				B21EAAB71FD5916D007BA9B8 /* PersistentService.swift */,
 				B278969E1FD81434002D2B90 /* CoreDataStack.swift */,
 			);
 			name = CoreDataManage;
@@ -637,7 +634,6 @@
 				B25AA1C91FAB1E0C0063E7AC /* NetworkServise.swift in Sources */,
 				B22D38311F604AA300FCC371 /* AppDelegate.swift in Sources */,
 				B2202C0F1F7BBBCE002D33C2 /* UserViewController.swift in Sources */,
-				B21EAAB81FD5916D007BA9B8 /* PersistentService.swift in Sources */,
 				B22B8B3A1FBC20E500A21401 /* GetPhotoNetworkService.swift in Sources */,
 				B2F7EBAE1F7A860400300C74 /* FetchJSON.swift in Sources */,
 				B277D7901FE2B21000BA81FF /* MainSegue.swift in Sources */,

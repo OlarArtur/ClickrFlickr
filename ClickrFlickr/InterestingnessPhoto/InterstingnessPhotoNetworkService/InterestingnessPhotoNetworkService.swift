@@ -25,8 +25,13 @@ class InterestingnessPhotoNetworkservice {
                 return
             }
             do {
-                try ParsePhotos.parsePhotoEntities(json: json)
-                completion(true)
+                try ParsePhotos.parsePhotoEntities(json: json) { success in
+                    guard success else {
+                        completion(false)
+                        return
+                    }
+                    completion(true)
+                }
             } catch {
                 completion(false)
                 let error = ErrorAlertController()
