@@ -219,19 +219,19 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        performSegue(withIdentifier: "UserPhotoDetail", sender: self)
-//    }
-//    
-//    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "UserPhotoDetail" {
-////            let detailVC = segue.destination as! UserPhotoDetailViewController
-////            detailVC.photos = photo
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "UserPhotoDetail", sender: nil)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "UserPhotoDetail" {
+            let detailVC = segue.destination as! UserPhotoDetailViewController
+            detailVC.photos = photo
 //            let detailVC = UserPhotoDetailViewController()
 //            detailVC.photos = photo
-//        }
-//    }
+        }
+    }
     
 }
 

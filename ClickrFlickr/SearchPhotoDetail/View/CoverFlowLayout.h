@@ -10,4 +10,7 @@
 
 @interface CoverFlowLayout : UICollectionViewFlowLayout
 
+@property (nonatomic, assign) CGFloat previousOffset;
+@property (nonatomic, assign) NSInteger currentPage;
+
 @end

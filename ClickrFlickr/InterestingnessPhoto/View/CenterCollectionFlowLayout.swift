@@ -13,39 +13,23 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
 
-        var mostRecentOffset = super.targetContentOffset(forProposedContentOffset: proposedContentOffset)
-
-        guard let collectionView = collectionView else {return mostRecentOffset}
-
-        let halfWidth = collectionView.bounds.size.width * 0.5
-
-        if let attributesForVisibleCells = layoutAttributesForElements(in: collectionView.bounds) {
-
-            var candidateAttributes: UICollectionViewLayoutAttributes?
-            for attributes in attributesForVisibleCells {
-
-                if attributes.representedElementCategory != .cell {
-                    continue
-                }
-
-                if (attributes.center.x == 0) || (attributes.center.x > (collectionView.contentOffset.x + halfWidth) && velocity.x < 0) {
-                    continue
-                }
-                candidateAttributes = attributes
-            }
-            
-            if(proposedContentOffset.x == -(collectionView.contentInset.left)) {
-                return proposedContentOffset
-            }
-            
-            guard let candidateAttr = candidateAttributes else {
-                return mostRecentOffset
-            }
-
-            mostRecentOffset = CGPoint(x: candidateAttr.center.x - halfWidth, y: candidateAttr.center.y)
-            return mostRecentOffset
+        let layoutAttributes = self.layoutAttributesForElements(in: collectionView!.bounds)
+        let center = collectionView!.bounds.size.width / 2
+        let proposedContentOffsetCenterOrigin = proposedContentOffset.x + center
+        let closest = layoutAttributes!.sorted { abs($0.center.x - proposedContentOffsetCenterOrigin) < abs($1.center.x - proposedContentOffsetCenterOrigin) }.first ?? UICollectionViewLayoutAttributes()
+        let targetContentOffset = CGPoint(x: floor(closest.center.x - center), y: proposedContentOffset.y)
+        return targetContentOffset
+    
+    }
+    
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        var newAttributes = [UICollectionViewLayoutAttributes]()
+        guard let attributes = super.layoutAttributesForElements(in: rect) else {return newAttributes}
+        for itemAttributes in attributes {
+            let newItmAttributes = itemAttributes.copy() as! UICollectionViewLayoutAttributes
+            newAttributes.append(newItmAttributes)
         }
-        return mostRecentOffset
+        return newAttributes
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {

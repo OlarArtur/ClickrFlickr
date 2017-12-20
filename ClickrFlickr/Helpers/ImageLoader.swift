@@ -9,13 +9,13 @@
 import Foundation
 
 
-class ImageLoader {
+@objc class ImageLoader: NSObject {
     
     private static let imageCashe = NSCache<NSString, UIImage>()
     
-    private init() {}
+    private override init() {}
     
-    static func loadImageUsingUrlString (urlString: String, completion: @escaping (UIImage?) ->()) {
+    @objc static func loadImageUsingUrlString (urlString: String, completion: @escaping (UIImage?) ->()) {
         
         guard let url = URL(string: urlString) else {
             completion(nil)

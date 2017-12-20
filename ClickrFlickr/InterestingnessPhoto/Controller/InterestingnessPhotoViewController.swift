@@ -55,7 +55,14 @@ class InterestingnessPhotoViewController: UIViewController {
         
     }
     
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        super.viewWillTransition(to: size, with: coordinator)
+//        collectionView.collectionViewLayout.invalidateLayout()
+//    }
+    
 }
+
+//MARK: UICollectionViewDataSource, UICollectionViewDelegate
 
 extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     

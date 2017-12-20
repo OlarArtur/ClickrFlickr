@@ -26,7 +26,7 @@ import UIKit
     
     var image: UIImage?
     
-    var url: String {
+    @objc var url: String {
         return "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret).jpg"
     }
     

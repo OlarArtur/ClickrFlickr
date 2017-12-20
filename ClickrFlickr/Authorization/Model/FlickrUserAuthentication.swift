@@ -27,12 +27,8 @@ class FlickrUserAuthentication {
     private static var oauthTokenSecret: String?
 
     private static var isAuthorized: Bool {
-        let nameObject = UserDefaults.standard.object(forKey: "usernsid")
-        if let _ = nameObject {
-            return true
-        } else {
-            return false
-        }
+        guard UserDefaults.standard.object(forKey: "usernsid") != nil else {return false}
+        return true
     }
 
     class func configureDataAPI(apiKey: String, apiSecretKey: String, callback: String) {

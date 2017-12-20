@@ -57,8 +57,40 @@
             }
         }
     }
-    
     return attributes;
+}
+
+- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
+{
+    CGSize collectionViewSize = self.collectionView.bounds.size;
+    CGFloat proposedContentOffsetCenterX = proposedContentOffset.x + self.collectionView.bounds.size.width * 0.5f;
+    CGRect proposedRect = self.collectionView.bounds;
+    
+    // the collectionview simply stop at the center of an item while scrolling freely
+     proposedRect = CGRectMake(proposedContentOffset.x, 0.0, collectionViewSize.width, collectionViewSize.height);
+    
+    UICollectionViewLayoutAttributes* candidateAttributes;
+    for (UICollectionViewLayoutAttributes* attributes in [self layoutAttributesForElementsInRect:proposedRect])
+    {
+        // == Skip comparison with non-cell items (headers and footers) == //
+        if (attributes.representedElementCategory != UICollectionElementCategoryCell)
+        {
+            continue;
+        }
+        // == First time in the loop == //
+        if(!candidateAttributes)
+        {
+            candidateAttributes = attributes;
+            continue;
+        }
+        
+        if (fabs(attributes.center.x - proposedContentOffsetCenterX) < fabs(candidateAttributes.center.x - proposedContentOffsetCenterX))
+        {
+            candidateAttributes = attributes;
+        }
+    }
+    return CGPointMake(candidateAttributes.center.x - self.collectionView.bounds.size.width * 0.5f, proposedContentOffset.y);
+
 }
 
 @end

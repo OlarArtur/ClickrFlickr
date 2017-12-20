@@ -283,10 +283,10 @@
             </objects>
             <point key="canvasLocation" x="3587" y="32"/>
         </scene>
-        <!--View Controller-->
+        <!--User Photo Detail View Controller-->
         <scene sceneID="rci-gH-gL8">
             <objects>
-                <viewController storyboardIdentifier="UserPhotoDetail" id="faj-s2-LBZ" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserPhotoDetail" id="faj-s2-LBZ" customClass="UserPhotoDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="h9m-bD-YvZ"/>
                         <viewControllerLayoutGuide type="bottom" id="hnp-gO-Jqc"/>
@@ -296,7 +296,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="WAt-py-Aeo">
-                                <rect key="frame" x="16" y="64" width="343" height="554"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="rH2-jH-zoi">
                                     <size key="itemSize" width="315" height="545"/>
@@ -306,13 +306,13 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UserPhotoDetailCell" id="9cs-GM-cXP" customClass="UserPhotoDetailCell">
-                                        <rect key="frame" x="14" y="0.0" width="315" height="545"/>
+                                        <rect key="frame" x="30" y="0.0" width="315" height="545"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="315" height="545"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ghg-Mf-1Ol">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ghg-Mf-1Ol">
                                                     <rect key="frame" x="8" y="8" width="299" height="529"/>
                                                 </imageView>
                                             </subviews>
@@ -336,9 +336,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="WAt-py-Aeo" secondAttribute="trailing" id="4Pe-1J-fqE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="WAt-py-Aeo" secondAttribute="trailing" constant="-16" id="4Pe-1J-fqE"/>
                             <constraint firstItem="WAt-py-Aeo" firstAttribute="top" secondItem="h9m-bD-YvZ" secondAttribute="bottom" id="KQZ-6P-89Q"/>
-                            <constraint firstItem="WAt-py-Aeo" firstAttribute="leading" secondItem="qWK-uK-SiM" secondAttribute="leadingMargin" id="aQP-XJ-saQ"/>
+                            <constraint firstItem="WAt-py-Aeo" firstAttribute="leading" secondItem="qWK-uK-SiM" secondAttribute="leadingMargin" constant="-16" id="aQP-XJ-saQ"/>
                             <constraint firstItem="hnp-gO-Jqc" firstAttribute="top" secondItem="WAt-py-Aeo" secondAttribute="bottom" id="l0G-d4-GAV"/>
                         </constraints>
                     </view>

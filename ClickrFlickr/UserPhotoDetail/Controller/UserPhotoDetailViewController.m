@@ -8,27 +8,24 @@
 
 #import "UserPhotoDetailViewController.h"
 #import "UserPhotoDetailCell.h"
+#import "CoverFlowLayout.h"
 #import "ClickrFlickr-Swift.h"
 
 @interface UserPhotoDetailViewController()
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-//@property (strong, nonatomic) NSArray *photos;
-@property Photo *photo;
-
 
 @end
 
 @implementation UserPhotoDetailViewController
-{
-    NSMutableArray *photos;
-}
+
+@synthesize photos;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    CoverFlowLayout *layout = [[CoverFlowLayout alloc]init];
+    _collectionView.collectionViewLayout = layout;
 }
-
 
 #pragma UICollectionViewDataSource
 
@@ -42,9 +39,22 @@
     static NSString *cellIdentifier = @"UserPhotoDetailCell";
     
     UserPhotoDetailCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.photo.image = [UIImage imageNamed:@"flickr"];
     
+    Photo *photo = [photos objectAtIndex:indexPath.item];
+    [ImageLoader loadImageUsingUrlStringWithUrlString:photo.url completion:^(UIImage * _Nullable image) {
+        cell.photo.image = image;
+    }];
     return cell;
 }
+
+
+
+#pragma UICollectionViewDelegateFlowLayout
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CGSizeMake(_collectionView.bounds.size.width, _collectionView.bounds.size.height);
+}
+
 
 @end

@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UserPhotoDetailViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate>
-
-//@property (strong, nonatomic) NSArray *photos;
+@interface UserPhotoDetailViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+{
+    NSArray *photos;
+}
+@property (strong, nonatomic) NSArray *photos;
 
 @end
