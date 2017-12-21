@@ -14,12 +14,9 @@ class MainViewController: UIViewController {
     @IBOutlet weak var partTwoLabel: UILabel!
     @IBOutlet weak var labelsStackView: UIStackView!
     
-    var shapeLayer = CAShapeLayer()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.cameraAnimation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,7 +29,6 @@ class MainViewController: UIViewController {
         super.viewDidAppear(animated)
 
         isAuthorized()
-    
 
     }
     
@@ -41,27 +37,40 @@ class MainViewController: UIViewController {
         if FlickrUserAuthentication.getIsAuthorized() {
             performSegue(withIdentifier: "Authorized", sender: self)
         } else {
-//            UIView.animate(withDuration: 50, delay: 0, options: .curveLinear, animations: {
-////                self.partOneLabel.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-////                self.labelsStackView.spacing = self.view.bounds.width
-//            }) { (success) in
-//                self.performSegue(withIdentifier: "NotAuthorized", sender: self)
-//            }
-            performSegue(withIdentifier: "NotAuthorized", sender: self)
+            logoAnimation()
         }
     }
     
-    private func cameraAnimation() {
-        
-        let path = UIBezierPath()
-   
-        path.move(to: CGPoint(x: labelsStackView.frame.origin.x, y: labelsStackView.frame.origin.y))
-        path.addLine(to: CGPoint(x: labelsStackView.frame.origin.x , y: labelsStackView.frame.origin.y - labelsStackView.bounds.width))
-        path.addLine(to: CGPoint(x: labelsStackView.frame.origin.x + labelsStackView.bounds.width, y: labelsStackView.frame.origin.y - labelsStackView.bounds.width))
-        path.addLine(to: CGPoint(x: labelsStackView.frame.origin.x + labelsStackView.bounds.width, y: labelsStackView.frame.origin.y))
-        path.addLine(to: CGPoint(x: labelsStackView.frame.origin.x, y: labelsStackView.frame.origin.y))
+    private func logoAnimation() {
         
         let shapeLayer = CAShapeLayer()
+        CATransaction.begin()
+        CATransaction.setCompletionBlock ({
+            self.performSegue(withIdentifier: "NotAuthorized", sender: self)
+            shapeLayer.removeFromSuperlayer()
+        })
+        
+        let path = UIBezierPath()
+        
+        let beginPath = CGPoint(x: labelsStackView.frame.origin.x, y: labelsStackView.frame.origin.y)
+        let widthPath = labelsStackView.bounds.width
+        let heightPath = widthPath / 2
+   
+        path.move(to: beginPath)
+        path.addLine(to: CGPoint(x: beginPath.x , y: beginPath.y - heightPath))
+        
+        path.addLine(to: CGPoint(x: beginPath.x + widthPath * 0.2, y: beginPath.y - heightPath))
+        path.addLine(to: CGPoint(x: beginPath.x + widthPath * 0.4, y: beginPath.y - heightPath - 15))
+        path.addLine(to: CGPoint(x: beginPath.x + widthPath * 0.6, y: beginPath.y - heightPath - 15))
+        path.addLine(to: CGPoint(x: beginPath.x + widthPath * 0.8, y: beginPath.y - heightPath))
+        path.addLine(to: CGPoint(x: beginPath.x + widthPath, y: beginPath.y - heightPath))
+        
+        path.addLine(to: CGPoint(x: beginPath.x + widthPath, y: beginPath.y))
+        path.addLine(to: CGPoint(x: beginPath.x, y: beginPath.y))
+        
+        path.move(to: CGPoint(x: beginPath.x + widthPath / 4, y: beginPath.y - heightPath / 2 - 5))
+        path.addArc(withCenter: CGPoint(x: beginPath.x + widthPath / 2, y: beginPath.y - heightPath / 2 - 5), radius: widthPath / 4, startAngle: CGFloat.pi, endAngle: CGFloat.pi*4, clockwise: true)
+        
         shapeLayer.fillColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0).cgColor
         shapeLayer.strokeColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1).cgColor
         shapeLayer.lineWidth = 2
@@ -70,9 +79,10 @@ class MainViewController: UIViewController {
         view.layer.addSublayer(shapeLayer)
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.fromValue = 0
-        animation.duration = 2
+        animation.duration = 3
         shapeLayer.add(animation, forKey: "MyAnimation")
-        self.shapeLayer = shapeLayer
+        
+        CATransaction.commit()
     }
     
 }
