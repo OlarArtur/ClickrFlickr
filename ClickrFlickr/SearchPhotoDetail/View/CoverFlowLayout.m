@@ -17,7 +17,7 @@
     CGSize size = self.collectionView.frame.size;
     CGFloat itemWidth = size.width/3.0f;
     self.itemSize = CGSizeMake(itemWidth, itemWidth*0.75f);
-    self.sectionInset = UIEdgeInsetsMake(size.height*0.1f, size.height*0.1f, size.height*0.1f, size.height*0.1f);
+    self.sectionInset = UIEdgeInsetsMake(size.height*0.1f, self.itemSize.width, size.height*0.1f, self.itemSize.width);
 }
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
@@ -27,7 +27,7 @@
 
 -(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
-    NSArray* attributes = [super layoutAttributesForElementsInRect:rect];
+    NSArray* attributes = [[super layoutAttributesForElementsInRect:rect] copy];
     
     CGRect visibleRect;
     visibleRect.origin = self.collectionView.contentOffset;
@@ -66,18 +66,15 @@
     CGFloat proposedContentOffsetCenterX = proposedContentOffset.x + self.collectionView.bounds.size.width * 0.5f;
     CGRect proposedRect = self.collectionView.bounds;
     
-    // the collectionview simply stop at the center of an item while scrolling freely
-     proposedRect = CGRectMake(proposedContentOffset.x, 0.0, collectionViewSize.width, collectionViewSize.height);
+    proposedRect = CGRectMake(proposedContentOffset.x, 0.0, collectionViewSize.width, collectionViewSize.height);
     
     UICollectionViewLayoutAttributes* candidateAttributes;
     for (UICollectionViewLayoutAttributes* attributes in [self layoutAttributesForElementsInRect:proposedRect])
     {
-        // == Skip comparison with non-cell items (headers and footers) == //
         if (attributes.representedElementCategory != UICollectionElementCategoryCell)
         {
             continue;
         }
-        // == First time in the loop == //
         if(!candidateAttributes)
         {
             candidateAttributes = attributes;

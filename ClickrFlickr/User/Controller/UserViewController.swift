@@ -25,6 +25,14 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     var photo = [Photo]()
     
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+    
     override func loadView() {
         super.loadView()
         

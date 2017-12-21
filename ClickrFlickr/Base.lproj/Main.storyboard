@@ -127,6 +127,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="miv-IH-SvP"/>
                     <connections>
+                        <outlet property="labelsStackView" destination="6ip-yY-PpG" id="57h-Vh-a80"/>
                         <outlet property="partOneLabel" destination="OvQ-RV-kMo" id="D4i-P4-VE3"/>
                         <outlet property="partTwoLabel" destination="Htz-wn-PY6" id="d1v-Fl-GKQ"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="NotAuthorized" id="6dq-yS-8yK"/>

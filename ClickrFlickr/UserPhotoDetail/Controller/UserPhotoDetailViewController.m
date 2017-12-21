@@ -47,14 +47,13 @@
     return cell;
 }
 
-
-
 #pragma UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"W:%f",_collectionView.bounds.size.width);
+    NSLog(@"H:%f",_collectionView.bounds.size.height);
     return CGSizeMake(_collectionView.bounds.size.width, _collectionView.bounds.size.height);
 }
-
 
 @end

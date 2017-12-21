@@ -18,6 +18,14 @@ class DetailPhotoViewController: UIViewController {
     var photos = [Photo]()
     var user: User?
     
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+    
     override func loadView() {
         Bundle.main.loadNibNamed("DetailPhotoViewController", owner: self, options: nil)
     }

@@ -25,10 +25,23 @@ class InterestingnessPhotoViewController: UIViewController {
     
     let spacingItem: CGFloat = 2
     
+    override var shouldAutorotate: Bool {
+        if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
         collectionView?.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
+//        self.automaticallyAdjustsScrollViewInsets = false
     
         InterestingnessPhotoNetworkservice.getJsonForSearchPhoto() { [weak self] (success) in
             
