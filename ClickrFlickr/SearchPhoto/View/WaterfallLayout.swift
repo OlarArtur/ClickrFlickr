@@ -92,5 +92,6 @@ class WaterfallLayout: UICollectionViewLayout {
         }
         return true
     }
+    
 }
 

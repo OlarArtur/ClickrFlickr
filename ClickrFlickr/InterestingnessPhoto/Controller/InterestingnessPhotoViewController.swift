@@ -191,7 +191,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
             
         } else {
             let layout = CenterCellCollectionViewFlowLayout()
-            layout.scrollDirection = .horizontal
             collectionView.setCollectionViewLayout(layout, animated: false) { [weak self] (success) in
                 guard let strongSelf = self else {return}
                 if success {

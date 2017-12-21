@@ -32,7 +32,6 @@ class InterstingnessPhotoCollectionViewCell: UICollectionViewCell {
     func configerOnlyPhoto (image: UIImage) {
         isOnlyPhoto = true
         
-        self.photo.bounds = self.bounds
         self.titleLabel.alpha = 0
         self.descriptionLabel.alpha = 0
         

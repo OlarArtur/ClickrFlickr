@@ -11,6 +11,11 @@ import UIKit
 
 class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
+    override func prepare() {
+        self.scrollDirection = .horizontal
+        self.collectionView?.showsHorizontalScrollIndicator = false
+    }
+    
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
 
         let layoutAttributes = self.layoutAttributesForElements(in: collectionView!.bounds)
@@ -22,18 +27,18 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     }
     
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        var newAttributes = [UICollectionViewLayoutAttributes]()
-        guard let attributes = super.layoutAttributesForElements(in: rect) else {return newAttributes}
-        for itemAttributes in attributes {
-            let newItmAttributes = itemAttributes.copy() as! UICollectionViewLayoutAttributes
-            newAttributes.append(newItmAttributes)
-        }
-        return newAttributes
-    }
-    
-    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return true
-    }
+//    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+//        var newAttributes = [UICollectionViewLayoutAttributes]()
+//        guard let attributes = super.layoutAttributesForElements(in: rect) else {return newAttributes}
+//        for itemAttributes in attributes {
+//            let newItmAttributes = itemAttributes.copy() as! UICollectionViewLayoutAttributes
+//            newAttributes.append(newItmAttributes)
+//        }
+//        return newAttributes
+//    }
+//
+//    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+//        return true
+//    }
     
 }

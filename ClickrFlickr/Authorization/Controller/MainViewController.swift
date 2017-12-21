@@ -29,7 +29,6 @@ class MainViewController: UIViewController {
         super.viewDidAppear(animated)
 
         isAuthorized()
-
     }
     
     func isAuthorized() {
@@ -44,6 +43,7 @@ class MainViewController: UIViewController {
     private func logoAnimation() {
         
         let shapeLayer = CAShapeLayer()
+        
         CATransaction.begin()
         CATransaction.setCompletionBlock ({
             self.performSegue(withIdentifier: "NotAuthorized", sender: self)
