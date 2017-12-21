@@ -64,9 +64,8 @@
 {
     CGSize collectionViewSize = self.collectionView.bounds.size;
     CGFloat proposedContentOffsetCenterX = proposedContentOffset.x + self.collectionView.bounds.size.width * 0.5f;
-    CGRect proposedRect = self.collectionView.bounds;
     
-    proposedRect = CGRectMake(proposedContentOffset.x, 0.0, collectionViewSize.width, collectionViewSize.height);
+    CGRect proposedRect = CGRectMake(proposedContentOffset.x, 0.0, collectionViewSize.width, collectionViewSize.height);
     
     UICollectionViewLayoutAttributes* candidateAttributes;
     for (UICollectionViewLayoutAttributes* attributes in [self layoutAttributesForElementsInRect:proposedRect])
@@ -87,7 +86,6 @@
         }
     }
     return CGPointMake(candidateAttributes.center.x - self.collectionView.bounds.size.width * 0.5f, proposedContentOffset.y);
-
 }
 
 @end

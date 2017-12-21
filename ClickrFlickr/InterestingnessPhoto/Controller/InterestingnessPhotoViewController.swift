@@ -41,7 +41,7 @@ class InterestingnessPhotoViewController: UIViewController {
         super.viewDidLoad()
     
         collectionView?.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
-//        self.automaticallyAdjustsScrollViewInsets = false
+
     
         InterestingnessPhotoNetworkservice.getJsonForSearchPhoto() { [weak self] (success) in
             
@@ -69,7 +69,7 @@ class InterestingnessPhotoViewController: UIViewController {
     }
     
 //    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        super.viewWillTransition(to: size, with: coordinator)
+//       
 //        collectionView.collectionViewLayout.invalidateLayout()
 //    }
     
@@ -231,24 +231,13 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
 
         let width = collectionView.bounds.size.width
 
-        guard let description = photoEntities[indexPath.item].photoDescription, let aspectSize = photoEntities[indexPath.item].aspectRatio, let aspectSizeFloat = Float(aspectSize) else {
+        guard let aspectSize = photoEntities[indexPath.item].aspectRatio, let aspectSizeFloat = Float(aspectSize) else {
             return CGSize(width: 0, height: 0)
         }
         
         let photoHeight = (width - 16) * CGFloat(aspectSizeFloat)
-
-        let fontDescription: UIFont = UIFont.systemFont(ofSize: 12, weight: .regular)
-
-        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let descriptionTemp = description.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSAttributedStringKey.font: fontDescription], context: nil)
-
-        var descriptionHeight = descriptionTemp.height + 5
         
-        if descriptionHeight > 50 {
-            descriptionHeight = 55
-        }
-        
-        let height = photoHeight + descriptionHeight
+        let height = photoHeight
 
         return CGSize(width: width, height: height)
     }
