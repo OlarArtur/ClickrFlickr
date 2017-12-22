@@ -20,7 +20,6 @@ class InterstingnessPhotoCollectionViewCell: UICollectionViewCell {
         isOnlyPhoto = false
         self.titleLabel.text = photoEntitie.title
         self.descriptionLabel.text =  photoEntitie.photoDescription
-        makeCellAppearance()
         
         self.titleLabel.alpha = 1
         self.descriptionLabel.alpha = 1
@@ -39,21 +38,12 @@ class InterstingnessPhotoCollectionViewCell: UICollectionViewCell {
         self.photo.contentMode = .scaleAspectFit
     }
     
-    private func makeCellAppearance() {
-        guard let htmlString = self.descriptionLabel.text else {return}
-        guard let htmlData = htmlString.data(using: String.Encoding.utf8, allowLossyConversion: false) else {return}
-        guard let attributedString = try? NSAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil) else {return}
-        self.descriptionLabel.text = attributedString.string
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
-        if isOnlyPhoto {
-            self.photo.image = UIImage()
-        } else {
-            self.titleLabel.text = String()
-            self.photo.image = UIImage()
-            self.descriptionLabel.text = String()
+        self.photo.image = nil
+        if !isOnlyPhoto {
+            self.titleLabel.text = ""
+            self.descriptionLabel.text = ""
         }
     }
     

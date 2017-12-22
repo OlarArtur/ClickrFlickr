@@ -29,6 +29,7 @@ class FetchJSON {
                     completion(json as AnyObject)
                 }
             } catch let errorJson {
+                completion(nil)
                 print(errorJson)
             }
         }

@@ -25,28 +25,32 @@ class ParsePhotos {
         var uniques = [String]()
         
         let context = CoreDatastack.default.writeManagedObjectContext
-        
-        let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
-        do {
-            let photoEntities = try context.fetch(fetchRequest)
-            uniques = photoEntities.flatMap({ $0.imageID }).sorted()
-        } catch {
-            print("Error fetch request \(error)")
-        }
-        let uniquesFlickr = photo.flatMap({ $0["id"] as? String}).sorted()
-        
-        let uniquesSet = Set(uniques)
-        var news = Set(uniquesFlickr)
-        
-        news.subtract(uniquesSet)
-        
-        for unic in news {
-            if let index = photo.index(where: { $0["id"] as? String == unic }) {
-                _ = PhotoEntitie(dict: photo[index], context: context)
+        context.perform {
+            
+            let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
+            do {
+                let photoEntities = try context.fetch(fetchRequest)
+                uniques = photoEntities.flatMap({ $0.imageID }).sorted()
+            } catch {
+                print("Error fetch request \(error)")
             }
+            let uniquesFlickr = photo.flatMap({ $0["id"] as? String}).sorted()
+            
+            let uniquesSet = Set(uniques)
+            var news = Set(uniquesFlickr)
+            
+            news.subtract(uniquesSet)
+            
+            for unic in news {
+                if let index = photo.index(where: { $0["id"] as? String == unic }) {
+                    _ = PhotoEntitie(dict: photo[index], context: context)
+                }
+            }
+            CoreDatastack.default.saveContext()
+            
+            completion(true)
         }
-        CoreDatastack.default.saveContext()
-        completion(true)
+        
     }
     
 }

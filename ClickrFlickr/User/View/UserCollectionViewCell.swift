@@ -36,12 +36,6 @@ class UserCollectionViewCell: UICollectionViewCell {
         photo.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
     
-//    func configure(with photo: Photo) {
-//        self.photo.bounds.size = (photo.image?.size)!
-//        self.photo.image = photo.image
-//        self.titlePhoto.text = photo.title
-//    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         self.photo.image = nil

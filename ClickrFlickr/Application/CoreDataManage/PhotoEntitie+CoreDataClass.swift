@@ -32,10 +32,18 @@ public class PhotoEntitie: NSManagedObject {
         
         self.aspectRatio = String(height / width)
         self.imageURL = "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret).jpg"
-        self.photoDescription = description
         self.imageID = id
         self.title = title
+        
+        guard let htmlData = description.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+            self.photoDescription = description
+            return
+        }
+        guard let attributedString = try? NSAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil) else {
+            self.photoDescription = description
+            return
+        }
+        self.photoDescription = attributedString.string
     }
-    
     
 }
