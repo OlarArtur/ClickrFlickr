@@ -21,8 +21,8 @@ class InterstingnessPhotoCollectionViewCell: UICollectionViewCell {
         self.titleLabel.text = photoEntitie.title
         self.descriptionLabel.text =  photoEntitie.photoDescription
         
-        self.titleLabel.alpha = 1
-        self.descriptionLabel.alpha = 1
+        self.titleLabel.isHidden = false
+        self.descriptionLabel.isHidden = false
         self.photo.contentMode = .scaleToFill
         guard let image = image else {return}
         self.photo.image = image
@@ -31,8 +31,8 @@ class InterstingnessPhotoCollectionViewCell: UICollectionViewCell {
     func configerOnlyPhoto (image: UIImage) {
         isOnlyPhoto = true
         
-        self.titleLabel.alpha = 0
-        self.descriptionLabel.alpha = 0
+        self.titleLabel.isHidden = true
+        self.descriptionLabel.isHidden = true
         
         self.photo.image = image
         self.photo.contentMode = .scaleAspectFit
