@@ -68,14 +68,6 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         cell.contentView.layer.opacity = 0
         cell.titlePhoto.text = photo[indexPath.item].title
         
-        if let image = ImageLoader.imageFromCashe(for: photo[indexPath.item].url) {
-            cell.photo.image = image
-            
-            cell.spinnerActivityIndicator.stopAnimating()
-            cell.spinnerActivityIndicator.isHidden = true
-            
-            return cell
-        }
         cell.spinnerActivityIndicator.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         cell.spinnerActivityIndicator.startAnimating()
         cell.spinnerActivityIndicator.isHidden = false
@@ -107,8 +99,6 @@ extension SearchCollectionViewController: UICollectionViewDataSourcePrefetching 
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            
-            guard ImageLoader.imageFromCashe(for: photo[indexPath.item].url) != nil else { return }
             
             ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { image in
                 guard image != nil else { return }

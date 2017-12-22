@@ -173,10 +173,10 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellUser", for: indexPath) as! UserCollectionViewCell
         
-        if let image = ImageLoader.imageFromCashe(for: photo[indexPath.item].url) {
-            cell.photo.image = image
-            return cell
-        }
+//        if let image = ImageLoader.imageFromCashe(for: photo[indexPath.item].url) {
+//            cell.photo.image = image
+//            return cell
+//        }
         ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { image in
             guard let image = image else {return}
             if collectionView.indexPath(for: cell) == indexPath {

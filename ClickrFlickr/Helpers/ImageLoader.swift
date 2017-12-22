@@ -22,6 +22,16 @@ import Foundation
             return
         }
         
+        if let imageFromCashe = imageFromCashe(for: urlString) {
+            completion(imageFromCashe)
+            return
+        }
+        
+        if let imageFromDocument = getImageFromDocumentDirectory(key: urlString) {
+            completion(imageFromDocument)
+            return
+        }
+        
         NetworkServise.shared.getData(url: url) { (data, urlForCashe) in
             
             guard let data = data else {
@@ -35,6 +45,7 @@ import Foundation
                 }
                 completion(image)
                 saveImageToCashe(image: image, for: urlForCashe.absoluteString)
+                saveImageToDocumentDirectory(image: image, for: urlForCashe.absoluteString)
             }
         }
         
@@ -49,6 +60,38 @@ import Foundation
             return nil
         }
         return image
+    }
+    
+    static private func saveImageToDocumentDirectory(image: UIImage, for key: String) {
+        
+        DispatchQueue.global().async {
+            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            guard let data = UIImagePNGRepresentation(image) else {return}
+            let modifyKey = key.replacingOccurrences(of: "/", with: "")
+            let fileName = paths.appendingPathComponent("image:\(modifyKey)")
+            
+            do {
+                try data.write(to: fileName)
+            } catch {
+                print("Error write image to document directory: \(error)")
+            }
+        }
+        
+    }
+    
+    static private func getImageFromDocumentDirectory(key: String) -> UIImage? {
+        
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let fileManager = FileManager.default
+        
+        let modifyKey = key.replacingOccurrences(of: "/", with: "")
+        let fileName = paths.appendingPathComponent("image:\(modifyKey)")
+        
+        if fileManager.fileExists(atPath: fileName.path) {
+            return UIImage(contentsOfFile: fileName.path)
+        }
+        return nil
+        
     }
     
 }

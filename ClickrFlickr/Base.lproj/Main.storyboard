@@ -447,12 +447,12 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="Aiy-pE-GQx" secondAttribute="trailing" constant="8" id="7jN-ak-Hjd"/>
                                             <constraint firstItem="Aiy-pE-GQx" firstAttribute="top" secondItem="ifg-3Z-Ud1" secondAttribute="top" constant="8" id="Cag-xp-eZ8"/>
+                                            <constraint firstItem="XDH-xB-Vhh" firstAttribute="trailing" secondItem="Aiy-pE-GQx" secondAttribute="trailing" id="Ppr-1c-iV6"/>
                                             <constraint firstItem="Aiy-pE-GQx" firstAttribute="leading" secondItem="ifg-3Z-Ud1" secondAttribute="leading" constant="8" id="Uwm-ui-1jC"/>
                                             <constraint firstItem="uer-45-2em" firstAttribute="centerX" secondItem="ifg-3Z-Ud1" secondAttribute="centerX" id="ZMI-Rd-8nE"/>
                                             <constraint firstItem="XDH-xB-Vhh" firstAttribute="bottom" secondItem="Aiy-pE-GQx" secondAttribute="bottom" id="a6I-Uk-VOu"/>
                                             <constraint firstItem="uer-45-2em" firstAttribute="width" secondItem="Aiy-pE-GQx" secondAttribute="width" id="am4-PX-nnE"/>
                                             <constraint firstItem="XDH-xB-Vhh" firstAttribute="leading" secondItem="Aiy-pE-GQx" secondAttribute="leading" id="fPV-iL-Kci"/>
-                                            <constraint firstItem="XDH-xB-Vhh" firstAttribute="width" secondItem="Aiy-pE-GQx" secondAttribute="width" id="fsH-VR-IPG"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="Aiy-pE-GQx" secondAttribute="bottom" constant="8" id="of6-Ca-dOC"/>
                                             <constraint firstItem="uer-45-2em" firstAttribute="top" secondItem="Aiy-pE-GQx" secondAttribute="top" id="seo-Ja-sk3"/>
                                         </constraints>

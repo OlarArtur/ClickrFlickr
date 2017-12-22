@@ -44,14 +44,7 @@ class InterestingnessPhotoViewController: UIViewController {
 
     
         InterestingnessPhotoNetworkservice.getJsonForSearchPhoto() { [weak self] (success) in
-            
-            guard let strongSelf = self else { return }
-    
-            guard success else {
-                strongSelf.fetchtPhotoEntities()
-                return
-            }
-            strongSelf.fetchtPhotoEntities()
+            self?.fetchtPhotoEntities()
         }
         
     }
@@ -98,7 +91,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         cell.contentView.layer.opacity = 0
         
         guard let imageURL = photoEntities[indexPath.item].imageURL else {return cell}
-        guard let imageID = photoEntities[indexPath.item].imageID else {return cell}
         
         if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
             cell.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
@@ -107,32 +99,10 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
             cell.configure(with: photoEntities[indexPath.item], image: nil)
         }
         
-        if let imageFromCashe = ImageLoader.imageFromCashe(for: imageURL) {
-            if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
-                cell.configerOnlyPhoto(image: imageFromCashe)
-            } else {
-                cell.configure(with: photoEntities[indexPath.item], image: imageFromCashe)
-            }
-            return cell
-        }
-        
-        if let imageFromDocument = getImageFromDocumentDirectory(key: imageID) {
-            
-            ImageLoader.saveImageToCashe(image: imageFromDocument, for: imageURL)
-            
-            if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
-                cell.configerOnlyPhoto(image: imageFromDocument)
-            } else {
-                cell.configure(with: photoEntities[indexPath.item], image: imageFromDocument)
-            }
-            return cell
-        }
-        
         cell.photo.tag = indexPath.item
         
         ImageLoader.loadImageUsingUrlString(urlString: imageURL) { [weak self] image in
             guard let strongSelf = self, let image = image else { return }
-            strongSelf.saveImageToDocumentDirectory(image: image, key: imageID)
             
             if cell.photo.tag == indexPath.item {
                 if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
@@ -146,34 +116,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         
     }
     
-    private func saveImageToDocumentDirectory(image: UIImage, key: String) {
-        
-        DispatchQueue.global().async {
-            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            guard let data = UIImagePNGRepresentation(image) else {return}
-            
-            let fileName = paths.appendingPathComponent("\(key).png")
-            do {
-                try data.write(to: fileName)
-            } catch {
-                print("Error write image to document directory: \(error)")
-            }
-        }
-        
-    }
-    
-    private func getImageFromDocumentDirectory(key: String) -> UIImage? {
-        
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let fileManager = FileManager.default
-        let fileName = paths.appendingPathComponent("\(key).png")
-        
-        if fileManager.fileExists(atPath: fileName.path) {
-            return UIImage(contentsOfFile: fileName.path)
-        }
-        return nil
-        
-    }
+
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
@@ -255,30 +198,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
             return 0
         }
         return 20
-    }
-
-}
-
-extension InterestingnessPhotoViewController: UICollectionViewDataSourcePrefetching {
-
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-
-        for indexPath in indexPaths {
-
-            guard let imageURL = photoEntities[indexPath.item].imageURL else { return }
-            guard let imageID = photoEntities[indexPath.item].imageID else { return }
-
-            if ImageLoader.imageFromCashe(for: imageURL) != nil {
-                continue
-            }
-            if getImageFromDocumentDirectory(key: imageID) != nil {
-                continue
-            }
-            ImageLoader.loadImageUsingUrlString(urlString: imageURL, completion: {[weak self] (image) in
-                guard let strongSelf = self, let image = image else {return}
-                strongSelf.saveImageToDocumentDirectory(image: image, key: imageID)
-            })
-        }
     }
 
 }

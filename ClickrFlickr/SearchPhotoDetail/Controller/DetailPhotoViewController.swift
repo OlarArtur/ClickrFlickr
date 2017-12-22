@@ -115,11 +115,6 @@ extension DetailPhotoViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DetailCell", for: indexPath) as! DetailPhotoViewCell
         
-        if let image = ImageLoader.imageFromCashe(for: photos[indexPath.item].url) {
-            cell.photoImage.image = image
-            return cell
-        }
-        
         ImageLoader.loadImageUsingUrlString(urlString: photos[indexPath.item].url) { image in
             guard let image = image else {return}
             if collectionView.indexPath(for: cell) == indexPath {
