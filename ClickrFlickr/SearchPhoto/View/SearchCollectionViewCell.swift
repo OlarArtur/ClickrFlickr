@@ -24,8 +24,6 @@ class SearchCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         self.photo.image = nil
         self.titlePhoto.text = ""
-        self.spinnerActivityIndicator.isHidden = false
-        self.spinnerActivityIndicator.startAnimating()
     }
     
 }

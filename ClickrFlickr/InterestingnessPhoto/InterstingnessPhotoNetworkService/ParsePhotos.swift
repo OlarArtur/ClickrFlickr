@@ -10,6 +10,20 @@ import Foundation
 import CoreData
 
 class ParsePhotos {
+    
+    static func parsePhotos(json: AnyObject, completion: @escaping ([Photo])->() ) throws {
+        
+        guard let photos = json["photos"] as? [String: Any] else { throw FlickOauthError.NetworkServiseError }
+        
+        guard let photo = photos["photo"] as? [[String: Any]] else { throw FlickOauthError.NetworkServiseError }
+        
+        DispatchQueue.global().async {
+            let arrayPhoto = photo.flatMap{Photo(dict: $0)}
+            DispatchQueue.main.async {
+                completion(arrayPhoto)
+            }
+        }
+    }
 
     static func parsePhotoEntities(json: AnyObject, completion: @escaping (Bool)->()) throws {
         
@@ -47,7 +61,6 @@ class ParsePhotos {
                 }
             }
             CoreDatastack.default.saveContext()
-            
             completion(true)
         }
         

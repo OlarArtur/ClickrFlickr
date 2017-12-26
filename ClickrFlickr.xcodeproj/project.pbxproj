@@ -11,7 +11,6 @@
 		B20D00911FBC86F60046004A /* InterestingnessPhotoNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20D00901FBC86F60046004A /* InterestingnessPhotoNetworkService.swift */; };
 		B20D00931FBC88620046004A /* InterstingnessPhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20D00921FBC88620046004A /* InterstingnessPhotoCollectionViewCell.swift */; };
 		B21603591FB42EF700AFA5F3 /* SearchNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21603581FB42EF700AFA5F3 /* SearchNetworkService.swift */; };
-		B216035B1FB42F7800AFA5F3 /* SearchPhotos.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216035A1FB42F7800AFA5F3 /* SearchPhotos.swift */; };
 		B21647501FD9207500E3F4DD /* PhotoEntitie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B216474E1FD9207500E3F4DD /* PhotoEntitie+CoreDataProperties.swift */; };
 		B21C33181FEB94D900DF1040 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21C33171FEB94D900DF1040 /* NavigationController.swift */; };
 		B21C331A1FEB950D00DF1040 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21C33191FEB950D00DF1040 /* TabBarController.swift */; };
@@ -65,7 +64,6 @@
 		B20D00901FBC86F60046004A /* InterestingnessPhotoNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestingnessPhotoNetworkService.swift; sourceTree = "<group>"; };
 		B20D00921FBC88620046004A /* InterstingnessPhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstingnessPhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		B21603581FB42EF700AFA5F3 /* SearchNetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchNetworkService.swift; path = SearchPhoto/SearchNetworkService/SearchNetworkService.swift; sourceTree = "<group>"; };
-		B216035A1FB42F7800AFA5F3 /* SearchPhotos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchPhotos.swift; path = SearchPhoto/Model/SearchPhotos.swift; sourceTree = "<group>"; };
 		B216474E1FD9207500E3F4DD /* PhotoEntitie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoEntitie+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B21C33171FEB94D900DF1040 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		B21C33191FEB950D00DF1040 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -266,7 +264,6 @@
 		B25AA1CB1FAB32AB0063E7AC /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B216035A1FB42F7800AFA5F3 /* SearchPhotos.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -680,7 +677,6 @@
 				B20D008E1FBC84E00046004A /* InterestingnessPhotoViewController.swift in Sources */,
 				B21C86321F79636C001CBC71 /* FlickrUserAuthentication.swift in Sources */,
 				B21C33181FEB94D900DF1040 /* NavigationController.swift in Sources */,
-				B216035B1FB42F7800AFA5F3 /* SearchPhotos.swift in Sources */,
 				B22B8B371FBC19A200A21401 /* UserCollectionViewCell.swift in Sources */,
 				B278902F1FCC294600CEBB48 /* CenterCollectionFlowLayout.swift in Sources */,
 				B20D00931FBC88620046004A /* InterstingnessPhotoCollectionViewCell.swift in Sources */,

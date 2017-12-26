@@ -20,15 +20,15 @@ class NetworkServise {
         
         session.dataTask(with: url) { (data, response, error) in
             
+            guard let data = data else {
+                completion(nil, url)
+                return
+            }
             DispatchQueue.main.async {
-                guard let data = data else {
-                    completion(nil, url)
-                    return
-                }
                 completion(data, url)
             }
             
-        }.resume()
+            }.resume()
     }
     
 }

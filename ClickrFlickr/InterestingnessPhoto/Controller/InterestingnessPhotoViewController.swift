@@ -13,13 +13,7 @@ class InterestingnessPhotoViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var photoEntities = [PhotoEntitie]() {
-        didSet {
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
-    }
+    var photoEntities = [PhotoEntitie]()
     
     let imageCache = NSCache<NSString, UIImage>()
     
@@ -41,8 +35,7 @@ class InterestingnessPhotoViewController: UIViewController {
         super.viewDidLoad()
     
         collectionView?.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
-
-    
+        
         InterestingnessPhotoNetworkservice.getJsonForSearchPhoto() { [weak self] (success) in
             self?.fetchtPhotoEntities()
         }
@@ -55,6 +48,9 @@ class InterestingnessPhotoViewController: UIViewController {
         do {
             let photoEntities = try CoreDatastack.default.mainManagedObjectContext.fetch(fetchRequest)
             self.photoEntities = photoEntities
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         } catch {
             print("Error fetch request \(error)")
         }
@@ -77,8 +73,8 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.8, delay: 0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
-            cell.contentView.layer.opacity = 1
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
+            cell.contentView.alpha = 1
         }, completion: nil)
 
     }
@@ -88,7 +84,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         let reuseIdentifier = "CellInterestingnessPhoto"
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
-        cell.contentView.layer.opacity = 0
+        cell.contentView.alpha = 0
         
         guard let imageURL = photoEntities[indexPath.item].imageURL else {return cell}
         
@@ -99,24 +95,20 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
             cell.configure(with: photoEntities[indexPath.item], image: nil)
         }
         
-        cell.photo.tag = indexPath.item
-        
         ImageLoader.loadImageUsingUrlString(urlString: imageURL) { [weak self] image in
             guard let strongSelf = self, let image = image else { return }
             
-            if cell.photo.tag == indexPath.item {
+//            if let cell = collectionView.cellForItem(at: indexPath) as? InterstingnessPhotoCollectionViewCell {
                 if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
                     cell.configerOnlyPhoto(image: image)
                 } else {
                     cell.configure(with: strongSelf.photoEntities[indexPath.item], image: image)
                 }
-            }
+//            }
         }
         return cell
         
     }
-    
-
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 

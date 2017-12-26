@@ -26,11 +26,7 @@ class InterestingnessPhotoNetworkservice {
             }
             do {
                 try ParsePhotos.parsePhotoEntities(json: json) { success in
-                    guard success else {
-                        completion(false)
-                        return
-                    }
-                    completion(true)
+                    completion(success)
                 }
             } catch {
                 completion(false)

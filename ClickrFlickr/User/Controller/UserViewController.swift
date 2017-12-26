@@ -159,7 +159,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         if let userId = userId as? String {
             GetPhotoNetworkservice.getJsonForSearchPhoto(userId: userId) {[weak self] photo in
                 guard let strongSelf = self else {return}
-                strongSelf.photo = photo.searchPhoto
+                strongSelf.photo = photo
                 strongSelf.collectionView.reloadData()
             }
         }
@@ -172,16 +172,10 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellUser", for: indexPath) as! UserCollectionViewCell
-        
-//        if let image = ImageLoader.imageFromCashe(for: photo[indexPath.item].url) {
-//            cell.photo.image = image
-//            return cell
-//        }
+    
         ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { image in
             guard let image = image else {return}
-            if collectionView.indexPath(for: cell) == indexPath {
                 cell.photo.image = image
-            }
         }
         return cell
     }
@@ -210,10 +204,10 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 strongSelf.userInfo.userNameLabel.text = user.userName
                 strongSelf.userInfo.photoCountLabel.text = "\(user.photoCount) photos"
                 
-                if let imageFromcashe = ImageLoader.imageFromCashe(for: user.urlAvatar) {
-                    strongSelf.userInfo.avatarImageView.image = imageFromcashe
-                    completion(strongSelf.userInfo)
-                }
+//                if let imageFromcashe = ImageLoader.imageFromCashe(for: user.urlAvatar) {
+//                    strongSelf.userInfo.avatarImageView.image = imageFromcashe
+//                    completion(strongSelf.userInfo)
+//                }
                 
                 ImageLoader.loadImageUsingUrlString(urlString: user.urlAvatar, completion: { image in
                     guard let image = image else {

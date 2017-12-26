@@ -56,9 +56,9 @@ class DetailPhotoViewController: UIViewController {
         
         guard let photoUrl = photo?.url else {return}
         photoImage.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
-        if let image = ImageLoader.imageFromCashe(for: photoUrl) {
-            photoImage.image = image
-        }
+//        if let image = ImageLoader.imageFromCashe(for: photoUrl) {
+//            photoImage.image = image
+//        }
         
         ImageLoader.loadImageUsingUrlString(urlString: photoUrl) { [weak self] image in
             guard let strongSelf = self, let image = image else {return}
@@ -88,13 +88,13 @@ class DetailPhotoViewController: UIViewController {
             strongSelf.userInfo.photoCountLabel.text = "\(user.photoCount) photos"
             
             GetPhotoNetworkservice.getJsonForSearchPhoto(userId: user.id) {photo in
-                strongSelf.photos = photo.searchPhoto
+                strongSelf.photos = photo
                 strongSelf.collectionView.reloadData()
             }
             
-            if let image = ImageLoader.imageFromCashe(for: user.urlAvatar) {
-                strongSelf.userInfo.avatarImageView.image = image
-            }
+//            if let image = ImageLoader.imageFromCashe(for: user.urlAvatar) {
+//                strongSelf.userInfo.avatarImageView.image = image
+//            }
             
             ImageLoader.loadImageUsingUrlString(urlString: user.urlAvatar) { [weak self] image in
                 guard let strongSelf = self, let image = image else {return}

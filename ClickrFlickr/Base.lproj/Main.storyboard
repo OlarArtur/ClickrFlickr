@@ -161,7 +161,7 @@
         <!--Search Collection View Controller-->
         <scene sceneID="GwV-aD-i4g">
             <objects>
-                <collectionViewController extendedLayoutIncludesOpaqueBars="YES" id="c0d-Rf-fo1" customClass="SearchCollectionViewController" customModule="ClickrFlickr" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController automaticallyAdjustsScrollViewInsets="NO" clearsSelectionOnViewWillAppear="NO" id="c0d-Rf-fo1" customClass="SearchCollectionViewController" customModule="ClickrFlickr" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" dataMode="prototypes" id="56h-Pw-G9w">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -211,6 +211,7 @@
                         <connections>
                             <outlet property="dataSource" destination="c0d-Rf-fo1" id="eJT-7q-fFr"/>
                             <outlet property="delegate" destination="c0d-Rf-fo1" id="Oij-rG-PQn"/>
+                            <outlet property="prefetchDataSource" destination="c0d-Rf-fo1" id="QBV-V3-wJW"/>
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="txJ-b5-A3t"/>

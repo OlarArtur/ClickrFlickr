@@ -13,15 +13,14 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
     
     var textForSearch: String = ""
     var photo = [Photo]()
-    let imageCache = NSCache<NSString, UIImage>()
-    let layout = WaterfallLayout()
     
-    let itemsPerRow: CGFloat = 2
-    let spacingItem: CGFloat = 2
+//    let itemsPerRow: CGFloat = 2
+//    let spacingItem: CGFloat = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let layout = WaterfallLayout()
         collectionView?.collectionViewLayout = layout
         layout.delegate = self
         
@@ -30,9 +29,10 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         
         SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) {[weak self] photo in
             guard let strongSelf = self else {return}
-            strongSelf.photo = photo.searchPhoto
+            strongSelf.photo = photo
             strongSelf.collectionView?.reloadData()
         }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,10 +55,10 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
     }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
             cell.contentView.alpha = 1
         }, completion: nil)
-        
+
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -68,22 +68,21 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         cell.contentView.alpha = 0
         cell.titlePhoto.text = photo[indexPath.item].title
         
+        cell.spinnerActivityIndicator.isHidden = false
         cell.spinnerActivityIndicator.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         cell.spinnerActivityIndicator.startAnimating()
-        cell.spinnerActivityIndicator.isHidden = false
         
-        cell.photo.tag = indexPath.item
+         cell.photo.tag = indexPath.item
         
-        ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { image in
+        ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
             guard let image = image else {return}
-            
             if cell.photo.tag == indexPath.item {
                 cell.photo.image = image
-                
+                cell.titlePhoto.text = self?.photo[indexPath.item].title
                 cell.spinnerActivityIndicator.stopAnimating()
                 cell.spinnerActivityIndicator.isHidden = true
             }
-            
+
         }
         return cell
         
@@ -121,8 +120,8 @@ extension SearchCollectionViewController: UISearchBarDelegate {
         textForSearch = text
         SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) {[weak self] photo in
             guard let strongSelf = self else {return}
-            strongSelf.photo = photo.searchPhoto
-            strongSelf.imageCache.removeAllObjects()
+            strongSelf.photo = photo
+            strongSelf.collectionView?.collectionViewLayout.invalidateLayout()
             strongSelf.collectionView?.reloadData()
             searchBar.endEditing(true)
         }
@@ -133,8 +132,8 @@ extension SearchCollectionViewController: UISearchBarDelegate {
 
 extension SearchCollectionViewController: WaterfallLayoutDelegate {
     func collectionView(collectionView: UICollectionView, heightForPhotoAt indexPath: IndexPath, with width: CGFloat) -> CGFloat? {
-        let squareInd = photo[indexPath.item].aspectSize
-        let height = width * CGFloat(squareInd)
+        let aspectSize = photo[indexPath.item].aspectSize
+        let height = width * CGFloat(aspectSize)
         return height
     }
     

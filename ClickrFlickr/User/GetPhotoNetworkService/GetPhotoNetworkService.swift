@@ -12,15 +12,19 @@ class GetPhotoNetworkservice {
     
     private init() {}
     
-    static func getJsonForSearchPhoto(userId: String, completion: @escaping (SearchPhotos)->()) {
+    static func getJsonForSearchPhoto(userId: String, completion: @escaping ([Photo])->()) {
         guard let string = CallingFlickrAPIwithOauth.methodPeopleGetPhoto(userId: userId) else {return}
         
         FetchJSON.fetchJson(fromUrl: string) { (json) in
             
             guard let json = json else {return}
             do {
-                let searchPhoto = try SearchPhotos(json: json)
-                completion(searchPhoto)
+//                let searchPhoto = try SearchPhotos(json: json)
+                
+                _ = try ParsePhotos.parsePhotos(json: json, completion: { (photo) in
+                    completion(photo)
+                })
+//                completion(searchPhoto)
             } catch {
                 let error = ErrorAlertController()
                 error.showErrorAlertController(title: "ERROR! Fetching JSON for search Photo", message: "Try again?")
@@ -29,3 +33,4 @@ class GetPhotoNetworkservice {
     }
     
 }
+

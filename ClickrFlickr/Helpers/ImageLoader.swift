@@ -21,41 +21,45 @@ import Foundation
             completion(nil)
             return
         }
-        
         if let imageFromCashe = imageFromCashe(for: urlString) {
             completion(imageFromCashe)
             return
         }
-        
         if let imageFromDocument = getImageFromDocumentDirectory(key: urlString) {
             completion(imageFromDocument)
+            saveImageToCashe(image: imageFromDocument, for: urlString)
             return
         }
         
         NetworkServise.shared.getData(url: url) { (data, urlForCashe) in
             
             guard let data = data else {
-                completion(nil)
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
                 return
             }
-            DispatchQueue.main.async {
-                guard let image = UIImage(data: data) else {
+            
+            guard let image = UIImage(data: data) else {
+                DispatchQueue.main.async {
                     completion(nil)
-                    return
                 }
-                completion(image)
-                saveImageToCashe(image: image, for: urlForCashe.absoluteString)
-                saveImageToDocumentDirectory(image: image, for: urlForCashe.absoluteString)
+                return
             }
+            
+            DispatchQueue.main.async {
+                completion(image)
+            }
+            saveImageToCashe(image: image, for: urlForCashe.absoluteString)
+            saveImageToDocumentDirectory(image: image, for: urlForCashe.absoluteString)
         }
-        
     }
-    
-    static func saveImageToCashe(image: UIImage, for url: String) {
+
+    static private func saveImageToCashe(image: UIImage, for url: String) {
         imageCashe.setObject(image, forKey: url as NSString)
     }
     
-    static func imageFromCashe(for url: String) -> UIImage? {
+    static private func imageFromCashe(for url: String) -> UIImage? {
         guard let image = imageCashe.object(forKey: url as NSString) else {
             return nil
         }

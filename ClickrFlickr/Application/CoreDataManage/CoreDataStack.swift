@@ -68,6 +68,9 @@ class CoreDatastack: NSObject {
     
     func saveContext() {
         
+//        let notificationCenter = NotificationCenter.default
+//        notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: writeManagedObjectContext)
+        
         if mainManagedObjectContext.hasChanges {
             mainManagedObjectContext.performAndWait {
                 do {
@@ -91,6 +94,12 @@ class CoreDatastack: NSObject {
         }
         
     }
+    
+//    @objc func managedObjectContextDidSave(notification: Notification) {
+//        mainManagedObjectContext.perform {
+//            self.mainManagedObjectContext.mergeChanges(fromContextDidSave: notification)
+//        }
+//    }
 
 }
 
