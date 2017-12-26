@@ -27,6 +27,11 @@
     _collectionView.collectionViewLayout = layout;
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    [ImageLoader cleanAllCash];
+}
+
 #pragma UICollectionViewDataSource
 
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

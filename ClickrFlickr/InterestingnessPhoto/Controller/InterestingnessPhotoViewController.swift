@@ -57,6 +57,11 @@ class InterestingnessPhotoViewController: UIViewController {
         
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        ImageLoader.cleanAllCash()
+    }
+    
 //    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
 //       
 //        collectionView.collectionViewLayout.invalidateLayout()

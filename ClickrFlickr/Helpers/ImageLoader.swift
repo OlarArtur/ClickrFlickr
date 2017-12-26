@@ -69,7 +69,7 @@ import Foundation
     static private func saveImageToDocumentDirectory(image: UIImage, for key: String) {
         
         DispatchQueue.global().async {
-            let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            guard let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {return}
             guard let data = UIImagePNGRepresentation(image) else {return}
             let modifyKey = key.replacingOccurrences(of: "/", with: "")
             let fileName = paths.appendingPathComponent("image:\(modifyKey)")
@@ -85,7 +85,7 @@ import Foundation
     
     static private func getImageFromDocumentDirectory(key: String) -> UIImage? {
         
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        guard let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {return nil}
         let fileManager = FileManager.default
         
         let modifyKey = key.replacingOccurrences(of: "/", with: "")
@@ -96,6 +96,10 @@ import Foundation
         }
         return nil
         
+    }
+    
+    @objc static func cleanAllCash() {
+        imageCashe.removeAllObjects()
     }
     
 }

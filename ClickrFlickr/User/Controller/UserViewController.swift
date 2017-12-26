@@ -77,6 +77,11 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        ImageLoader.cleanAllCash()
+    }
+    
     @objc func menuPressed() {
         
         if menuIsVisible {
@@ -204,11 +209,6 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 strongSelf.userInfo.userNameLabel.text = user.userName
                 strongSelf.userInfo.photoCountLabel.text = "\(user.photoCount) photos"
                 
-//                if let imageFromcashe = ImageLoader.imageFromCashe(for: user.urlAvatar) {
-//                    strongSelf.userInfo.avatarImageView.image = imageFromcashe
-//                    completion(strongSelf.userInfo)
-//                }
-                
                 ImageLoader.loadImageUsingUrlString(urlString: user.urlAvatar, completion: { image in
                     guard let image = image else {
                         completion(nil)
@@ -230,8 +230,6 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         if segue.identifier == "UserPhotoDetail" {
             let detailVC = segue.destination as! UserPhotoDetailViewController
             detailVC.photos = photo
-//            let detailVC = UserPhotoDetailViewController()
-//            detailVC.photos = photo
         }
     }
     
@@ -275,10 +273,6 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
 
         let width = collectionView.bounds.size.width - spacingItem
 
-//        guard let imageWidth = photo[indexPath.item].width, let imageHeight = photo[indexPath.item].height else {
-//            let height = width
-//            return CGSize(width: width, height: height)
-//        }
         let aspectSize = photo[indexPath.item].aspectSize
         let height = width * CGFloat(aspectSize)
 

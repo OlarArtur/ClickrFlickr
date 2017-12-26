@@ -41,6 +41,11 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         navigationController?.hidesBarsOnSwipe = true
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        ImageLoader.cleanAllCash()
+    }
+    
     private func createSearchBar() {
         let searchBar: UISearchBar = UISearchBar()
         searchBar.searchBarStyle = .default
