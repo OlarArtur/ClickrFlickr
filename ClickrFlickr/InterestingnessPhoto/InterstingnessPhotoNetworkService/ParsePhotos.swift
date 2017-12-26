@@ -42,13 +42,17 @@ class ParsePhotos {
         context.perform {
             
             let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
+            let sorDescriptor = NSSortDescriptor(key: "imageID", ascending: true)
+            fetchRequest.sortDescriptors = [sorDescriptor]
+            
             do {
                 let photoEntities = try context.fetch(fetchRequest)
-                uniques = photoEntities.flatMap({ $0.imageID }).sorted()
+                uniques = photoEntities.map({ $0.imageID })
+                
             } catch {
                 print("Error fetch request \(error)")
             }
-            let uniquesFlickr = photo.flatMap({ $0["id"] as? String}).sorted()
+            let uniquesFlickr = photo.flatMap({ $0["id"] as? String})
             
             let uniquesSet = Set(uniques)
             var news = Set(uniquesFlickr)

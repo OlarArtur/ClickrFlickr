@@ -47,6 +47,7 @@ class InterestingnessPhotoViewController: UIViewController {
         let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
         do {
             let photoEntities = try CoreDatastack.default.mainManagedObjectContext.fetch(fetchRequest)
+    
             self.photoEntities = photoEntities
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
