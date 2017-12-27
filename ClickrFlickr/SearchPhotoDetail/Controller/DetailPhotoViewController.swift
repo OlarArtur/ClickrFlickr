@@ -26,6 +26,10 @@ class DetailPhotoViewController: UIViewController {
         return .portrait
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
     override func loadView() {
         Bundle.main.loadNibNamed("DetailPhotoViewController", owner: self, options: nil)
     }
@@ -70,6 +74,7 @@ class DetailPhotoViewController: UIViewController {
         if navigationController?.isNavigationBarHidden == true {
             navigationController?.isNavigationBarHidden = false
         }
+
     }
     
     override func didReceiveMemoryWarning() {

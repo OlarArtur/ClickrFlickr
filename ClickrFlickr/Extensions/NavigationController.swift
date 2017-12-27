@@ -28,4 +28,13 @@ extension UINavigationController {
         }
     }
     
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        get {
+            if let visibleVC = visibleViewController {
+                return visibleVC.supportedInterfaceOrientations
+            }
+            return super.supportedInterfaceOrientations
+        }
+    }
+    
 }

@@ -28,4 +28,13 @@ extension UITabBarController {
         }
     }
     
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        get {
+            if let visibleVC = selectedViewController {
+                return visibleVC.supportedInterfaceOrientations
+            }
+            return super.supportedInterfaceOrientations
+        }
+    }
+    
 }
