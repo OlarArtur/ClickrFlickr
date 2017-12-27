@@ -17,12 +17,8 @@ class ParsePhotos {
         
         guard let photo = photos["photo"] as? [[String: Any]] else { throw FlickOauthError.NetworkServiseError }
         
-        DispatchQueue.global().async {
-            let arrayPhoto = photo.flatMap{Photo(dict: $0)}
-            DispatchQueue.main.async {
-                completion(arrayPhoto)
-            }
-        }
+        let arrayPhoto = photo.flatMap{Photo(dict: $0)}
+        completion(arrayPhoto)
     }
 
     static func parsePhotoEntities(json: AnyObject, completion: @escaping (Bool)->()) throws {
@@ -58,10 +54,14 @@ class ParsePhotos {
             var news = Set(uniquesFlickr)
             
             news.subtract(uniquesSet)
+//            var photoEntitiesID = [NSManagedObjectID]()
             
             for unic in news {
                 if let index = photo.index(where: { $0["id"] as? String == unic }) {
                     _ = PhotoEntitie(dict: photo[index], context: context)
+//                    guard let entity = PhotoEntitie(dict: photo[index], context: context) else {return}
+//                    let entityID = entity.objectID
+//                    photoEntitiesID.append(entityID)
                 }
             }
             CoreDatastack.default.saveContext()

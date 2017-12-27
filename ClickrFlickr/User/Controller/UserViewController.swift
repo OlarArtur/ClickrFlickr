@@ -42,11 +42,14 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     private func addCollectionView() {
         
-        let collectionViewLayout = UICollectionViewFlowLayout.init()
+        let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
-        collectionView = UICollectionView(frame: CGRect.init() , collectionViewLayout: collectionViewLayout)
+//        let collectionViewLayout = WaterfallLayout()
+//        collectionViewLayout.delegate = self
+        collectionView = UICollectionView(frame: CGRect() , collectionViewLayout: collectionViewLayout)
         collectionView.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.setCollectionViewLayout(collectionViewLayout, animated: true)
         collectionView.register(UserCollectionViewCell.self, forCellWithReuseIdentifier: "CellUser")
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -267,25 +270,44 @@ extension UserViewController: UIScrollViewDelegate {
     
 }
 
+//extension UserViewController: WaterfallLayoutDelegate {
+//    func collectionView(collectionView: UICollectionView, heightForPhotoAt indexPath: IndexPath, with width: CGFloat) -> CGFloat? {
+//        let aspectSize = photo[indexPath.item].aspectSize
+//        let height = width * CGFloat(aspectSize)
+//        return height
+//    }
+//
+//}
+
 extension UserViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        let width = collectionView.bounds.size.width - spacingItem
-
+        var width = collectionView.bounds.size.width / 2
         let aspectSize = photo[indexPath.item].aspectSize
+        if aspectSize < 1 {
+            width = collectionView.bounds.size.width
+        }
         let height = width * CGFloat(aspectSize)
 
         return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0.0
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return spacingItem
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: 180)
     }
-    
+
 }
 

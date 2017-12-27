@@ -18,21 +18,24 @@ class WaterfallLayout: UICollectionViewLayout {
     
     weak var delegate: WaterfallLayoutDelegate?
 
-    var numberOfColumns: CGFloat = 2
-    var cellPadding: CGFloat = 2.5
+    private var numberOfColumns: CGFloat = 2
+    private var cellPadding: CGFloat = 2.5
 
     private var oldBounds = CGRect.zero
+    
     private var contentHeight: CGFloat = 0.0
     private var contentWidth: CGFloat {
-        return (collectionView?.bounds.width)!
+        guard let collectionView = collectionView else {return 0.0}
+        return collectionView.bounds.width
     }
 
     private var attributesCache = [UICollectionViewLayoutAttributes]()
 
     override func prepare() {
         super.prepare()
-
-        guard attributesCache.isEmpty, let collectionView = collectionView else {return}
+        
+        attributesCache = [UICollectionViewLayoutAttributes]()
+        guard let collectionView = collectionView else {return}
         
         oldBounds = collectionView.bounds
         
@@ -49,7 +52,7 @@ class WaterfallLayout: UICollectionViewLayout {
             
             let width = columWidth
             
-            let photoHeight: CGFloat = delegate!.collectionView(collectionView: collectionView, heightForPhotoAt: indexPath, with: width)!
+            guard let photoHeight: CGFloat = delegate?.collectionView(collectionView: collectionView, heightForPhotoAt: indexPath, with: width) else {return}
             let height = photoHeight
             
             let frame = CGRect(x: xOffsets[column], y: yOffsets[column], width: columWidth, height: height)
@@ -86,12 +89,16 @@ class WaterfallLayout: UICollectionViewLayout {
         return layoutAttributes
     }
     
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return attributesCache[indexPath.item]
+    }
+    
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         if oldBounds.size != newBounds.size {
             attributesCache.removeAll(keepingCapacity: true)
         }
         return true
     }
-    
+
 }
 

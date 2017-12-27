@@ -17,6 +17,8 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         self.scrollDirection = .horizontal
         collectionView.showsHorizontalScrollIndicator = false
+        self.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.minimumLineSpacing = 0
     }
     
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
@@ -32,8 +34,8 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
 
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        
         return true
     }
+    
     
 }

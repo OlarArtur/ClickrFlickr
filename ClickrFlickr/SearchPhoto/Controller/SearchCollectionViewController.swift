@@ -14,9 +14,6 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
     var textForSearch: String = ""
     var photo = [Photo]()
     
-//    let itemsPerRow: CGFloat = 2
-//    let spacingItem: CGFloat = 2
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,12 +24,25 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         collectionView?.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         createSearchBar()
         
+        let activityIndicator = addActivityIndecator()
+        view.addSubview(activityIndicator)
+        
         SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) {[weak self] photo in
             guard let strongSelf = self else {return}
             strongSelf.photo = photo
             strongSelf.collectionView?.reloadData()
+            activityIndicator.stopAnimating()
+            activityIndicator.removeFromSuperview()
         }
         
+    }
+    
+    private func addActivityIndecator() -> UIActivityIndicatorView {
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        return activityIndicator
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,11 +87,11 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         cell.spinnerActivityIndicator.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         cell.spinnerActivityIndicator.startAnimating()
         
-         cell.photo.tag = indexPath.item
-        
+        cell.tag = indexPath.item
+
         ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
             guard let image = image else {return}
-            if cell.photo.tag == indexPath.item {
+            if cell.tag == indexPath.item {
                 cell.photo.image = image
                 cell.titlePhoto.text = self?.photo[indexPath.item].title
                 cell.spinnerActivityIndicator.stopAnimating()
@@ -118,17 +128,24 @@ extension SearchCollectionViewController: UICollectionViewDataSourcePrefetching 
 extension SearchCollectionViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        searchBar.endEditing(true)
+        
+        let activityIndicator = addActivityIndecator()
+        view.addSubview(activityIndicator)
+        
         guard let text = searchBar.text?.replacingOccurrences(of: " ", with: "+") else {
             textForSearch = ""
             return
         }
         textForSearch = text
         SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) {[weak self] photo in
-            guard let strongSelf = self else {return}
-            strongSelf.photo = photo
-            strongSelf.collectionView?.collectionViewLayout.invalidateLayout()
-            strongSelf.collectionView?.reloadData()
-            searchBar.endEditing(true)
+            self?.photo = photo
+            self?.collectionView?.reloadData()
+            activityIndicator.stopAnimating()
+            activityIndicator.removeFromSuperview()
+            
+            
         }
         searchBar.text = ""
     }

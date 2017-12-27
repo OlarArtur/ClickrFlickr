@@ -35,6 +35,11 @@ public class PhotoEntitie: NSManagedObject {
         self.imageID = id
         self.title = title
         
+        guard description != "" else {
+            self.photoDescription = description
+            return
+        }
+        
         guard let htmlData = description.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
             self.photoDescription = description
             return

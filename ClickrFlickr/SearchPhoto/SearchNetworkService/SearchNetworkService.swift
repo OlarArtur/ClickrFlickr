@@ -19,14 +19,10 @@ class SearchNetworkservice {
             
             guard let json = json else {return}
             do {
-//                let start = Date()
-            
 //                let searchPhoto = try SearchPhotos(json: json)
                 _ = try ParsePhotos.parsePhotos(json: json, completion: { (photo) in
                     completion(photo)
                 })
-//                let end = Date()
-//                print(start.timeIntervalSince(end))
 //                completion(searchPhoto)
             } catch {
                 let error = ErrorAlertController()

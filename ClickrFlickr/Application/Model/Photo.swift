@@ -51,16 +51,17 @@ import UIKit
         self.id = id
         self.secret = secret
         self.owner = owner
+        self.photoDescription = description
         
-        guard let htmlData = description.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
-            self.photoDescription = description
-            return
-        }
-        guard let attributedString = try? NSAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil) else {
-            self.photoDescription = description
-            return
-        }
-        self.photoDescription = attributedString.string
+//        guard let htmlData = description.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
+//            self.photoDescription = description
+//            return
+//        }
+//        guard let attributedString = try? NSAttributedString(data: htmlData, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil) else {
+//            self.photoDescription = description
+//            return
+//        }
+//        self.photoDescription = attributedString.string
         
     }
     

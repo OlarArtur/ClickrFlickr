@@ -51,6 +51,7 @@
 		B2AB94C91FE942B2005EDF9F /* DetailPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2AB94C71FE942B2005EDF9F /* DetailPhotoViewController.xib */; };
 		B2AB94CC1FE94FB3005EDF9F /* DetailPhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AB94CA1FE94FB3005EDF9F /* DetailPhotoViewCell.swift */; };
 		B2AB94CD1FE94FB3005EDF9F /* DetailPhotoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2AB94CB1FE94FB3005EDF9F /* DetailPhotoViewCell.xib */; };
+		B2ACA9911FF3D98700C407B2 /* ScaleItemCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACA9901FF3D98700C407B2 /* ScaleItemCollectionFlowLayout.swift */; };
 		B2BC9C1F1FCEB0CC00A4C900 /* UserHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC9C1E1FCEB0CC00A4C900 /* UserHeaderCollectionReusableView.swift */; };
 		B2C6EDBF1FA71DF700C254D5 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C6EDBE1FA71DF700C254D5 /* Photo.swift */; };
 		B2D90FAF1FBD94B100FB0E64 /* UserInfoNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D90FAE1FBD94B100FB0E64 /* UserInfoNetworkService.swift */; };
@@ -110,6 +111,7 @@
 		B2AB94C71FE942B2005EDF9F /* DetailPhotoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = DetailPhotoViewController.xib; path = SearchPhotoDetail/Controller/DetailPhotoViewController.xib; sourceTree = "<group>"; };
 		B2AB94CA1FE94FB3005EDF9F /* DetailPhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailPhotoViewCell.swift; path = SearchPhotoDetail/View/DetailPhotoViewCell.swift; sourceTree = "<group>"; };
 		B2AB94CB1FE94FB3005EDF9F /* DetailPhotoViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = DetailPhotoViewCell.xib; path = SearchPhotoDetail/View/DetailPhotoViewCell.xib; sourceTree = "<group>"; };
+		B2ACA9901FF3D98700C407B2 /* ScaleItemCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleItemCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		B2BC9C1E1FCEB0CC00A4C900 /* UserHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserHeaderCollectionReusableView.swift; path = User/View/UserHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		B2C6EDBE1FA71DF700C254D5 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Photo.swift; path = Application/Model/Photo.swift; sourceTree = "<group>"; };
 		B2D90FAE1FBD94B100FB0E64 /* UserInfoNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoNetworkService.swift; sourceTree = "<group>"; };
@@ -562,6 +564,7 @@
 				B22C6FD21FE1079B0087FF0D /* CoverFlowLayout.h */,
 				B22C6FD31FE1079B0087FF0D /* CoverFlowLayout.m */,
 				B26A92C91FBF11F70058C336 /* WaterfallLayout.swift */,
+				B2ACA9901FF3D98700C407B2 /* ScaleItemCollectionFlowLayout.swift */,
 			);
 			path = CustomCollectionViewLayout;
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				B20D00931FBC88620046004A /* InterstingnessPhotoCollectionViewCell.swift in Sources */,
 				B2AB94CC1FE94FB3005EDF9F /* DetailPhotoViewCell.swift in Sources */,
 				B2D90FAF1FBD94B100FB0E64 /* UserInfoNetworkService.swift in Sources */,
+				B2ACA9911FF3D98700C407B2 /* ScaleItemCollectionFlowLayout.swift in Sources */,
 				B249F76F1F7A2E310036FAB7 /* FlickrOauthError.swift in Sources */,
 				B2AB94C81FE942B2005EDF9F /* DetailPhotoViewController.swift in Sources */,
 				B20D00911FBC86F60046004A /* InterestingnessPhotoNetworkService.swift in Sources */,
