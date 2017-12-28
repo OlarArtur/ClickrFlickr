@@ -92,7 +92,7 @@
         <!--Main View Controller-->
         <scene sceneID="0A3-hx-mpR">
             <objects>
-                <viewController id="PaT-tM-mhF" customClass="MainViewController" customModule="ClickrFlickr" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="PaT-tM-mhF" customClass="MainViewController" customModule="ClickrFlickr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lWZ-D2-Hql"/>
                         <viewControllerLayoutGuide type="bottom" id="PfV-Rd-AR9"/>
@@ -223,8 +223,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="3Ef-XO-ytD">
             <objects>
-                <tabBarController storyboardIdentifier="Authorized" id="6ZA-as-NYi" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout"/>
+                <tabBarController storyboardIdentifier="Authorized" automaticallyAdjustsScrollViewInsets="NO" id="6ZA-as-NYi" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" barStyle="black" id="Bf9-Tg-8D1">
@@ -361,6 +360,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="D5Z-9m-E4C">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -374,12 +374,13 @@
         <!--Popular-->
         <scene sceneID="Mxp-jb-HS6">
             <objects>
-                <navigationController id="SfD-lc-8jh" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SfD-lc-8jh" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Popular" image="thumbs_up" id="3Rd-Sr-r2e"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="dK8-0p-8J6">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="E70-Bb-z0Y">
                         <autoresizingMask key="autoresizingMask"/>
@@ -471,12 +472,11 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="AOs-uu-6ED" secondAttribute="trailing" constant="-16" id="5mI-0d-UR2"/>
-                            <constraint firstItem="AOs-uu-6ED" firstAttribute="top" secondItem="Tbz-3x-hJQ" secondAttribute="top" id="Vg1-0e-bpP"/>
+                            <constraint firstAttribute="bottom" secondItem="AOs-uu-6ED" secondAttribute="bottom" id="LsA-RT-H4M"/>
+                            <constraint firstItem="AOs-uu-6ED" firstAttribute="top" secondItem="Tbz-3x-hJQ" secondAttribute="top" id="cCT-05-LB9"/>
                             <constraint firstItem="AOs-uu-6ED" firstAttribute="leading" secondItem="Tbz-3x-hJQ" secondAttribute="leadingMargin" constant="-16" id="gV6-a4-5GC"/>
-                            <constraint firstAttribute="bottom" secondItem="AOs-uu-6ED" secondAttribute="bottom" id="p7w-2H-0KO"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Most Popular" id="DJo-ou-qSg"/>

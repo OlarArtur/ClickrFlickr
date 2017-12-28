@@ -27,7 +27,7 @@
 
 -(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
-    NSArray* attributes = [[super layoutAttributesForElementsInRect:rect] copy];
+    NSArray *attributes = [[NSArray alloc] initWithArray:[super layoutAttributesForElementsInRect:rect] copyItems:YES];
     
     CGRect visibleRect;
     visibleRect.origin = self.collectionView.contentOffset;

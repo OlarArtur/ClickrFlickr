@@ -14,8 +14,8 @@ class InterestingnessPhotoViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var photoEntities = [PhotoEntitie]()
+    
     lazy var fetchedResultsController: NSFetchedResultsController<PhotoEntitie> = {
-        
         let context = CoreDatastack.default.mainManagedObjectContext
         let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "imageID", ascending: true)
@@ -42,11 +42,19 @@ class InterestingnessPhotoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.automaticallyAdjustsScrollViewInsets = false
+        
         collectionView?.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         view.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         
-        InterestingnessPhotoNetworkservice.getJsonForSearchPhoto() { [weak self] (success) in
+        let activityIndicator = addActivityIndecator()
+        view.addSubview(activityIndicator)
+        
+        InterestingnessPhotoNetworkservice.parseJsonForInterestingnessPhoto() { [weak self] (success) in
             self?.fetchtPhotoEntities()
+            DispatchQueue.main.async {
+                activityIndicator.stopAnimating()
+            }
         }
         
         do {
@@ -56,6 +64,14 @@ class InterestingnessPhotoViewController: UIViewController {
             print("\(fetchError), \(fetchError.userInfo)")
         }
         
+    }
+    
+    private func addActivityIndecator() -> UIActivityIndicatorView {
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        return activityIndicator
     }
     
     private func fetchtPhotoEntities() {
@@ -150,6 +166,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
                     strongSelf.collectionView.reloadItems(at: [indexPath])
                 }
             }
+            
             collectionView.decelerationRate = UIScrollViewDecelerationRateFast
             let closeItem = UIBarButtonItem(image: #imageLiteral(resourceName: "cancel"), style: .plain , target: self , action: #selector(closeButtonPressed))
             closeItem.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
