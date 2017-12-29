@@ -23,8 +23,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    CoverFlowLayout *layout = [[CoverFlowLayout alloc]init];
+    CenterCellCollectionViewFlowLayout *layout = [[CenterCellCollectionViewFlowLayout alloc]init];
     _collectionView.collectionViewLayout = layout;
+    UIColor *color = [[UIColor alloc]initWithRed:0.1915385664 green:0.1915385664 blue:0.1915385664 alpha:1.0];
+    _collectionView.backgroundColor = color;
 }
 
 - (void)didReceiveMemoryWarning {

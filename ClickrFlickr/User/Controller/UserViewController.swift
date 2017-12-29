@@ -25,14 +25,6 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     var photo = [Photo]()
     
-    override var shouldAutorotate: Bool {
-        return false
-    }
-    
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return .portrait
-    }
-    
     override func loadView() {
         super.loadView()
         
@@ -44,8 +36,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
-//        let collectionViewLayout = WaterfallLayout()
-//        collectionViewLayout.delegate = self
+
         collectionView = UICollectionView(frame: CGRect() , collectionViewLayout: collectionViewLayout)
         collectionView.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         collectionView.showsHorizontalScrollIndicator = false
@@ -269,15 +260,6 @@ extension UserViewController: UIScrollViewDelegate {
     }
     
 }
-
-//extension UserViewController: WaterfallLayoutDelegate {
-//    func collectionView(collectionView: UICollectionView, heightForPhotoAt indexPath: IndexPath, with width: CGFloat) -> CGFloat? {
-//        let aspectSize = photo[indexPath.item].aspectSize
-//        let height = width * CGFloat(aspectSize)
-//        return height
-//    }
-//
-//}
 
 extension UserViewController: UICollectionViewDelegateFlowLayout {
 

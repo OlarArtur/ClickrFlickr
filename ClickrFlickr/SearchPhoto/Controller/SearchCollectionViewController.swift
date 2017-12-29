@@ -14,6 +14,10 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
     var textForSearch: String = ""
     var photo = [Photo]()
     
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
