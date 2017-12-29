@@ -69,18 +69,11 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         return photo.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
-            cell.contentView.alpha = 1
-        }, completion: nil)
-
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SearchCollectionViewCell
-        
-        cell.contentView.alpha = 0
+
+        cell.photo.alpha = 0
         cell.titlePhoto.text = photo[indexPath.item].title
         
         cell.spinnerActivityIndicator.isHidden = false
@@ -96,6 +89,10 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
                 cell.titlePhoto.text = self?.photo[indexPath.item].title
                 cell.spinnerActivityIndicator.stopAnimating()
                 cell.spinnerActivityIndicator.isHidden = true
+                
+                UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
+                    cell.photo.alpha = 1
+                }, completion: nil)
             }
 
         }
@@ -115,7 +112,6 @@ extension SearchCollectionViewController: UICollectionViewDataSourcePrefetching 
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            
             ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { image in
                 guard image != nil else { return }
                 return

@@ -44,6 +44,14 @@ class ParsePhotos {
             do {
                 let photoEntities = try context.fetch(fetchRequest)
                 uniques = photoEntities.map({ $0.imageID })
+            
+                for entitie in photoEntities {
+                    if let index = photo.index(where: { $0["id"] as? String == entitie.imageID }) {
+                        entitie.indexOfPopular = Int16(index)
+                    } else {
+                        context.delete(entitie)
+                    }
+                }
                 
             } catch {
                 print("Error fetch request \(error)")
@@ -51,20 +59,26 @@ class ParsePhotos {
             let uniquesFlickr = photo.flatMap({ $0["id"] as? String})
             
             let uniquesSet = Set(uniques)
+            
             var news = Set(uniquesFlickr)
             
             news.subtract(uniquesSet)
-//            var photoEntitiesID = [NSManagedObjectID]()
+    
+            var batchToSave = 0
             
             for unic in news {
                 if let index = photo.index(where: { $0["id"] as? String == unic }) {
-                    _ = PhotoEntitie(dict: photo[index], context: context)
-//                    guard let entity = PhotoEntitie(dict: photo[index], context: context) else {return}
-//                    let entityID = entity.objectID
-//                    photoEntitiesID.append(entityID)
+                    
+                    _ = PhotoEntitie(dict: photo[index], index: index ,context: context)
+
+                    batchToSave += 1
+                    if batchToSave == 10 {
+                        CoreDatastack.default.saveContext(context: context)
+                        batchToSave = 0
+                    }
                 }
             }
-            CoreDatastack.default.saveContext()
+            CoreDatastack.default.saveContext(context: context)
             completion(true)
         }
         

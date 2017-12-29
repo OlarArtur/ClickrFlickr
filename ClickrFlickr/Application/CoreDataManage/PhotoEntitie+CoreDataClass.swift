@@ -13,7 +13,7 @@ import CoreData
 @objc(PhotoEntitie)
 public class PhotoEntitie: NSManagedObject {
     
-    convenience init? (dict: [String: Any], context: NSManagedObjectContext) {
+    convenience init? (dict: [String: Any], index: Int, context: NSManagedObjectContext) {
         guard let title = dict["title"] as? String,
             let farm = dict["farm"] as? Int,
             let heightS = dict["height_s"] as? String,
@@ -34,6 +34,7 @@ public class PhotoEntitie: NSManagedObject {
         self.imageURL = "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret).jpg"
         self.imageID = id
         self.title = title
+        self.indexOfPopular = Int16(index)
         
         guard description != "" else {
             self.photoDescription = description

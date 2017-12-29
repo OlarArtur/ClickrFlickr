@@ -4,6 +4,7 @@
         <attribute name="aspectRatio" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imageID" attributeType="String" syncable="YES"/>
         <attribute name="imageURL" optional="YES" attributeType="String" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="indexOfPopular" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="photoDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <uniquenessConstraints>
@@ -13,6 +14,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="PhotoEntitie" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="PhotoEntitie" positionX="-63" positionY="-18" width="128" height="135"/>
     </elements>
 </model>

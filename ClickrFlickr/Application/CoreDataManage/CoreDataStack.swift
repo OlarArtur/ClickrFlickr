@@ -12,9 +12,16 @@ import CoreData
 class CoreDatastack: NSObject {
     
     static let `default` = CoreDatastack()
-    private override init() {}
+    
+    private override init() {
+        super.init()
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: writeManagedObjectContext)
+    }
     
     private let modelName = "ClickrFlickr"
+    
+    
     
     private lazy var managedObjectModel: NSManagedObjectModel = {
         
@@ -66,30 +73,32 @@ class CoreDatastack: NSObject {
         
     } ()
     
-    func saveContext() {
-        
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: writeManagedObjectContext)
+    func saveContext(context: NSManagedObjectContext) {
+        if context.hasChanges {
+            do {
+                try context.save()
+                print("Save")
+            } catch {
+                fatalError("Error saving context \(error)")
+            }
+        }
+    }
+    
+    func saveAllContext() {
         
         if mainManagedObjectContext.hasChanges {
-            mainManagedObjectContext.performAndWait {
-                do {
-                    try mainManagedObjectContext.save()
-                    print("Save")
-                } catch {
-                    fatalError("Error saving main context \(error)")
-                }
+            do {
+                try mainManagedObjectContext.save()
+            } catch {
+                fatalError("Error saving main context \(error)")
             }
         }
         
         if writeManagedObjectContext.hasChanges {
-            writeManagedObjectContext.perform {
-                do {
-                    try self.writeManagedObjectContext.save()
-                    print("Private Save")
-                } catch {
-                    fatalError("Error saving private context \(error)")
-                }
+            do {
+                try self.writeManagedObjectContext.save()
+            } catch {
+                fatalError("Error saving private context \(error)")
             }
         }
         

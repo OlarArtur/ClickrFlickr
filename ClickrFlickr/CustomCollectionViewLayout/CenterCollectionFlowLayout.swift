@@ -11,6 +11,8 @@ import UIKit
 
 class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
+    private var attributesCache = [UICollectionViewLayoutAttributes]()
+    
     override func prepare() {
         
         guard let collectionView = collectionView else {return}
@@ -25,13 +27,34 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
         guard let collectionView = collectionView else {return CGPoint()}
         
         guard let layoutAttributes = self.layoutAttributesForElements(in: collectionView.bounds) else {return CGPoint()}
-        let center = collectionView.bounds.size.width / 2
+        let center = collectionView.frame.size.width / 2
         let proposedContentOffsetCenterOrigin = proposedContentOffset.x + center
         let closest = layoutAttributes.sorted { abs($0.center.x - proposedContentOffsetCenterOrigin) < abs($1.center.x - proposedContentOffsetCenterOrigin) }.first ?? UICollectionViewLayoutAttributes()
-        let targetContentOffset = CGPoint(x: floor(closest.center.x - center), y: proposedContentOffset.y)
+        let targetContentOffset = CGPoint(x: closest.center.x - center, y: proposedContentOffset.y)
         return targetContentOffset
     
     }
+    
+//    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+//        let layoutAttributes = super.layoutAttributesForElements(in: rect)
+//        guard let collectionView = collectionView else {return layoutAttributes}
+//        var visibleRect = CGRect()
+//        visibleRect.origin = collectionView.contentOffset
+//        visibleRect.size = collectionView.bounds.size
+//        
+//        let center = collectionView.frame.size.width / 2
+//        
+//        for attributes in layoutAttributes! {
+//            if attributes.frame.intersects(rect) {
+//                let distance = visibleRect.origin.x / 2 - attributes.center.x
+//                
+//            }
+//            
+//            
+//        }
+//        return layoutAttributes
+//        
+//    }
 
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true

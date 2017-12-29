@@ -22,5 +22,6 @@ extension PhotoEntitie {
     @NSManaged public var photoDescription: String?
     @NSManaged public var title: String?
     @NSManaged public var aspectRatio: String?
+    @NSManaged public var indexOfPopular: Int16
 
 }

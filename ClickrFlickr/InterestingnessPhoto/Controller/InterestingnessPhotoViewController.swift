@@ -13,19 +13,20 @@ class InterestingnessPhotoViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var photoEntities = [PhotoEntitie]()
+    var blockOperations = [BlockOperation]()
     
     lazy var fetchedResultsController: NSFetchedResultsController<PhotoEntitie> = {
         let context = CoreDatastack.default.mainManagedObjectContext
         let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "imageID", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "indexOfPopular", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
         return fetchedResultsController
     }()
     
-    let spacingItem: CGFloat = 2
+    private let spacingItem: CGFloat = 2
+    private let reuseIdentifier = "CellInterestingnessPhoto"
     
     override var shouldAutorotate: Bool {
         if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
@@ -50,8 +51,7 @@ class InterestingnessPhotoViewController: UIViewController {
         let activityIndicator = addActivityIndecator()
         view.addSubview(activityIndicator)
         
-        InterestingnessPhotoNetworkservice.parseJsonForInterestingnessPhoto() { [weak self] (success) in
-            self?.fetchtPhotoEntities()
+        InterestingnessPhotoNetworkservice.parseJsonForInterestingnessPhoto() { success in
             DispatchQueue.main.async {
                 activityIndicator.stopAnimating()
             }
@@ -74,29 +74,10 @@ class InterestingnessPhotoViewController: UIViewController {
         return activityIndicator
     }
     
-    private func fetchtPhotoEntities() {
-        let context = CoreDatastack.default.mainManagedObjectContext
-        context.performAndWait {
-            let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
-            do {
-                let photoEntities = try context.fetch(fetchRequest)
-                self.photoEntities = photoEntities
-                self.collectionView.reloadData()
-            } catch {
-                print("Error fetch request \(error)")
-            }
-        }
-        
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         ImageLoader.cleanAllCash()
     }
-    
-//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        collectionView.collectionViewLayout.invalidateLayout()
-//    }
     
 }
 
@@ -105,42 +86,44 @@ class InterestingnessPhotoViewController: UIViewController {
 extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photoEntities.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.5, delay: 0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
-            cell.contentView.alpha = 1
-        }, completion: nil)
-
+        guard let fetchedObjects = fetchedResultsController.fetchedObjects else {return 0}
+        return fetchedObjects.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let reuseIdentifier = "CellInterestingnessPhoto"
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
-        cell.contentView.alpha = 0
+
+        configureCell(cell: cell, atIndexPath: indexPath)
         
-        guard let imageURL = photoEntities[indexPath.item].imageURL else {return cell}
+        return cell
+        
+    }
+    
+    private func configureCell(cell: InterstingnessPhotoCollectionViewCell, atIndexPath indexPath: IndexPath) {
+        
+        let photoEntitie = fetchedResultsController.object(at: indexPath)
+        cell.photo.alpha = 0
+        guard let imageURL = photoEntitie.imageURL else {return}
         
         if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
             cell.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         } else {
             cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            cell.configure(with: photoEntities[indexPath.item], image: nil)
+            cell.configure(with: photoEntitie, image: nil)
         }
         
         ImageLoader.loadImageUsingUrlString(urlString: imageURL) { [weak self] image in
-            guard let strongSelf = self, let image = image else { return }
-            
-            if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
+            guard let image = image else {return}
+            if self?.collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
                 cell.configerOnlyPhoto(image: image)
             } else {
-                cell.configure(with: strongSelf.photoEntities[indexPath.item], image: image)
+                cell.configure(with: photoEntitie, image: image)
             }
+            UIView.animate(withDuration: 0.5, delay: 0, options: [.allowUserInteraction, .curveEaseInOut], animations: {
+                cell.photo.alpha = 1
+            }, completion: nil)
         }
-        return cell
         
     }
     
@@ -193,10 +176,35 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
 
 extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate {
     
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        self.fetchtPhotoEntities()
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        if type == .insert {
+            blockOperations.append(BlockOperation(block: {
+                if let indexPath = newIndexPath {
+                    self.collectionView.insertItems(at: [indexPath])
+                }
+            }))
+        }
+        
+        if type == .update {
+            if let indexPath = indexPath {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
+                configureCell(cell: cell, atIndexPath: indexPath)
+            }
+        }
+
     }
     
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        collectionView.performBatchUpdates({
+            for operation in self.blockOperations {
+                operation.start()
+            }
+        }) { (finished) in
+            
+        }
+    }
+
 }
 
 extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout {
@@ -206,10 +214,11 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
         if collectionViewLayout is CenterCellCollectionViewFlowLayout {
             return collectionView.bounds.size
         }
+        let photoEntitie = fetchedResultsController.object(at: indexPath)
 
         let width = collectionView.bounds.size.width
 
-        guard let aspectSize = photoEntities[indexPath.item].aspectRatio, let aspectSizeFloat = Float(aspectSize) else {
+        guard let aspectSize = photoEntitie.aspectRatio, let aspectSizeFloat = Float(aspectSize) else {
             return CGSize(width: 0, height: 0)
         }
         

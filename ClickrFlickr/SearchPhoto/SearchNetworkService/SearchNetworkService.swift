@@ -19,11 +19,9 @@ class SearchNetworkservice {
             
             guard let json = json else {return}
             do {
-//                let searchPhoto = try SearchPhotos(json: json)
                 _ = try ParsePhotos.parsePhotos(json: json, completion: { (photo) in
                     completion(photo)
                 })
-//                completion(searchPhoto)
             } catch {
                 let error = ErrorAlertController()
                 error.showErrorAlertController(title: "ERROR! Fetching JSON for search Photo", message: "Try again?")

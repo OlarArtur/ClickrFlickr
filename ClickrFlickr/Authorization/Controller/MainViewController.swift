@@ -64,7 +64,7 @@ class MainViewController: UIViewController {
         let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
         animation.fromValue = photoCameraLayer.strokeStart
         animation.toValue = photoCameraLayer.strokeEnd
-        animation.duration = 3
+        animation.duration = 2
         animation.beginTime = 0
 
         lensLayer.frame = centerLayerFrame
@@ -77,7 +77,7 @@ class MainViewController: UIViewController {
         let animation1 = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
         animation1.fromValue = lensLayer.strokeStart
         animation1.toValue = lensLayer.strokeEnd
-        animation1.duration = 3
+        animation1.duration = 2
         lensLayer.add(animation1, forKey: nil)
         
         let animation2 = CABasicAnimation(keyPath: "transform.scale")

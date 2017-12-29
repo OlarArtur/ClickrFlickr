@@ -89,10 +89,6 @@ class WaterfallLayout: UICollectionViewLayout {
         return layoutAttributes
     }
     
-    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return attributesCache[indexPath.item]
-    }
-    
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         if oldBounds.size != newBounds.size {
             attributesCache.removeAll(keepingCapacity: true)
