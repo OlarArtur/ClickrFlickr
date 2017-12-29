@@ -112,10 +112,7 @@ extension SearchCollectionViewController: UICollectionViewDataSourcePrefetching 
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { image in
-                guard image != nil else { return }
-                return
-            }
+            ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { image in }
         }
     }
     
@@ -140,7 +137,6 @@ extension SearchCollectionViewController: UISearchBarDelegate {
             self?.collectionView?.reloadData()
             activityIndicator.stopAnimating()
             activityIndicator.removeFromSuperview()
-            
             
         }
         searchBar.text = ""

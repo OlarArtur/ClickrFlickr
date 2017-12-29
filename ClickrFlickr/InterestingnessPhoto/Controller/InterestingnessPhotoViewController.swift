@@ -93,9 +93,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
-
         configureCell(cell: cell, atIndexPath: indexPath)
-        
         return cell
         
     }
@@ -112,7 +110,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
             cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             cell.configure(with: photoEntitie, image: nil)
         }
-        
         ImageLoader.loadImageUsingUrlString(urlString: imageURL) { [weak self] image in
             guard let image = image else {return}
             if self?.collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
@@ -200,9 +197,8 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
             for operation in self.blockOperations {
                 operation.start()
             }
-        }) { (finished) in
-            
-        }
+        }, completion: nil)
+        
     }
 
 }

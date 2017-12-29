@@ -131,6 +131,7 @@ extension DetailPhotoViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         ImageLoader.loadImageUsingUrlString(urlString: photos[indexPath.item].url, completion: { [weak self] (image) in
             self?.photoImage.image = image
         })
