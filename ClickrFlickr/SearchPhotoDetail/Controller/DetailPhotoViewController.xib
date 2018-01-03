@@ -24,12 +24,15 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BsW-2h-ol6">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CET-pi-YnV" customClass="UserInfo" customModule="ClickrFlickr" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="20" width="375" height="162"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="167"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="0Pv-pP-6BR">
-                    <rect key="frame" x="0.0" y="505.5" width="375" height="161.5"/>
+                    <rect key="frame" x="0.0" y="500.5" width="375" height="166.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Zgx-9Y-Mb6">
                         <size key="itemSize" width="50" height="50"/>
@@ -42,24 +45,22 @@
                         <outlet property="delegate" destination="-1" id="pLH-6P-G3R"/>
                     </connections>
                 </collectionView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BsW-2h-ol6">
-                    <rect key="frame" x="0.0" y="182" width="375" height="323.5"/>
-                </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CET-pi-YnV" secondAttribute="trailing" id="1el-f7-mLp"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BsW-2h-ol6" secondAttribute="trailing" id="7L1-Ja-4sd"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0Pv-pP-6BR" secondAttribute="trailing" id="9eO-0E-u3N"/>
-                <constraint firstItem="0Pv-pP-6BR" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="FnM-QG-PFg"/>
-                <constraint firstItem="BsW-2h-ol6" firstAttribute="height" secondItem="CET-pi-YnV" secondAttribute="height" multiplier="4:2" id="JZt-9l-oY7"/>
-                <constraint firstItem="BsW-2h-ol6" firstAttribute="top" secondItem="CET-pi-YnV" secondAttribute="bottom" id="K96-WQ-oBZ"/>
-                <constraint firstItem="BsW-2h-ol6" firstAttribute="height" secondItem="0Pv-pP-6BR" secondAttribute="height" multiplier="4:2" id="MeD-rO-9Sa"/>
-                <constraint firstItem="BsW-2h-ol6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Uxq-GJ-DN9"/>
-                <constraint firstItem="0Pv-pP-6BR" firstAttribute="top" secondItem="BsW-2h-ol6" secondAttribute="bottom" id="hkd-CV-5iT"/>
-                <constraint firstItem="CET-pi-YnV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="pL2-EB-0l5"/>
-                <constraint firstItem="CET-pi-YnV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="rGz-hg-Vyi"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="0Pv-pP-6BR" secondAttribute="bottom" id="tFd-uS-jTa"/>
+                <constraint firstItem="CET-pi-YnV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="5LQ-0p-0Xb"/>
+                <constraint firstItem="0Pv-pP-6BR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9JC-3U-bsd"/>
+                <constraint firstAttribute="trailing" secondItem="BsW-2h-ol6" secondAttribute="trailing" id="HZx-xC-h3x"/>
+                <constraint firstItem="CET-pi-YnV" firstAttribute="height" secondItem="BsW-2h-ol6" secondAttribute="height" multiplier="1:4" id="Hta-X8-Ri8"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="0Pv-pP-6BR" secondAttribute="bottom" id="S5l-gY-n59"/>
+                <constraint firstItem="0Pv-pP-6BR" firstAttribute="height" secondItem="BsW-2h-ol6" secondAttribute="height" multiplier="1:4" id="XbC-6O-l0H"/>
+                <constraint firstAttribute="trailing" secondItem="0Pv-pP-6BR" secondAttribute="trailing" id="eMb-vB-OAh"/>
+                <constraint firstAttribute="bottom" secondItem="BsW-2h-ol6" secondAttribute="bottom" id="eiU-Xg-gSX"/>
+                <constraint firstItem="BsW-2h-ol6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ipB-HG-QJC"/>
+                <constraint firstItem="BsW-2h-ol6" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="ktK-lE-7dS"/>
+                <constraint firstAttribute="trailing" secondItem="CET-pi-YnV" secondAttribute="trailing" id="mnM-ks-1nv"/>
+                <constraint firstItem="BsW-2h-ol6" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="pyq-Zg-LqH"/>
+                <constraint firstItem="CET-pi-YnV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="uft-LE-i2X"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="33.5" y="63.5"/>

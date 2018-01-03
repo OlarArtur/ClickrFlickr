@@ -28,33 +28,28 @@ class InterestingnessPhotoViewController: UIViewController {
     private let spacingItem: CGFloat = 2
     private let reuseIdentifier = "CellInterestingnessPhoto"
     
-    override var shouldAutorotate: Bool {
-        if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return .portrait
-    }
+//    override var shouldAutorotate: Bool {
+//        if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
+//            return true
+//        } else {
+//            return false
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.automaticallyAdjustsScrollViewInsets = false
         
         collectionView?.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         view.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         
-        let activityIndicator = addActivityIndecator()
-        view.addSubview(activityIndicator)
+//        let activityIndicator = addActivityIndecator()
+//        view.addSubview(activityIndicator)
         
         InterestingnessPhotoNetworkservice.parseJsonForInterestingnessPhoto() { success in
-            DispatchQueue.main.async {
-                activityIndicator.stopAnimating()
-            }
+//            DispatchQueue.main.async {
+//                activityIndicator.stopAnimating()
+//            }
         }
         
         do {

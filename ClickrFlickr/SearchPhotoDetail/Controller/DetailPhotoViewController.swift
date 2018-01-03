@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailPhotoViewController: UIViewController {
+class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var userInfo: UserInfo!
     @IBOutlet weak var photoImage: UIImageView!
@@ -17,18 +17,6 @@ class DetailPhotoViewController: UIViewController {
     var photo: Photo?
     var photos = [Photo]()
     var user: User?
-    
-    override var shouldAutorotate: Bool {
-        return false
-    }
-    
-    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return .portrait
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
     
     override func loadView() {
         Bundle.main.loadNibNamed("DetailPhotoViewController", owner: self, options: nil)
@@ -41,9 +29,35 @@ class DetailPhotoViewController: UIViewController {
         collectionView.collectionViewLayout = layout
         collectionView.register(UINib(nibName: "DetailPhotoViewCell", bundle: nil), forCellWithReuseIdentifier: "DetailCell")
         
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        tapGestureRecognizer.delegate = self
+        photoImage.addGestureRecognizer(tapGestureRecognizer)
+        photoImage.isUserInteractionEnabled = true
+        
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch))
+        pinchGestureRecognizer.delegate = self
+        photoImage.addGestureRecognizer(pinchGestureRecognizer)
+        
         customViews()
         configUserInfo()
         
+    }
+    
+    @objc func handlePinch(recognizer: UIPinchGestureRecognizer) {
+        if let view = recognizer.view {
+            view.transform = CGAffineTransform(scaleX: recognizer.scale, y: recognizer.scale)
+            recognizer.scale = 1
+        }
+    }
+    
+    @objc func handleTap(recognizer: UITapGestureRecognizer) {
+        if collectionView.isHidden {
+            collectionView.isHidden = false
+            userInfo.isHidden = false
+        } else {
+            collectionView.isHidden = true
+            userInfo.isHidden = true
+        }
     }
     
     private func customViews() {
@@ -68,7 +82,6 @@ class DetailPhotoViewController: UIViewController {
         
     }
 
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -77,6 +90,11 @@ class DetailPhotoViewController: UIViewController {
             navigationController?.isNavigationBarHidden = false
         }
 
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     override func didReceiveMemoryWarning() {
@@ -137,6 +155,18 @@ extension DetailPhotoViewController: UICollectionViewDelegate, UICollectionViewD
         ImageLoader.loadImageUsingUrlString(urlString: photos[indexPath.item].url, completion: { [weak self] (image) in
             self?.photoImage.image = image
         })
+    }
+    
+}
+
+extension DetailPhotoViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
     }
     
 }

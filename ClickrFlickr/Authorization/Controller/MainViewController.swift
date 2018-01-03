@@ -64,7 +64,7 @@ class MainViewController: UIViewController {
         let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
         animation.fromValue = photoCameraLayer.strokeStart
         animation.toValue = photoCameraLayer.strokeEnd
-        animation.duration = 2
+        animation.duration = 1.5
         animation.beginTime = 0
 
         lensLayer.frame = centerLayerFrame
@@ -77,7 +77,7 @@ class MainViewController: UIViewController {
         let animation1 = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
         animation1.fromValue = lensLayer.strokeStart
         animation1.toValue = lensLayer.strokeEnd
-        animation1.duration = 2
+        animation1.duration = 1.5
         lensLayer.add(animation1, forKey: nil)
         
         let animation2 = CABasicAnimation(keyPath: "transform.scale")
@@ -145,13 +145,13 @@ class MainViewController: UIViewController {
         let animation2 = CABasicAnimation(keyPath: "position.x")
         animation2.fromValue = redOval.position.x
         animation2.toValue = redOval.position.x + labelsStackView.bounds.width / 3.5
-        animation2.beginTime = animation.beginTime + animation.duration + 0.5
+        animation2.beginTime = animation.beginTime + animation.duration + 0.3
         animation2.fillMode = kCAFillModeForwards
         animation2.duration = 0.5
         
         let groupAnimation = CAAnimationGroup()
         groupAnimation.animations = [animation, animation2]
-        groupAnimation.duration = animation.duration + animation2.duration + 1
+        groupAnimation.duration = animation.duration + animation2.duration + 0.3
         groupAnimation.isRemovedOnCompletion = false
         groupAnimation.fillMode = kCAFillModeForwards
         redOval.add(groupAnimation, forKey: nil)
@@ -159,13 +159,13 @@ class MainViewController: UIViewController {
         let animation3 = CABasicAnimation(keyPath: "position.x")
         animation3.fromValue = blueOval.position.x
         animation3.toValue = blueOval.position.x - labelsStackView.bounds.width / 3.5
-        animation3.beginTime = animation1.beginTime + animation1.duration + 0.5
+        animation3.beginTime = animation1.beginTime + animation1.duration + 0.3
         animation3.fillMode = kCAFillModeForwards
         animation3.duration = 0.5
         
         let groupAnimation1 = CAAnimationGroup()
         groupAnimation1.animations = [animation1, animation3]
-        groupAnimation1.duration = animation.duration + animation2.duration + 1
+        groupAnimation1.duration = animation.duration + animation2.duration + 0.3
         groupAnimation1.isRemovedOnCompletion = false
         groupAnimation1.fillMode = kCAFillModeForwards
         blueOval.add(groupAnimation1, forKey: nil)

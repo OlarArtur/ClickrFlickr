@@ -37,13 +37,13 @@ class CoreDatastack: NSObject {
     private lazy var coordinator: NSPersistentStoreCoordinator = {
         
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        
         let persistantStoreURL = self.getDocumentsDirectory?.appendingPathComponent("ClickrFlickr.sqlite")
         do {
             try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: persistantStoreURL, options: [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true])
         } catch {
             fatalError("Error adding persistent store \(error)")
         }
+        
         return coordinator
         
     } ()

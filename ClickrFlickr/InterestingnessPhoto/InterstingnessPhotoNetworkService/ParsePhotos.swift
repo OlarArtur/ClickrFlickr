@@ -63,19 +63,25 @@ class ParsePhotos {
             var news = Set(uniquesFlickr)
             
             news.subtract(uniquesSet)
-    
+                
             var batchToSave = 0
             
+            var indexes = [Int]()
             for unic in news {
                 if let index = photo.index(where: { $0["id"] as? String == unic }) {
-                    
-                    _ = PhotoEntitie(dict: photo[index], index: index ,context: context)
-
-                    batchToSave += 1
-                    if batchToSave == 10 {
-                        CoreDatastack.default.saveContext(context: context)
-                        batchToSave = 0
-                    }
+                    indexes.append(index)
+                }
+            }
+            
+            let sortedIndexes = indexes.sorted()
+            
+            for index in sortedIndexes {
+                _ = PhotoEntitie(dict: photo[index], index: index ,context: context)
+                
+                batchToSave += 1
+                if batchToSave == 10 {
+                    CoreDatastack.default.saveContext(context: context)
+                    batchToSave = 0
                 }
             }
             CoreDatastack.default.saveContext(context: context)
