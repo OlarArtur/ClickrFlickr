@@ -203,8 +203,13 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         if collectionViewLayout is CenterCellCollectionViewFlowLayout {
-            return collectionView.bounds.size
+            if #available(iOS 11.0, *) {
+                return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height - (collectionView.safeAreaInsets.bottom + collectionView.safeAreaInsets.top))
+            } else {
+                return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height - (collectionView.layoutMargins.bottom + collectionView.layoutMargins.top))
+            }
         }
+        
         let photoEntitie = fetchedResultsController.object(at: indexPath)
 
         let width = collectionView.bounds.size.width

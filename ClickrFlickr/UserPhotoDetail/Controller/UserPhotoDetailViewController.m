@@ -58,9 +58,11 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"W:%f",_collectionView.bounds.size.width);
-    NSLog(@"H:%f",_collectionView.bounds.size.height);
-    return CGSizeMake(_collectionView.bounds.size.width, _collectionView.bounds.size.height);
+    if (@available(iOS 11.0, *)) {
+        return CGSizeMake(_collectionView.bounds.size.width, _collectionView.bounds.size.height - (_collectionView.safeAreaInsets.bottom + _collectionView.safeAreaInsets.top));
+    } else {
+        return CGSizeMake(_collectionView.bounds.size.width, _collectionView.bounds.size.height - (_collectionView.layoutMargins.bottom + _collectionView.layoutMargins.top));
+    }
 }
 
 @end
