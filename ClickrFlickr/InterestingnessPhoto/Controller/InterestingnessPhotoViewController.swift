@@ -26,15 +26,8 @@ class InterestingnessPhotoViewController: UIViewController {
     }()
     
     private let spacingItem: CGFloat = 2
+    private let photoFrameSize: CGFloat = 8
     private let reuseIdentifier = "CellInterestingnessPhoto"
-    
-//    override var shouldAutorotate: Bool {
-//        if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
-//            return true
-//        } else {
-//            return false
-//        }
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,13 +36,13 @@ class InterestingnessPhotoViewController: UIViewController {
         collectionView?.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         view.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         
-//        let activityIndicator = addActivityIndecator()
-//        view.addSubview(activityIndicator)
+        let activityIndicator = addActivityIndecator()
+        view.addSubview(activityIndicator)
         
         InterestingnessPhotoNetworkservice.parseJsonForInterestingnessPhoto() { success in
-//            DispatchQueue.main.async {
-//                activityIndicator.stopAnimating()
-//            }
+            DispatchQueue.main.async {
+                activityIndicator.stopAnimating()
+            }
         }
         
         do {
@@ -67,6 +60,21 @@ class InterestingnessPhotoViewController: UIViewController {
         activityIndicator.hidesWhenStopped = true
         activityIndicator.startAnimating()
         return activityIndicator
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        let offset = collectionView.contentOffset
+        let width = collectionView.bounds.size.width
+        let layoutMarginsLeft = collectionView.layoutMargins.left
+        
+        let newWidth = size.width
+        let index = offset.x / width
+        
+        let newOffset = CGPoint(x: index * newWidth - (index * layoutMarginsLeft), y: offset.y)
+
+        collectionView.setContentOffset(newOffset, animated: false)
     }
     
     override func didReceiveMemoryWarning() {
@@ -218,7 +226,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
             return CGSize(width: 0, height: 0)
         }
         
-        let photoHeight = (width - 16) * CGFloat(aspectSizeFloat)
+        let photoHeight = (width - 2 * photoFrameSize) * CGFloat(aspectSizeFloat)
         
         let height = photoHeight
 

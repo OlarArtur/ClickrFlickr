@@ -34,6 +34,16 @@
     [ImageLoader cleanAllCash];
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    CGPoint offset = _collectionView.contentOffset;
+    CGFloat width = _collectionView.bounds.size.width;
+    CGFloat newWidth = size.width;
+    CGFloat index = offset.x / width;
+    CGPoint newOffset = CGPointMake(index * newWidth, offset.y);
+    _collectionView.contentOffset = newOffset;
+}
+
 #pragma UICollectionViewDataSource
 
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section

@@ -90,9 +90,6 @@ class WaterfallLayout: UICollectionViewLayout {
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        if oldBounds.size != newBounds.size {
-            attributesCache.removeAll(keepingCapacity: true)
-        }
         return true
     }
 
