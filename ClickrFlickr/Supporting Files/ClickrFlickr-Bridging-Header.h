@@ -4,5 +4,5 @@
 
 #import <CommonCrypto/CommonCrypto.h>
 #import "UserPhotoDetailViewController.h"
-#import "CoverFlowLayout.h"
+
 

@@ -8,7 +8,6 @@
 
 #import "UserPhotoDetailViewController.h"
 #import "UserPhotoDetailCell.h"
-#import "CoverFlowLayout.h"
 #import "ClickrFlickr-Swift.h"
 
 @interface UserPhotoDetailViewController()

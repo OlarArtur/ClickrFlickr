@@ -19,6 +19,7 @@ class ScrollLineCollectionFlowLayout: UICollectionViewFlowLayout {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.decelerationRate = UIScrollViewDecelerationRateFast
         collectionView.backgroundColor = #colorLiteral(red: 0.1879811585, green: 0.1879865527, blue: 0.1879836619, alpha: 1)
+        collectionView.isPagingEnabled = false
         let size = collectionView.frame.size
         let amountOfCells = ceilf(Float(size.width / size.height))
         let itemWidth = size.width / CGFloat(amountOfCells)

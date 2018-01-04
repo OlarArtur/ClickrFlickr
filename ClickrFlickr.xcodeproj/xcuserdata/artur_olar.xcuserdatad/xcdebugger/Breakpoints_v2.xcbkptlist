@@ -45,43 +45,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ClickrFlickr/CustomCollectionViewLayout/ScrollLineCollectionFlowLayout.swift"
-            timestampString = "536763989.7771"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "prepare()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ClickrFlickr/CustomCollectionViewLayout/ScrollLineCollectionFlowLayout.swift"
-            timestampString = "536763989.777195"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "changeLayoutAttributes(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ClickrFlickr/InterestingnessPhoto/Controller/InterestingnessPhotoViewController.swift"
-            timestampString = "536763989.777272"
+            timestampString = "536764535.568875"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "191"
@@ -97,7 +65,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ClickrFlickr/InterestingnessPhoto/InterstingnessPhotoNetworkService/ParsePhotos.swift"
-            timestampString = "536763989.777745"
+            timestampString = "536764535.569"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
