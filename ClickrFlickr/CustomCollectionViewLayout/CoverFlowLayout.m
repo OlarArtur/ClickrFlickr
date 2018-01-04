@@ -15,14 +15,10 @@
     self.collectionView.showsHorizontalScrollIndicator = NO;
     self.collectionView.backgroundColor = [[UIColor alloc]initWithRed:0.1915385664 green:0.1915385664 blue:0.1915385664 alpha:1];
     CGSize size = self.collectionView.frame.size;
-    CGFloat itemWidth = size.width/3.0f;
+    CGFloat someSize = ceilf(size.width / size.height);
+    CGFloat itemWidth = size.width/someSize;
     self.itemSize = CGSizeMake(itemWidth, itemWidth*0.75f);
     self.sectionInset = UIEdgeInsetsMake(size.height*0.1f, self.itemSize.width, size.height*0.1f, self.itemSize.width);
-}
-
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
-{
-    return YES;
 }
 
 -(NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
@@ -46,7 +42,7 @@
                 rotationTransform = CATransform3DMakeRotation(normalizedDistance * M_PI_2 *0.8f, 0.0f, 1.0f, 0.0f);
                 CATransform3D zoomTransform = CATransform3DMakeScale(zoom, zoom, 1.0f);
                 layoutAttributes.transform3D = CATransform3DConcat(zoomTransform, rotationTransform);
-                layoutAttributes.zIndex = ABS(normalizedDistance) * 10.0f;
+                layoutAttributes.zIndex = ABS(normalizedDistance) * 8.0f;
                 CGFloat alpha = (1  - ABS(normalizedDistance)) + 0.1f;
                 if (alpha > 1.0f) alpha = 1.0f;
                 layoutAttributes.alpha = alpha;
@@ -86,6 +82,11 @@
         }
     }
     return CGPointMake(candidateAttributes.center.x - self.collectionView.bounds.size.width * 0.5f, proposedContentOffset.y);
+}
+
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
+{
+    return YES;
 }
 
 @end

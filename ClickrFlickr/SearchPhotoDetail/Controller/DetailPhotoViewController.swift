@@ -146,7 +146,6 @@ extension DetailPhotoViewController: UICollectionViewDelegate, UICollectionViewD
                 cell.photoImage.image = image
             }
         }
-        
         return cell
     }
     
@@ -158,3 +157,19 @@ extension DetailPhotoViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
 }
+
+//extension DetailPhotoViewController: UICollectionViewDelegateFlowLayout {
+//    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let height = collectionView.bounds.height - 40
+//        let aspectSize = photos[indexPath.item].aspectSize
+//        let width = height / CGFloat(aspectSize)
+//        
+//        return CGSize(width: width, height: height)
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return UIEdgeInsets(top: 20, left: 5, bottom: 20, right: 5)
+//    }
+//}
+
