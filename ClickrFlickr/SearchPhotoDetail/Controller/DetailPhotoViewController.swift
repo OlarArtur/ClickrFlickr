@@ -25,7 +25,8 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let layout = CoverFlowLayout()
+//        let layout = CoverFlowLayout()
+        let layout = ScrollLineCollectionFlowLayout()
         collectionView.collectionViewLayout = layout
         collectionView.register(UINib(nibName: "DetailPhotoViewCell", bundle: nil), forCellWithReuseIdentifier: "DetailCell")
         
@@ -157,19 +158,3 @@ extension DetailPhotoViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
 }
-
-//extension DetailPhotoViewController: UICollectionViewDelegateFlowLayout {
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let height = collectionView.bounds.height - 40
-//        let aspectSize = photos[indexPath.item].aspectSize
-//        let width = height / CGFloat(aspectSize)
-//        
-//        return CGSize(width: width, height: height)
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 20, left: 5, bottom: 20, right: 5)
-//    }
-//}
-

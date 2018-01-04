@@ -53,6 +53,7 @@
 		B2AB94CD1FE94FB3005EDF9F /* DetailPhotoViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2AB94CB1FE94FB3005EDF9F /* DetailPhotoViewCell.xib */; };
 		B2ACA9911FF3D98700C407B2 /* ScaleItemCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACA9901FF3D98700C407B2 /* ScaleItemCollectionFlowLayout.swift */; };
 		B2BC9C1F1FCEB0CC00A4C900 /* UserHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BC9C1E1FCEB0CC00A4C900 /* UserHeaderCollectionReusableView.swift */; };
+		B2C1DF3A1FFE47870028A7EA /* ScrollLineCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C1DF391FFE47870028A7EA /* ScrollLineCollectionFlowLayout.swift */; };
 		B2C6EDBF1FA71DF700C254D5 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C6EDBE1FA71DF700C254D5 /* Photo.swift */; };
 		B2D90FAF1FBD94B100FB0E64 /* UserInfoNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D90FAE1FBD94B100FB0E64 /* UserInfoNetworkService.swift */; };
 		B2D90FB11FBD9FD700FB0E64 /* CreateUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D90FB01FBD9FD700FB0E64 /* CreateUserInfo.swift */; };
@@ -113,6 +114,7 @@
 		B2AB94CB1FE94FB3005EDF9F /* DetailPhotoViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = DetailPhotoViewCell.xib; path = SearchPhotoDetail/View/DetailPhotoViewCell.xib; sourceTree = "<group>"; };
 		B2ACA9901FF3D98700C407B2 /* ScaleItemCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleItemCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		B2BC9C1E1FCEB0CC00A4C900 /* UserHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserHeaderCollectionReusableView.swift; path = User/View/UserHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		B2C1DF391FFE47870028A7EA /* ScrollLineCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollLineCollectionFlowLayout.swift; sourceTree = "<group>"; };
 		B2C6EDBE1FA71DF700C254D5 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Photo.swift; path = Application/Model/Photo.swift; sourceTree = "<group>"; };
 		B2D90FAE1FBD94B100FB0E64 /* UserInfoNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoNetworkService.swift; sourceTree = "<group>"; };
 		B2D90FB01FBD9FD700FB0E64 /* CreateUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUserInfo.swift; sourceTree = "<group>"; };
@@ -561,6 +563,7 @@
 			isa = PBXGroup;
 			children = (
 				B278902E1FCC294600CEBB48 /* CenterCollectionFlowLayout.swift */,
+				B2C1DF391FFE47870028A7EA /* ScrollLineCollectionFlowLayout.swift */,
 				B22C6FD21FE1079B0087FF0D /* CoverFlowLayout.h */,
 				B22C6FD31FE1079B0087FF0D /* CoverFlowLayout.m */,
 				B26A92C91FBF11F70058C336 /* WaterfallLayout.swift */,
@@ -651,6 +654,7 @@
 				B21C331A1FEB950D00DF1040 /* TabBarController.swift in Sources */,
 				B22B8B3A1FBC20E500A21401 /* GetPhotoNetworkService.swift in Sources */,
 				B2F7EBAE1F7A860400300C74 /* FetchJSON.swift in Sources */,
+				B2C1DF3A1FFE47870028A7EA /* ScrollLineCollectionFlowLayout.swift in Sources */,
 				B277D7901FE2B21000BA81FF /* MainSegue.swift in Sources */,
 				B29A9FEF1F7276C000567FD5 /* SearchCollectionViewCell.swift in Sources */,
 				B29A9FF51F72869600567FD5 /* NotAuthorizedViewController.swift in Sources */,

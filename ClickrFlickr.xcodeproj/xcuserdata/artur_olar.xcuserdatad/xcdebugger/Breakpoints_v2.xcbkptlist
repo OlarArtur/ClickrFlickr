@@ -48,13 +48,61 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ClickrFlickr/CustomCollectionViewLayout/CenterCollectionFlowLayout.swift"
-            timestampString = "536749711.388809"
+            filePath = "ClickrFlickr/CustomCollectionViewLayout/ScrollLineCollectionFlowLayout.swift"
+            timestampString = "536763989.7771"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "shouldInvalidateLayout(forBoundsChange:)"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "prepare()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ClickrFlickr/CustomCollectionViewLayout/ScrollLineCollectionFlowLayout.swift"
+            timestampString = "536763989.777195"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "changeLayoutAttributes(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ClickrFlickr/InterestingnessPhoto/Controller/InterestingnessPhotoViewController.swift"
+            timestampString = "536763989.777272"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
+            landmarkName = "controller(_:didChange:at:for:newIndexPath:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ClickrFlickr/InterestingnessPhoto/InterstingnessPhotoNetworkService/ParsePhotos.swift"
+            timestampString = "536763989.777745"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "parsePhotoEntities(json:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

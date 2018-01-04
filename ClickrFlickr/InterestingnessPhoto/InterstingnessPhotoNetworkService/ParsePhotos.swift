@@ -38,8 +38,8 @@ class ParsePhotos {
         context.perform {
             
             let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
-            let sorDescriptor = NSSortDescriptor(key: "imageID", ascending: true)
-            fetchRequest.sortDescriptors = [sorDescriptor]
+//            let sorDescriptor = NSSortDescriptor(key: "imageID", ascending: true)
+//            fetchRequest.sortDescriptors = [sorDescriptor]
             
             do {
                 let photoEntities = try context.fetch(fetchRequest)
@@ -47,14 +47,19 @@ class ParsePhotos {
             
                 for entitie in photoEntities {
                     if let index = photo.index(where: { $0["id"] as? String == entitie.imageID }) {
-                        entitie.indexOfPopular = Int16(index)
+                        if index != entitie.indexOfPopular{
+                            entitie.indexOfPopular = Int16(index)
+                        }
                     } else {
                         context.delete(entitie)
                     }
                 }
                 
             } catch {
+                context.rollback()
+                CoreDatastack.default.saveContext(context: context)
                 print("Error fetch request \(error)")
+                completion(false)
             }
             let uniquesFlickr = photo.flatMap({ $0["id"] as? String})
             

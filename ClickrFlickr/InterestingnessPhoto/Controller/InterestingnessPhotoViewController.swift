@@ -192,10 +192,11 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
                 configureCell(cell: cell, atIndexPath: indexPath)
             }
         }
-
+      
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+  
         collectionView.performBatchUpdates({
             for operation in self.blockOperations {
                 operation.start()
