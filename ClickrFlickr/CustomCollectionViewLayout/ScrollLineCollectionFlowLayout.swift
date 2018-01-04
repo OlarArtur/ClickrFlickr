@@ -25,30 +25,33 @@ class ScrollLineCollectionFlowLayout: UICollectionViewFlowLayout {
         let itemWidth = size.width / CGFloat(amountOfCells)
         self.itemSize = CGSize(width: itemWidth, height: itemWidth * 0.8)
         self.sectionInset = UIEdgeInsets(top: 0, left: self.itemSize.width, bottom: 0, right: self.itemSize.width)
+        self.minimumLineSpacing = 30
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        let attributes = super.layoutAttributesForElements(in: rect)
+        
+        guard let collectionView = collectionView else {return nil}
+        
+        guard let attributes = super.layoutAttributesForElements(in: rect) else {return nil}
         var newAttributes = [UICollectionViewLayoutAttributes]()
         
-        for itemAttributes in attributes! {
+        for itemAttributes in attributes {
             let newItemAttributes = itemAttributes.copy() as! UICollectionViewLayoutAttributes
-            changeLayoutAttributes(newItemAttributes)
-            
+            var visibleRect = CGRect()
+            visibleRect.origin = collectionView.contentOffset
+            visibleRect.size = collectionView.bounds.size
+            if newItemAttributes.frame.intersects(rect) {
+                let distance = visibleRect.midX - newItemAttributes.center.x
+                let normalizedDistanse = distance / 200
+                if abs(distance) < 200 {
+                    let scale =  1 + 0.3 * (1 - abs(normalizedDistanse))
+                    newItemAttributes.transform3D = CATransform3DMakeScale(scale, scale, 1)
+                }
+            }
             newAttributes.append(newItemAttributes)
         }
         return newAttributes
-    }
-    
-    private func changeLayoutAttributes(_ attributes: UICollectionViewLayoutAttributes) {
-        let collectionCenter = collectionView!.frame.size.width / 2
-        let offset = collectionView!.contentOffset.x
-        let normalizedCenter = attributes.center.x - offset
-        let maxDistance = self.itemSize.width + self.minimumLineSpacing
-        let distance = min(abs(collectionCenter - normalizedCenter), maxDistance)
-        let ratio = (maxDistance - distance)/maxDistance
-        let scale = ratio * (1 - 0.8) + 0.8
-        attributes.transform3D = CATransform3DScale(CATransform3DIdentity, scale, scale, 1)
+
     }
     
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
