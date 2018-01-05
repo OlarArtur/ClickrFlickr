@@ -14,6 +14,7 @@ class InterestingnessPhotoViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     private var blockOperations = [BlockOperation]()
+    private let refreshControl = UIRefreshControl()
     
     private lazy var fetchedResultsController: NSFetchedResultsController<PhotoEntitie> = {
         let context = CoreDatastack.default.mainManagedObjectContext
@@ -31,19 +32,18 @@ class InterestingnessPhotoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.automaticallyAdjustsScrollViewInsets = false
+    
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(loadData), for: .valueChanged)
+        refreshControl.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        refreshControl.attributedTitle = NSAttributedString(string: "Loading...", attributes: [.foregroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)])
         
         collectionView?.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         view.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         
-        let activityIndicator = addActivityIndecator()
-        view.addSubview(activityIndicator)
-        
-        InterestingnessPhotoNetworkservice.parseJsonForInterestingnessPhoto() { success in
-            DispatchQueue.main.async {
-                activityIndicator.stopAnimating()
-            }
-        }
+        loadData()
         
         do {
             try self.fetchedResultsController.performFetch()
@@ -52,6 +52,23 @@ class InterestingnessPhotoViewController: UIViewController {
             print("\(fetchError), \(fetchError.userInfo)")
         }
         
+    }
+    
+    @objc private func loadData() {
+        
+        let activityIndicator = addActivityIndecator()
+        view.addSubview(activityIndicator)
+        
+        InterestingnessPhotoNetworkservice.parseJsonForInterestingnessPhoto() {[weak self] success in
+            DispatchQueue.main.async {
+                activityIndicator.stopAnimating()
+                
+                if self?.refreshControl.isRefreshing == true {
+                    self?.refreshControl.endRefreshing()
+                }
+            }
+        }
+    
     }
     
     private func addActivityIndecator() -> UIActivityIndicatorView {
@@ -179,8 +196,8 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
         
         if type == .insert {
             blockOperations.append(BlockOperation(block: {
-                if let indexPath = newIndexPath {
-                    self.collectionView.insertItems(at: [indexPath])
+                if let newIndexPath = newIndexPath {
+                    self.collectionView.insertItems(at: [newIndexPath])
                 }
             }))
         }
@@ -192,6 +209,29 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
                     self.configureCell(cell: cell, atIndexPath: indexPath)
                 }
             }))
+        }
+        
+        if type == .delete {
+            blockOperations.append(BlockOperation(block: {
+                if let indexPath = indexPath {
+                    self.collectionView.deleteItems(at: [indexPath])
+                }
+            }))
+        }
+        
+        if type == .move {
+            blockOperations.append(BlockOperation(block: {
+                if let indexPath = indexPath {
+                    self.collectionView.deleteItems(at: [indexPath])
+                }
+            }))
+            
+            blockOperations.append(BlockOperation(block: {
+                if let newIndexPath = newIndexPath {
+                    self.collectionView.insertItems(at: [newIndexPath])
+                }
+            }))
+
         }
       
     }
