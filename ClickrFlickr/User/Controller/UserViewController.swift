@@ -265,7 +265,7 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        var width = collectionView.bounds.size.width / 2
+        var width = (collectionView.bounds.size.width - spacingItem) / 2
         let aspectSize = photo[indexPath.item].aspectSize
         if aspectSize < 1 {
             width = collectionView.bounds.size.width
@@ -280,7 +280,7 @@ extension UserViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
+        return spacingItem
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

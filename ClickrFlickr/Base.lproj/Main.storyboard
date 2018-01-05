@@ -102,7 +102,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ip-yY-PpG">
-                                <rect key="frame" x="121.5" y="318.5" width="133" height="30"/>
+                                <rect key="frame" x="121" y="318.5" width="133" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clickr" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OvQ-RV-kMo">
                                         <rect key="frame" x="0.0" y="0.0" width="68.5" height="30"/>
@@ -336,10 +336,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="WAt-py-Aeo" firstAttribute="top" secondItem="qWK-uK-SiM" secondAttribute="top" id="6be-cs-FVD"/>
-                            <constraint firstAttribute="bottom" secondItem="WAt-py-Aeo" secondAttribute="bottom" id="kGg-bd-8cb"/>
-                            <constraint firstAttribute="trailing" secondItem="WAt-py-Aeo" secondAttribute="trailing" id="lzi-Zh-dMj"/>
-                            <constraint firstItem="WAt-py-Aeo" firstAttribute="leading" secondItem="qWK-uK-SiM" secondAttribute="leading" id="vTP-mp-XpQ"/>
+                            <constraint firstItem="WAt-py-Aeo" firstAttribute="width" secondItem="qWK-uK-SiM" secondAttribute="width" id="4b7-u5-wyj"/>
+                            <constraint firstItem="WAt-py-Aeo" firstAttribute="centerX" secondItem="qWK-uK-SiM" secondAttribute="centerX" id="LF7-at-j1Q"/>
+                            <constraint firstItem="WAt-py-Aeo" firstAttribute="height" secondItem="qWK-uK-SiM" secondAttribute="height" id="aWD-32-llk"/>
+                            <constraint firstItem="WAt-py-Aeo" firstAttribute="centerY" secondItem="qWK-uK-SiM" secondAttribute="centerY" id="e4c-a5-TyI"/>
                         </constraints>
                     </view>
                     <connections>
@@ -473,10 +473,10 @@
                             </collectionView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="AOs-uu-6ED" secondAttribute="trailing" constant="-16" id="5mI-0d-UR2"/>
-                            <constraint firstAttribute="bottom" secondItem="AOs-uu-6ED" secondAttribute="bottom" id="LsA-RT-H4M"/>
-                            <constraint firstItem="AOs-uu-6ED" firstAttribute="top" secondItem="Tbz-3x-hJQ" secondAttribute="top" id="cCT-05-LB9"/>
-                            <constraint firstItem="AOs-uu-6ED" firstAttribute="leading" secondItem="Tbz-3x-hJQ" secondAttribute="leadingMargin" constant="-16" id="gV6-a4-5GC"/>
+                            <constraint firstItem="AOs-uu-6ED" firstAttribute="centerY" secondItem="Tbz-3x-hJQ" secondAttribute="centerY" id="9Zl-XC-1S8"/>
+                            <constraint firstItem="AOs-uu-6ED" firstAttribute="centerX" secondItem="Tbz-3x-hJQ" secondAttribute="centerX" id="Ua6-ro-oYU"/>
+                            <constraint firstItem="AOs-uu-6ED" firstAttribute="height" secondItem="Tbz-3x-hJQ" secondAttribute="height" id="nob-a9-hSJ"/>
+                            <constraint firstItem="AOs-uu-6ED" firstAttribute="width" secondItem="Tbz-3x-hJQ" secondAttribute="width" id="saL-Az-LNL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Most Popular" id="DJo-ou-qSg"/>
@@ -486,7 +486,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n5d-ga-GhK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2648.8000000000002" y="1544.9775112443779"/>
+            <point key="canvasLocation" x="2648.7256371814096" y="1544.8"/>
         </scene>
     </scenes>
     <resources>

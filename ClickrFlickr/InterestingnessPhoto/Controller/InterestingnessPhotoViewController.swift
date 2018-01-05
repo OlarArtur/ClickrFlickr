@@ -57,6 +57,7 @@ class InterestingnessPhotoViewController: UIViewController {
     private func addActivityIndecator() -> UIActivityIndicatorView {
         let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
         activityIndicator.center = view.center
+        activityIndicator.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         activityIndicator.hidesWhenStopped = true
         activityIndicator.startAnimating()
         return activityIndicator
@@ -67,12 +68,9 @@ class InterestingnessPhotoViewController: UIViewController {
         
         let offset = collectionView.contentOffset
         let width = collectionView.bounds.size.width
-        let layoutMarginsLeft = collectionView.layoutMargins.left
-        
         let newWidth = size.width
         let index = offset.x / width
-        
-        let newOffset = CGPoint(x: index * newWidth - (index * layoutMarginsLeft), y: offset.y)
+        let newOffset = CGPoint(x: index * newWidth, y: offset.y)
 
         collectionView.setContentOffset(newOffset, animated: false)
     }
@@ -89,8 +87,9 @@ class InterestingnessPhotoViewController: UIViewController {
 extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let fetchedObjects = fetchedResultsController.fetchedObjects else {return 0}
-        return fetchedObjects.count
+        guard let sections = fetchedResultsController.sections else {return 0}
+        print(sections[section].numberOfObjects)
+        return sections[section].numberOfObjects
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -187,10 +186,12 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
         }
         
         if type == .update {
-            if let indexPath = indexPath {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
-                configureCell(cell: cell, atIndexPath: indexPath)
-            }
+            blockOperations.append(BlockOperation(block: {
+                if let indexPath = indexPath {
+                    let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
+                    self.configureCell(cell: cell, atIndexPath: indexPath)
+                }
+            }))
         }
       
     }
