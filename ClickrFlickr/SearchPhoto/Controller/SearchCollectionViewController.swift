@@ -108,16 +108,6 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
     
 }
 
-//extension SearchCollectionViewController: UICollectionViewDataSourcePrefetching {
-//
-//    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-//        for indexPath in indexPaths {
-//            ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { image in }
-//        }
-//    }
-//
-//}
-
 extension SearchCollectionViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

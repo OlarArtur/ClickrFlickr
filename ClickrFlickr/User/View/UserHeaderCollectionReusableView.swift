@@ -22,7 +22,7 @@ class UserHeaderCollectionReusableView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addViews() {
+   private func addViews() {
         userInfo = UserInfo()
         userInfo.translatesAutoresizingMaskIntoConstraints = false
         addSubview(userInfo)

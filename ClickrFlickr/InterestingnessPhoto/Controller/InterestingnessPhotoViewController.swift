@@ -13,9 +13,9 @@ class InterestingnessPhotoViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var blockOperations = [BlockOperation]()
+    private var blockOperations = [BlockOperation]()
     
-    lazy var fetchedResultsController: NSFetchedResultsController<PhotoEntitie> = {
+    private lazy var fetchedResultsController: NSFetchedResultsController<PhotoEntitie> = {
         let context = CoreDatastack.default.mainManagedObjectContext
         let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "indexOfPopular", ascending: true)
@@ -156,7 +156,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         }
     }
     
-    @objc func closeButtonPressed() {
+    @objc private func closeButtonPressed() {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -199,6 +199,9 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
   
         collectionView.performBatchUpdates({
+            guard let sections = fetchedResultsController.sections else {return}
+            print("controllerDidChangeContent: \(sections[0].numberOfObjects)")
+            
             for operation in self.blockOperations {
                 operation.start()
             }

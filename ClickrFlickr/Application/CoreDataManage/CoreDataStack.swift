@@ -104,7 +104,7 @@ class CoreDatastack: NSObject {
         
     }
     
-    @objc func managedObjectContextDidSave(notification: Notification) {
+    @objc private func managedObjectContextDidSave(notification: Notification) {
         mainManagedObjectContext.perform {
             self.mainManagedObjectContext.mergeChanges(fromContextDidSave: notification)
         }

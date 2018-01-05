@@ -17,7 +17,7 @@ class NotAuthorizedViewController: UIViewController {
     @IBOutlet weak var pleaseAuthorizeLabel: UILabel!
     @IBOutlet weak var authorizeButton: UIButton!
     
-    var authBackgroundView: UIImageView!
+    private var authBackgroundView: UIImageView!
     
     @IBAction func authorize(_ sender: UIButton) {
         sender.pulsate()
@@ -43,7 +43,7 @@ class NotAuthorizedViewController: UIViewController {
         authorizeButton.layer.cornerRadius = 8
     }
     
-    func createBackground() {
+    private func createBackground() {
         
         authBackgroundView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 2053, height: 1460))
         
@@ -57,7 +57,7 @@ class NotAuthorizedViewController: UIViewController {
         
     }
     
-    func animateBackground() {
+    private func animateBackground() {
         guard let authBackgroundView = authBackgroundView else {return}
         UIView.animate(withDuration: 100.0, delay: 0, options: [.curveLinear, .repeat, .autoreverse], animations: { [weak self] in
             guard let weakSelf = self else {return}

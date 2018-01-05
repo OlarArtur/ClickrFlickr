@@ -11,15 +11,15 @@ import SafariServices
 
 class UserViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SFSafariViewControllerDelegate {
     
-    let itemsPerRow: CGFloat = 2
-    let spacingItem: CGFloat = 2
+    private let itemsPerRow: CGFloat = 2
+    private let spacingItem: CGFloat = 2
     
-    var headerViewHeight: CGFloat = 0
-    var isHeaderVisible: Bool = true
+    private var headerViewHeight: CGFloat = 0
+    private var isHeaderVisible: Bool = true
     
-    var menuIsVisible = false
+    private var menuIsVisible = false
     
-    var sideBarContainerView: UIView!
+    private var sideBarContainerView: UIView!
     var collectionView: UICollectionView!
     var userInfo: UserInfo!
     
@@ -76,7 +76,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         ImageLoader.cleanAllCash()
     }
     
-    @objc func menuPressed() {
+    @objc private func menuPressed() {
         
         if menuIsVisible {
             
@@ -134,7 +134,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
-    @objc func logOutPressed(sender: UIButton) {
+    @objc private func logOutPressed(sender: UIButton) {
         UserDefaults.standard.removeObject(forKey: "fullname")
         UserDefaults.standard.removeObject(forKey: "usernsid")
         UserDefaults.standard.removeObject(forKey: "token")

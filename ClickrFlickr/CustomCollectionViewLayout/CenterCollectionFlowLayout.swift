@@ -37,5 +37,4 @@ class CenterCellCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return true
     }
     
-    
 }

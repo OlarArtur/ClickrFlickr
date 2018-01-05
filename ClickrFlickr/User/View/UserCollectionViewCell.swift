@@ -22,7 +22,7 @@ class UserCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addViews() {
+    private func addViews() {
         titlePhoto = UILabel()
         addSubview(titlePhoto)
         

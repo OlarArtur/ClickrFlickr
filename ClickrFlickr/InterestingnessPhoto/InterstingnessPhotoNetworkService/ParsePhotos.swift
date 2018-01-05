@@ -38,8 +38,6 @@ class ParsePhotos {
         context.perform {
             
             let fetchRequest: NSFetchRequest<PhotoEntitie> = PhotoEntitie.fetchRequest()
-//            let sorDescriptor = NSSortDescriptor(key: "imageID", ascending: true)
-//            fetchRequest.sortDescriptors = [sorDescriptor]
             
             do {
                 let photoEntities = try context.fetch(fetchRequest)

@@ -25,7 +25,6 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let layout = CoverFlowLayout()
         let layout = ScrollLineCollectionFlowLayout()
         collectionView.collectionViewLayout = layout
         collectionView.register(UINib(nibName: "DetailPhotoViewCell", bundle: nil), forCellWithReuseIdentifier: "DetailCell")
@@ -44,14 +43,14 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
         
     }
     
-    @objc func handlePinch(recognizer: UIPinchGestureRecognizer) {
+    @objc private func handlePinch(recognizer: UIPinchGestureRecognizer) {
         if let view = recognizer.view {
             view.transform = CGAffineTransform(scaleX: recognizer.scale, y: recognizer.scale)
             recognizer.scale = 1
         }
     }
     
-    @objc func handleTap(recognizer: UITapGestureRecognizer) {
+    @objc private func handleTap(recognizer: UITapGestureRecognizer) {
         if collectionView.isHidden {
             collectionView.isHidden = false
             userInfo.isHidden = false
@@ -103,7 +102,7 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
         ImageLoader.cleanAllCash()
     }
     
-    func configUserInfo() {
+    private func configUserInfo() {
         
         guard let photo = photo else { return }
         

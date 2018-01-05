@@ -16,7 +16,6 @@ private struct dataAPI {
     static let callback: String = "clickrflickr%3A%2F%2F"
 }
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

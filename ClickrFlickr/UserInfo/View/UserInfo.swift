@@ -68,14 +68,14 @@ import UIKit
         setup()
     }
     
-    func loadFromNib() -> UIView {
+    private func loadFromNib() -> UIView {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: nibName, bundle: bundle)
         let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
         return view
     }
     
-    func setup() {
+    private func setup() {
         view = loadFromNib()
         avatarImageView.layer.cornerRadius = 10
         avatarImageView.layer.masksToBounds = true
