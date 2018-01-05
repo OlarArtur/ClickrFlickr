@@ -23,10 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
         FlickrUserAuthentication.configureDataAPI(apiKey: dataAPI.apiKey, apiSecretKey: dataAPI.apiSecretKey, callback: dataAPI.callback)
         CallingFlickrAPIwithOauth.configureDataAPI(apiKey: dataAPI.apiKey, apiSecretKey: dataAPI.apiSecretKey)
-        
         return true
     }
 
@@ -51,13 +49,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        CoreDatastack.default.saveAllContext()
+        
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        
         _ = FlickrUserAuthentication.takeURLScheme(url: url)
-        
         return true
     }
 

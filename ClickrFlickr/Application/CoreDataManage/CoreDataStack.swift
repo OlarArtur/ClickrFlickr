@@ -15,8 +15,8 @@ class CoreDatastack: NSObject {
     
     private override init() {
         super.init()
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: writeManagedObjectContext)
+        NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: writeManagedObjectContext)
+        NotificationCenter.default.addObserver(self, selector: #selector(saveAllContext), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
     }
     
     private let modelName = "ClickrFlickr"
@@ -84,7 +84,7 @@ class CoreDatastack: NSObject {
         }
     }
     
-    func saveAllContext() {
+    @objc private func saveAllContext() {
         
         if mainManagedObjectContext.hasChanges {
             do {
@@ -109,6 +109,12 @@ class CoreDatastack: NSObject {
             self.mainManagedObjectContext.mergeChanges(fromContextDidSave: notification)
         }
     }
+    
+    deinit {
+        print("deinit")
+        NotificationCenter.default.removeObserver(self)
+    }
 
 }
+
 
