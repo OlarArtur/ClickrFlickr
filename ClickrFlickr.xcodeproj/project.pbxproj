@@ -129,8 +129,7 @@
 				B216474E1FD9207500E3F4DD /* PhotoEntitie+CoreDataProperties.swift */,
 				B278969E1FD81434002D2B90 /* CoreDataStack.swift */,
 			);
-			name = CoreDataManage;
-			path = Application/CoreDataManage;
+			path = CoreDataManage;
 			sourceTree = "<group>";
 		};
 		B22D38241F604AA300FCC371 = {
@@ -156,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				B280AD0C1FFF8F90000A3969 /* NetworkServicies */,
+				B21EAAB61FD59022007BA9B8 /* CoreDataManage */,
 				B280ACFA1FFF8B5D000A3969 /* Models */,
 				B280ACF91FFF8B56000A3969 /* Views */,
 				B280ACF81FFF8B23000A3969 /* Controllers */,
@@ -362,7 +362,6 @@
 		B2A27F031FAB0C5C00EE7A97 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				B21EAAB61FD59022007BA9B8 /* CoreDataManage */,
 				B22D38301F604AA300FCC371 /* AppDelegate.swift */,
 			);
 			name = Application;

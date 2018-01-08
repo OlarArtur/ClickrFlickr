@@ -167,6 +167,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
             }
             
             collectionView.decelerationRate = UIScrollViewDecelerationRateFast
+            collectionView.bounces = false
             let closeItem = UIBarButtonItem(image: #imageLiteral(resourceName: "cancel"), style: .plain , target: self , action: #selector(closeButtonPressed))
             closeItem.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             navigationItem.rightBarButtonItem = closeItem
@@ -185,6 +186,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
             }
         }
         collectionView.decelerationRate = UIScrollViewDecelerationRateNormal
+        collectionView.bounces = true
         navigationItem.rightBarButtonItem = nil
     }
     
