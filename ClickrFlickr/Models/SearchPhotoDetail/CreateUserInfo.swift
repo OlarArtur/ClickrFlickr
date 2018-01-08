@@ -11,7 +11,7 @@ import Foundation
 
 class CreateUserInfo {
     
-    var userInfo: User
+    var userInfo: UserInfo
     
     init (json: AnyObject) throws {
         
@@ -32,7 +32,7 @@ class CreateUserInfo {
         } else {
             userInfoDictionary["realname"] = "" as AnyObject
         }
-        guard let user = User(dict: userInfoDictionary) else { throw FlickOauthError.NetworkServiseError }
+        guard let user = UserInfo(dict: userInfoDictionary) else { throw FlickOauthError.NetworkServiseError }
         userInfo = user
     }
     

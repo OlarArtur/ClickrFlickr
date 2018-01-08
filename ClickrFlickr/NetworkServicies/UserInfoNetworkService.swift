@@ -13,7 +13,7 @@ class UserInfoNetworkservice {
     
     private init() {}
     
-    static func getUserInfo (for userId: String, completion: @escaping (User?)->()) {
+    static func getUserInfo (for userId: String, completion: @escaping (UserInfo?)->()) {
         guard let string = CallingFlickrAPIwithOauth.methodPeopleGetInfo(userId: userId) else {return}
         
         FetchJSON.fetchJson(fromUrl: string) { (json) in

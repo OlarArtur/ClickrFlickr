@@ -27,7 +27,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BsW-2h-ol6">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CET-pi-YnV" customClass="UserInfo" customModule="ClickrFlickr" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CET-pi-YnV" customClass="UserInfoView" customModule="ClickrFlickr" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="20" width="375" height="167"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <variation key="heightClass=compact-widthClass=compact" hidden="YES"/>

@@ -21,7 +21,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     private var sideBarContainerView: UIView!
     var collectionView: UICollectionView!
-    var userInfo: UserInfo!
+    var userInfo: UserInfoView!
     
     var photo = [Photo]()
     
@@ -190,7 +190,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return headerView
     }
     
-    private func fetchUserInfo(completion: @escaping (UserInfo?) ->()) {
+    private func fetchUserInfo(completion: @escaping (UserInfoView?) ->()) {
         let userId = UserDefaults.standard.object(forKey: "usernsid")
         if let userId = userId as? String {
             UserInfoNetworkservice.getUserInfo(for: userId) { [weak self] user in
@@ -198,7 +198,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     completion(nil)
                     return
                 }
-                strongSelf.userInfo = UserInfo()
+                strongSelf.userInfo = UserInfoView()
                 strongSelf.userInfo.fullNameLabel.text = user.realName
                 strongSelf.userInfo.userNameLabel.text = user.userName
                 strongSelf.userInfo.photoCountLabel.text = "\(user.photoCount) photos"

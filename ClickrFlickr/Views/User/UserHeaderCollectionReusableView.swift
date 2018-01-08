@@ -10,7 +10,7 @@ import UIKit
 
 class UserHeaderCollectionReusableView: UICollectionReusableView {
     
-    var userInfo: UserInfo!
+    var userInfo: UserInfoView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,7 +23,7 @@ class UserHeaderCollectionReusableView: UICollectionReusableView {
     }
     
    private func addViews() {
-        userInfo = UserInfo()
+        userInfo = UserInfoView()
         userInfo.translatesAutoresizingMaskIntoConstraints = false
         addSubview(userInfo)
         let centerX = userInfo.centerXAnchor.constraint(equalTo: self.centerXAnchor)
@@ -47,7 +47,7 @@ class UserHeaderCollectionReusableView: UICollectionReusableView {
         
     }
     
-    func configerUserInfo(userInfo: UserInfo) {
+    func configerUserInfo(userInfo: UserInfoView) {
         self.userInfo.fullNameLabel.text = userInfo.fullNameLabel.text
         self.userInfo.userNameLabel.text = userInfo.userNameLabel.text
         self.userInfo.photoCountLabel.text = userInfo.photoCountLabel.text

@@ -1,15 +1,14 @@
 //
-//  UserInfo.swift
+//  UserInfoView.swift
 //  ClickrFlickr
 //
-//  Created by Artur Olar on 11/16/17.
-//  Copyright © 2017 Artur Olar. All rights reserved.
+//  Created by Artur Olar on 1/5/18.
+//  Copyright © 2018 Artur Olar. All rights reserved.
 //
-
 
 import UIKit
 
-@IBDesignable class UserInfo: UIView {
+@IBDesignable class UserInfoView: UIView {
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
@@ -45,7 +44,7 @@ import UIKit
         }
     }
     
-     @IBInspectable var photoCount: String {
+    @IBInspectable var photoCount: String {
         get {
             return photoCountLabel.text!
         }

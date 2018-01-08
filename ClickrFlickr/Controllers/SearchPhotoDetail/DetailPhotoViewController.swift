@@ -10,13 +10,13 @@ import UIKit
 
 class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
 
-    @IBOutlet weak var userInfo: UserInfo!
+    @IBOutlet weak var userInfo: UserInfoView!
     @IBOutlet weak var photoImage: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     
     var photo: Photo?
     var photos = [Photo]()
-    var user: User?
+    var user: UserInfo?
     
     override func loadView() {
         Bundle.main.loadNibNamed("DetailPhotoViewController", owner: self, options: nil)

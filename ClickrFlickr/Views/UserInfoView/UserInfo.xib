@@ -44,7 +44,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCQ-iP-kcM">
-                                    <rect key="frame" x="7" y="31.333333333333329" width="68.333333333333329" height="31.333333333333329"/>
+                                    <rect key="frame" x="7.3333333333333428" y="31.333333333333329" width="68.333333333333329" height="31.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
