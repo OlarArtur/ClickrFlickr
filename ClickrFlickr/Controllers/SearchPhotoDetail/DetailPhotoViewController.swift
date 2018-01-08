@@ -53,10 +53,8 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
     @objc private func handleTap(recognizer: UITapGestureRecognizer) {
         if collectionView.isHidden {
             collectionView.isHidden = false
-            userInfo.isHidden = false
         } else {
             collectionView.isHidden = true
-            userInfo.isHidden = true
         }
     }
     
@@ -85,6 +83,12 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        if UIDevice.current.orientation.isPortrait {
+            userInfo.isHidden = false
+        } else {
+            userInfo.isHidden = true
+        }
+        
         navigationController?.hidesBarsOnSwipe = false
         if navigationController?.isNavigationBarHidden == true {
             navigationController?.isNavigationBarHidden = false
@@ -94,7 +98,13 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        collectionView.collectionViewLayout.invalidateLayout()
+        
+        let visibleCells = collectionView.indexPathsForVisibleItems
+        let invalidateItems = UICollectionViewFlowLayoutInvalidationContext()
+        invalidateItems.invalidateItems(at: visibleCells)
+        collectionView.collectionViewLayout.invalidateLayout(with: invalidateItems)
+        
+//        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     override func didReceiveMemoryWarning() {
