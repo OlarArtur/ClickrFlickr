@@ -44,6 +44,7 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc private func handlePinch(recognizer: UIPinchGestureRecognizer) {
+        
         if let view = recognizer.view {
             view.transform = CGAffineTransform(scaleX: recognizer.scale, y: recognizer.scale)
             recognizer.scale = 1
@@ -53,7 +54,13 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
     @objc private func handleTap(recognizer: UITapGestureRecognizer) {
         if collectionView.isHidden {
             collectionView.isHidden = false
+            if UIDevice.current.orientation.isPortrait {
+                userInfo.isHidden = false
+            }
         } else {
+            if UIDevice.current.orientation.isPortrait {
+                userInfo.isHidden = true
+            }
             collectionView.isHidden = true
         }
     }
