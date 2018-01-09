@@ -28,7 +28,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         view.addSubview(activityIndicator)
         
         SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) {[weak self] photo in
-            guard let strongSelf = self else {return}
+            guard let strongSelf = self, let photo = photo else {return}
             strongSelf.photo = photo
             strongSelf.collectionView?.reloadData()
             activityIndicator.stopAnimating()
@@ -128,6 +128,7 @@ extension SearchCollectionViewController: UISearchBarDelegate {
         }
         textForSearch = text
         SearchNetworkservice.getJsonForSearchPhoto(searchText: textForSearch) {[weak self] photo in
+            guard let photo = photo else {return}
             self?.photo = photo
             self?.collectionView?.reloadData()
             activityIndicator.stopAnimating()

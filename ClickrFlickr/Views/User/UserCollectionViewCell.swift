@@ -20,7 +20,6 @@ class UserCollectionViewCell: UICollectionViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-
     }
     
     private func addViews() {

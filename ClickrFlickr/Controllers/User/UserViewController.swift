@@ -157,7 +157,7 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let userId = UserDefaults.standard.object(forKey: "usernsid")
         if let userId = userId as? String {
             GetPhotoNetworkservice.getJsonForSearchPhoto(userId: userId) {[weak self] photo in
-                guard let strongSelf = self else {return}
+                guard let strongSelf = self, let photo = photo else {return}
                 strongSelf.photo = photo
                 strongSelf.collectionView.reloadData()
             }

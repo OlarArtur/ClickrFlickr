@@ -124,7 +124,8 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
             strongSelf.userInfo.userNameLabel.text = user.userName
             strongSelf.userInfo.photoCountLabel.text = "\(user.photoCount) photos"
             
-            GetPhotoNetworkservice.getJsonForSearchPhoto(userId: user.id) {photo in
+            GetPhotoNetworkservice.getJsonForSearchPhoto(userId: user.id) { photo in
+                guard let photo = photo else {return}
                 strongSelf.photos = photo
                 strongSelf.collectionView.reloadData()
             }
