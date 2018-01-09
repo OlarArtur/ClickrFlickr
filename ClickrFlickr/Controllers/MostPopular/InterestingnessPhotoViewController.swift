@@ -11,7 +11,7 @@ import CoreData
 
 class InterestingnessPhotoViewController: UIViewController {
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView?
     
     private var blockOperations = [BlockOperation]()
     private let refreshControl = UIRefreshControl()
@@ -34,13 +34,15 @@ class InterestingnessPhotoViewController: UIViewController {
         super.viewDidLoad()
         
         self.automaticallyAdjustsScrollViewInsets = false
+        
+        guard let collectionView = collectionView else {return}
     
         collectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(loadData), for: .valueChanged)
         refreshControl.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         refreshControl.attributedTitle = NSAttributedString(string: "Loading...", attributes: [.foregroundColor: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)])
         
-        collectionView?.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
+        collectionView.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         view.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
         
         loadData()
@@ -82,7 +84,7 @@ class InterestingnessPhotoViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        
+        guard let collectionView = collectionView else {return}
         let offset = collectionView.contentOffset
         let width = collectionView.bounds.size.width
         let newWidth = size.width
@@ -121,7 +123,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         
         let photoEntitie = fetchedResultsController.object(at: indexPath)
         cell.photo.alpha = 0
-        guard let imageURL = photoEntitie.imageURL else {return}
+        guard let imageURL = photoEntitie.imageURL, let collectionView = collectionView else {return}
         
         if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
             cell.backgroundColor = #colorLiteral(red: 0.1915385664, green: 0.1915385664, blue: 0.1915385664, alpha: 1)
@@ -129,9 +131,9 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
             cell.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             cell.configure(with: photoEntitie, image: nil)
         }
-        ImageLoader.loadImageUsingUrlString(urlString: imageURL) { [weak self] image in
+        ImageLoader.loadImageUsingUrlString(urlString: imageURL) { image in
             guard let image = image else {return}
-            if self?.collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
+            if collectionView.collectionViewLayout is CenterCellCollectionViewFlowLayout {
                 cell.configerOnlyPhoto(image: image)
             } else {
                 cell.configure(with: photoEntitie, image: image)
@@ -162,7 +164,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
             collectionView.setCollectionViewLayout(layout, animated: false) { [weak self] (success) in
                 guard let strongSelf = self else {return}
                 if success {
-                    strongSelf.collectionView.reloadItems(at: [indexPath])
+                    strongSelf.collectionView?.reloadItems(at: [indexPath])
                 }
             }
             
@@ -178,11 +180,11 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        collectionView.setCollectionViewLayout(layout, animated: true) { [weak self] (success) in
-            guard let strongSelf = self else {return}
+        guard let collectionView = collectionView else {return}
+        collectionView.setCollectionViewLayout(layout, animated: true) { (success) in
             if success {
-                let visibleCells = strongSelf.collectionView.indexPathsForVisibleItems
-                strongSelf.collectionView.reloadItems(at: visibleCells)
+                let visibleCells = collectionView.indexPathsForVisibleItems
+                collectionView.reloadItems(at: visibleCells)
             }
         }
         collectionView.decelerationRate = UIScrollViewDecelerationRateNormal
@@ -196,10 +198,12 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
+        guard let collectionView = collectionView else {return}
+        
         if type == .insert {
             blockOperations.append(BlockOperation(block: {
                 if let newIndexPath = newIndexPath {
-                    self.collectionView.insertItems(at: [newIndexPath])
+                    collectionView.insertItems(at: [newIndexPath])
                 }
             }))
         }
@@ -207,7 +211,7 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
         if type == .update {
             blockOperations.append(BlockOperation(block: {
                 if let indexPath = indexPath {
-                    let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
                     self.configureCell(cell: cell, atIndexPath: indexPath)
                 }
             }))
@@ -216,7 +220,7 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
         if type == .delete {
             blockOperations.append(BlockOperation(block: {
                 if let indexPath = indexPath {
-                    self.collectionView.deleteItems(at: [indexPath])
+                    collectionView.deleteItems(at: [indexPath])
                 }
             }))
         }
@@ -224,13 +228,13 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
         if type == .move {
             blockOperations.append(BlockOperation(block: {
                 if let indexPath = indexPath {
-                    self.collectionView.deleteItems(at: [indexPath])
+                    collectionView.deleteItems(at: [indexPath])
                 }
             }))
             
             blockOperations.append(BlockOperation(block: {
                 if let newIndexPath = newIndexPath {
-                    self.collectionView.insertItems(at: [newIndexPath])
+                    collectionView.insertItems(at: [newIndexPath])
                 }
             }))
 
@@ -239,6 +243,8 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        
+         guard let collectionView = collectionView else {return}
   
         collectionView.performBatchUpdates({
             guard let sections = fetchedResultsController.sections else {return}
