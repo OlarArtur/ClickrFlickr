@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-class UserViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SFSafariViewControllerDelegate {
+class UserViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SFSafariViewControllerDelegate, UIGestureRecognizerDelegate {
     
     private let itemsPerRow: CGFloat = 2
     private let spacingItem: CGFloat = 2
@@ -68,6 +68,31 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu"), style: .plain, target: self, action: #selector(menuPressed))
         navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(sender:)))
+        pinchGestureRecognizer.delegate = self
+        collectionView.isUserInteractionEnabled = true
+        collectionView.addGestureRecognizer(pinchGestureRecognizer)
+        
+    }
+    
+    @objc func handlePinchGesture(sender: UIPinchGestureRecognizer) {
+        let layout = PinchCollectionFlowLayout()
+        collectionView.collectionViewLayout = layout
+        
+        if sender.state == UIGestureRecognizerState.began {
+            let initialPinchPoint = sender.location(in: self.collectionView)
+            let pinchedCellPath = self.collectionView.indexPathForItem(at: initialPinchPoint)
+            layout.pinchedCellPath = pinchedCellPath
+        } else if sender.state == UIGestureRecognizerState.changed {
+            layout.pinchedCellCenter = sender.location(in: self.collectionView)
+            layout.pinchedCellScale = sender.scale
+        }
+        
+//        if sender.state == UIGestureRecognizerState.changed {
+//            layout.pinchedCellCenter = sender.location(in: self.collectionView)
+//            layout.pinchedCellScale = sender.scale
+//        }
         
     }
     
@@ -172,6 +197,12 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellUser", for: indexPath) as! UserCollectionViewCell
     
+//        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(sender:)))
+//        pinchGestureRecognizer.delegate = self
+//        cell.isUserInteractionEnabled = true
+//        cell.addGestureRecognizer(pinchGestureRecognizer)
+        
+        
         ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { image in
             guard let image = image else {return}
                 cell.photo.image = image
@@ -215,9 +246,9 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "UserPhotoDetail", sender: nil)
-    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        performSegue(withIdentifier: "UserPhotoDetail", sender: nil)
+//    }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
