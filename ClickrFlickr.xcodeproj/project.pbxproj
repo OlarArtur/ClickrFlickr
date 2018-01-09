@@ -154,7 +154,7 @@
 		B22D382F1F604AA300FCC371 /* ClickrFlickr */ = {
 			isa = PBXGroup;
 			children = (
-				B280AD0C1FFF8F90000A3969 /* NetworkServicies */,
+				B280AD0C1FFF8F90000A3969 /* NetworkServices */,
 				B21EAAB61FD59022007BA9B8 /* CoreDataManage */,
 				B280ACFA1FFF8B5D000A3969 /* Models */,
 				B280ACF91FFF8B56000A3969 /* Views */,
@@ -327,7 +327,7 @@
 			path = Authorization;
 			sourceTree = "<group>";
 		};
-		B280AD0C1FFF8F90000A3969 /* NetworkServicies */ = {
+		B280AD0C1FFF8F90000A3969 /* NetworkServices */ = {
 			isa = PBXGroup;
 			children = (
 				B21603581FB42EF700AFA5F3 /* SearchNetworkService.swift */,
@@ -337,7 +337,7 @@
 				B2754A9B1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift */,
 				B21C862F1F795594001CBC71 /* FlickrGetResponse.swift */,
 			);
-			path = NetworkServicies;
+			path = NetworkServices;
 			sourceTree = "<group>";
 		};
 		B280AD0D1FFF9063000A3969 /* UserInfoView */ = {

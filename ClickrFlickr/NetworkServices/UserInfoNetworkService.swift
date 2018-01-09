@@ -18,7 +18,10 @@ class UserInfoNetworkservice {
         
         FetchJSON.fetchJson(fromUrl: string) { (json) in
             
-            guard let json = json else {return}
+            guard let json = json else {
+                completion(nil)
+                return
+            }
         
             do {
                 let user = try CreateUserInfo(json: json).userInfo
@@ -26,9 +29,9 @@ class UserInfoNetworkservice {
                     completion(user)
                 }
             } catch {
-                completion(nil)
                 let error = ErrorAlertController()
                 error.showErrorAlertController(title: "ERROR! Fetching JSON for search Photo", message: "Try again?")
+                completion(nil)
             }
         }
     }

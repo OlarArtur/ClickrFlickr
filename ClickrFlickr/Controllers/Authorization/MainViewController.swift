@@ -61,7 +61,7 @@ class MainViewController: UIViewController {
         photoCameraLayer.path = photoCameraPath().cgPath
         view.layer.addSublayer(photoCameraLayer)
         
-        let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.fromValue = photoCameraLayer.strokeStart
         animation.toValue = photoCameraLayer.strokeEnd
         animation.duration = 1.5
@@ -74,7 +74,7 @@ class MainViewController: UIViewController {
         lensLayer.path = lensPath().cgPath
         view.layer.addSublayer(lensLayer)
         
-        let animation1 = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
+        let animation1 = CABasicAnimation(keyPath: "strokeEnd")
         animation1.fromValue = lensLayer.strokeStart
         animation1.toValue = lensLayer.strokeEnd
         animation1.duration = 1.5

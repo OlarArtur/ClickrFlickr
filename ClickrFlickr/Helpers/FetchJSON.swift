@@ -15,7 +15,10 @@ class FetchJSON {
 
     static func fetchJson(fromUrl stringUrl: String, completion: @escaping (AnyObject?)->()) {
         
-        guard let url = URL(string: stringUrl) else {return}
+        guard let url = URL(string: stringUrl) else {
+            completion(nil)
+            return
+        }
         
         NetworkServise.shared.getData(url: url) { (data, url) in
             

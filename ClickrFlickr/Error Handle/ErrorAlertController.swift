@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class ErrorAlertController: UIAlertController{
+class ErrorAlertController: UIAlertController {
 
     func showErrorAlertController(title: String, message: String ) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

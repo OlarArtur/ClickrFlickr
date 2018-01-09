@@ -72,21 +72,27 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SearchCollectionViewCell
-
+        configureCell(cell: cell, atIndexPath: indexPath)
+        return cell
+        
+    }
+    
+    private func configureCell(cell: SearchCollectionViewCell, atIndexPath indexPath: IndexPath) {
+        
         cell.photo.alpha = 0
-        cell.titlePhoto.text = photo[indexPath.item].title
+        cell.configure(with: photo[indexPath.item].title, nil)
         
         cell.spinnerActivityIndicator.isHidden = false
         cell.spinnerActivityIndicator.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         cell.spinnerActivityIndicator.startAnimating()
         
         cell.tag = indexPath.item
-
+        
         ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) {[weak self] image in
-            guard let image = image else {return}
+            guard let strongSelf = self, let image = image else {return}
+
             if cell.tag == indexPath.item {
-                cell.photo.image = image
-                cell.titlePhoto.text = self?.photo[indexPath.item].title
+                cell.configure(with: strongSelf.photo[indexPath.item].title, image)
                 cell.spinnerActivityIndicator.stopAnimating()
                 cell.spinnerActivityIndicator.isHidden = true
                 
@@ -94,9 +100,8 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
                     cell.photo.alpha = 1
                 }, completion: nil)
             }
-
+            
         }
-        return cell
         
     }
     

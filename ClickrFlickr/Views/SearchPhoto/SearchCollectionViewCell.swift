@@ -15,9 +15,9 @@ class SearchCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titlePhoto: UILabel!
     @IBOutlet weak var spinnerActivityIndicator: UIActivityIndicatorView!
     
-    func configure(with photo: Photo) {
-        self.photo.image = photo.image
-        self.titlePhoto.text = photo.title
+    func configure(with title: String, _ photo: UIImage?) {
+        self.photo.image = photo
+        self.titlePhoto.text = title
     }
     
     override func prepareForReuse() {
