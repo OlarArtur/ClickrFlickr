@@ -40,7 +40,16 @@ class NotAuthorizedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         pleaseAuthorizeLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        setupAuthorizeButton()
+        
+    }
+    
+    private func setupAuthorizeButton() {
         authorizeButton.layer.cornerRadius = 8
+        authorizeButton.layer.shadowOpacity = 0.6
+        authorizeButton.layer.shadowRadius = 3
+        authorizeButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        authorizeButton.applyGradient(topGradientColor: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1), bottomGradientColor: #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1))
     }
     
     private func createBackground() {
@@ -59,9 +68,8 @@ class NotAuthorizedViewController: UIViewController {
     
     private func animateBackground() {
         guard let authBackgroundView = authBackgroundView else {return}
-        UIView.animate(withDuration: 100.0, delay: 0, options: [.curveLinear, .repeat, .autoreverse], animations: { [weak self] in
-            guard let weakSelf = self else {return}
-            authBackgroundView.frame.origin.x = weakSelf.view.bounds.size.width - authBackgroundView.frame.width
+        UIView.animate(withDuration: 100.0, delay: 0, options: [.curveLinear, .repeat, .autoreverse], animations: {
+            authBackgroundView.frame.origin.x = self.view.bounds.size.width - authBackgroundView.frame.width
             }, completion: nil)
     }
     
@@ -75,9 +83,17 @@ extension UIButton {
         pulse.duration = 0.6
         pulse.fromValue = 0.95
         pulse.toValue = 1.0
+        self.layer.add(pulse, forKey: "pulse")
         
-        layer.add(pulse, forKey: "pulse")
-        
+    }
+    
+    func applyGradient(topGradientColor: UIColor, bottomGradientColor: UIColor) -> Void {
+        let gradient: CAGradientLayer = CAGradientLayer()
+        gradient.cornerRadius = self.layer.cornerRadius
+        gradient.frame = self.bounds
+        gradient.colors = [topGradientColor.cgColor, bottomGradientColor.cgColor]
+        gradient.locations = [0, 1]
+        self.layer.insertSublayer(gradient, at: 0)
     }
     
 }

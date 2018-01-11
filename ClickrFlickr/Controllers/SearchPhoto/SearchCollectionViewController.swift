@@ -60,6 +60,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         let searchBar: UISearchBar = UISearchBar()
         searchBar.searchBarStyle = .default
         searchBar.placeholder = "Search Photos"
+        searchBar.showsCancelButton = true
         searchBar.delegate = self
         navigationItem.titleView = searchBar
         searchBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
@@ -114,6 +115,10 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
 }
 
 extension SearchCollectionViewController: UISearchBarDelegate {
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
