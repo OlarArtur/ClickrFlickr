@@ -11,7 +11,20 @@ import UIKit
 class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var userInfo: UserInfoView!
-    @IBOutlet weak var photoImage: UIImageView!
+    @IBOutlet weak var photoImage: UIImageView! {
+        didSet {
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+            tapGestureRecognizer.delegate = self
+            photoImage.addGestureRecognizer(tapGestureRecognizer)
+            photoImage.isUserInteractionEnabled = true
+            
+            let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch))
+            pinchGestureRecognizer.delegate = self
+            photoImage.addGestureRecognizer(pinchGestureRecognizer)
+        }
+        
+    }
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     var photo: Photo?
@@ -29,15 +42,6 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
         collectionView.collectionViewLayout = layout
         collectionView.register(UINib(nibName: "DetailPhotoViewCell", bundle: nil), forCellWithReuseIdentifier: "DetailCell")
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        tapGestureRecognizer.delegate = self
-        photoImage.addGestureRecognizer(tapGestureRecognizer)
-        photoImage.isUserInteractionEnabled = true
-        
-        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch))
-        pinchGestureRecognizer.delegate = self
-        photoImage.addGestureRecognizer(pinchGestureRecognizer)
-        
         customViews()
         configUserInfo()
         
@@ -46,8 +50,13 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
     @objc private func handlePinch(recognizer: UIPinchGestureRecognizer) {
         
         if let view = recognizer.view {
-            view.transform = CGAffineTransform(scaleX: recognizer.scale, y: recognizer.scale)
-            recognizer.scale = 1
+            switch recognizer.state {
+            case .changed:
+                view.transform = CGAffineTransform(scaleX: recognizer.scale, y: recognizer.scale)
+                recognizer.scale = 1
+            default:
+                break
+            }
         }
     }
     
