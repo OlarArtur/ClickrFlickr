@@ -29,7 +29,7 @@ class UserHeaderCollectionReusableView: UICollectionReusableView {
         addSubview(userInfo)
         let centerX = userInfo.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         let centerY = userInfo.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-        let height = userInfo.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -20)
+        let height = userInfo.heightAnchor.constraint(equalToConstant: self.bounds.height * 0.8)
         let width = userInfo.widthAnchor.constraint(equalTo: userInfo.heightAnchor)
         NSLayoutConstraint.activate([centerX, centerY, height, width])
         

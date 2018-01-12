@@ -64,10 +64,9 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         super.viewDidLoad()
         
         fetchUserPhotos()
-        
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "menu"), style: .plain, target: self, action: #selector(menuPressed))
-        navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "menu"), style: .plain, target: self, action: #selector(menuPressed))
+        self.navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
     }
     

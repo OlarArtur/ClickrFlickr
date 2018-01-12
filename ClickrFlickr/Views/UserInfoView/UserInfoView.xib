@@ -26,31 +26,31 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="H2K-Cr-ApY">
-                    <rect key="frame" x="94.666666666666686" y="26.666666666666671" width="94" height="193"/>
+                    <rect key="frame" x="0.0" y="5" width="283" height="237"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KsE-pC-vdu">
-                            <rect key="frame" x="0.0" y="0.0" width="94" height="94"/>
+                            <rect key="frame" x="83.666666666666657" y="0.0" width="115.66666666666666" height="116.33333333333333"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="KsE-pC-vdu" secondAttribute="height" multiplier="1:1" id="sQo-PW-FVP"/>
                             </constraints>
                         </imageView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="j0I-eo-x3s">
-                            <rect key="frame" x="5.6666666666666572" y="99" width="82.666666666666671" height="94"/>
+                            <rect key="frame" x="100.33333333333331" y="121.33333333333331" width="82.666666666666686" height="115.66666666666669"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RealName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFp-2Q-pvv">
-                                    <rect key="frame" x="0.0" y="0.0" width="82.666666666666671" height="31.333333333333332"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="82.666666666666671" height="38.666666666666664"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCQ-iP-kcM">
-                                    <rect key="frame" x="7.3333333333333428" y="31.333333333333329" width="68.333333333333329" height="31.333333333333329"/>
+                                    <rect key="frame" x="7" y="38.666666666666671" width="68.333333333333329" height="38.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q1K-jO-t2G">
-                                    <rect key="frame" x="24.666666666666675" y="62.666666666666679" width="33.333333333333343" height="31.333333333333336"/>
+                                    <rect key="frame" x="24.666666666666675" y="77.000000000000014" width="33.333333333333343" height="38.666666666666671"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -64,9 +64,10 @@
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="H2K-Cr-ApY" firstAttribute="centerX" secondItem="kbV-Qq-9Ty" secondAttribute="centerX" id="HMH-O5-aMA"/>
-                <constraint firstItem="H2K-Cr-ApY" firstAttribute="height" relation="lessThanOrEqual" secondItem="cTw-61-QLb" secondAttribute="height" constant="-5" id="JXQ-Hk-u58"/>
-                <constraint firstItem="H2K-Cr-ApY" firstAttribute="centerY" secondItem="kbV-Qq-9Ty" secondAttribute="centerY" id="n22-tr-QWh"/>
+                <constraint firstItem="cTw-61-QLb" firstAttribute="bottom" secondItem="H2K-Cr-ApY" secondAttribute="bottom" constant="5" id="CTO-CY-LOk"/>
+                <constraint firstItem="H2K-Cr-ApY" firstAttribute="leading" secondItem="cTw-61-QLb" secondAttribute="leading" id="QD4-xW-FVf"/>
+                <constraint firstItem="cTw-61-QLb" firstAttribute="trailing" secondItem="H2K-Cr-ApY" secondAttribute="trailing" id="lOt-xI-EmD"/>
+                <constraint firstItem="H2K-Cr-ApY" firstAttribute="top" secondItem="cTw-61-QLb" secondAttribute="top" constant="5" id="syQ-1W-msb"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="cTw-61-QLb"/>
