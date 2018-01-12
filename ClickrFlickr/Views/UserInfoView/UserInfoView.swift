@@ -17,7 +17,9 @@ import UIKit
     
     @IBOutlet weak var topStackView: UIStackView!
     
-    @IBInspectable var avatar: UIImage {
+    @IBInspectable var imageCornerRadius: CGFloat = 10
+    
+    var avatar: UIImage {
         get {
             return avatarImageView.image!
         }
@@ -26,7 +28,7 @@ import UIKit
         }
     }
     
-    @IBInspectable var userName: String {
+    var userName: String {
         get {
             return userNameLabel.text!
         }
@@ -35,7 +37,7 @@ import UIKit
         }
     }
     
-    @IBInspectable var fullName: String {
+    var fullName: String {
         get {
             return fullNameLabel.text!
         }
@@ -44,7 +46,7 @@ import UIKit
         }
     }
     
-    @IBInspectable var photoCount: String {
+    var photoCount: String {
         get {
             return photoCountLabel.text!
         }
@@ -54,7 +56,7 @@ import UIKit
     }
     
     var view: UIView!
-    var nibName: String = "UserInfo"
+    var nibName: String = "UserInfoView"
     
     
     override init(frame: CGRect) {
@@ -76,7 +78,7 @@ import UIKit
     
     private func setup() {
         view = loadFromNib()
-        avatarImageView.layer.cornerRadius = 10
+        avatarImageView.layer.cornerRadius = imageCornerRadius
         avatarImageView.layer.masksToBounds = true
         view.frame = bounds
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]

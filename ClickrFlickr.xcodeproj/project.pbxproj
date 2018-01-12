@@ -40,7 +40,7 @@
 		B280AD111FFF9239000A3969 /* UserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B280AD101FFF9239000A3969 /* UserInfoView.swift */; };
 		B291E4071FC714C300EB3419 /* UserPhotoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B291E4061FC714C300EB3419 /* UserPhotoDetailViewController.m */; };
 		B291E40A1FC7186F00EB3419 /* UserPhotoDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B291E4091FC7186F00EB3419 /* UserPhotoDetailCell.m */; };
-		B29439211FBD883900006CE6 /* UserInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = B29439201FBD883900006CE6 /* UserInfo.xib */; };
+		B29439211FBD883900006CE6 /* UserInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B29439201FBD883900006CE6 /* UserInfoView.xib */; };
 		B29A9FEF1F7276C000567FD5 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29A9FEE1F7276C000567FD5 /* SearchCollectionViewCell.swift */; };
 		B29A9FF11F72778C00567FD5 /* SearchCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29A9FF01F72778C00567FD5 /* SearchCollectionViewController.swift */; };
 		B29A9FF51F72869600567FD5 /* NotAuthorizedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29A9FF41F72869600567FD5 /* NotAuthorizedViewController.swift */; };
@@ -95,7 +95,7 @@
 		B291E4061FC714C300EB3419 /* UserPhotoDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserPhotoDetailViewController.m; sourceTree = "<group>"; };
 		B291E4081FC7186F00EB3419 /* UserPhotoDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserPhotoDetailCell.h; sourceTree = "<group>"; };
 		B291E4091FC7186F00EB3419 /* UserPhotoDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserPhotoDetailCell.m; sourceTree = "<group>"; };
-		B29439201FBD883900006CE6 /* UserInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserInfo.xib; sourceTree = "<group>"; };
+		B29439201FBD883900006CE6 /* UserInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserInfoView.xib; sourceTree = "<group>"; };
 		B29A9FEE1F7276C000567FD5 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		B29A9FF01F72778C00567FD5 /* SearchCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewController.swift; sourceTree = "<group>"; };
 		B29A9FF41F72869600567FD5 /* NotAuthorizedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotAuthorizedViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +122,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B215213F2008C22600D74A33 /* SearchNetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				B21603581FB42EF700AFA5F3 /* SearchNetworkService.swift */,
+			);
+			path = SearchNetworkService;
+			sourceTree = "<group>";
+		};
+		B21521402008C24E00D74A33 /* UserInfoNwtworkservice */ = {
+			isa = PBXGroup;
+			children = (
+				B2D90FAE1FBD94B100FB0E64 /* UserInfoNetworkService.swift */,
+			);
+			path = UserInfoNwtworkservice;
+			sourceTree = "<group>";
+		};
+		B21521412008C28F00D74A33 /* GetUsersPhotosNetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				B22B8B391FBC20E500A21401 /* GetPhotoNetworkService.swift */,
+			);
+			path = GetUsersPhotosNetworkService;
+			sourceTree = "<group>";
+		};
+		B21521422008C2E600D74A33 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				B25AA1C81FAB1E0C0063E7AC /* NetworkServise.swift */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
 		B21EAAB61FD59022007BA9B8 /* CoreDataManage */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,9 +362,10 @@
 		B280AD0C1FFF8F90000A3969 /* NetworkServices */ = {
 			isa = PBXGroup;
 			children = (
-				B21603581FB42EF700AFA5F3 /* SearchNetworkService.swift */,
-				B22B8B391FBC20E500A21401 /* GetPhotoNetworkService.swift */,
-				B2D90FAE1FBD94B100FB0E64 /* UserInfoNetworkService.swift */,
+				B21521422008C2E600D74A33 /* NetworkService */,
+				B21521412008C28F00D74A33 /* GetUsersPhotosNetworkService */,
+				B21521402008C24E00D74A33 /* UserInfoNwtworkservice */,
+				B215213F2008C22600D74A33 /* SearchNetworkService */,
 				B21C862D1F79553B001CBC71 /* FlickrCreateRequest.swift */,
 				B2754A9B1F712F8A00B403DF /* CallingFlickrAPIwithOauth.swift */,
 				B21C862F1F795594001CBC71 /* FlickrGetResponse.swift */,
@@ -343,7 +376,7 @@
 		B280AD0D1FFF9063000A3969 /* UserInfoView */ = {
 			isa = PBXGroup;
 			children = (
-				B29439201FBD883900006CE6 /* UserInfo.xib */,
+				B29439201FBD883900006CE6 /* UserInfoView.xib */,
 				B280AD101FFF9239000A3969 /* UserInfoView.swift */,
 			);
 			path = UserInfoView;
@@ -379,7 +412,6 @@
 		B2D33E791F7BD927000FC8EB /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				B25AA1C81FAB1E0C0063E7AC /* NetworkServise.swift */,
 				B2306D2F1FE3C23F00DA7DF0 /* ImageLoader.swift */,
 				B2F7EBAD1F7A860400300C74 /* FetchJSON.swift */,
 			);
@@ -464,7 +496,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B29439211FBD883900006CE6 /* UserInfo.xib in Resources */,
+				B29439211FBD883900006CE6 /* UserInfoView.xib in Resources */,
 				B25AA1DD1FAB404C0063E7AC /* Main.storyboard in Resources */,
 				B25AA1DC1FAB40420063E7AC /* LaunchScreen.storyboard in Resources */,
 				B22D383B1F604AA300FCC371 /* Assets.xcassets in Resources */,

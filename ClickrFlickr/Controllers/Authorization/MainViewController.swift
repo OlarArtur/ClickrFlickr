@@ -205,8 +205,7 @@ class MainViewController: UIViewController {
         let beginPath = CGPoint(x: 0, y: heightPath)
     
         let ovalPath = UIBezierPath()
-        ovalPath.move(to: CGPoint(x: beginPath.x + widthPath / 4, y: beginPath.y - heightPath / 2 - 5))
-        ovalPath.addArc(withCenter: CGPoint(x: beginPath.x + widthPath / 2, y: beginPath.y - heightPath / 2 - 5), radius: widthPath / 4, startAngle: CGFloat.pi, endAngle: CGFloat.pi*3, clockwise: true)
+        ovalPath.addArc(withCenter: CGPoint(x: beginPath.x + widthPath / 2, y: beginPath.y - heightPath / 2 - 5), radius: widthPath / 4, startAngle: 0, endAngle: CGFloat.pi * 2, clockwise: true)
         ovalPath.close()
         
         return ovalPath
