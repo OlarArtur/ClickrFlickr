@@ -32,7 +32,7 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
     var user: UserInfo?
     
     override func loadView() {
-        Bundle.main.loadNibNamed("DetailPhotoViewController", owner: self, options: nil)
+        self.view = Bundle.main.loadNibNamed("DetailPhotoView", owner: self, options: nil)?.first as? UIView
     }
     
     override func viewDidLoad() {
@@ -170,7 +170,7 @@ extension DetailPhotoViewController: UICollectionViewDelegate, UICollectionViewD
         ImageLoader.loadImageUsingUrlString(urlString: photos[indexPath.item].url) { image in
             guard let image = image else {return}
             if cell.tag == indexPath.item {
-                cell.photoImage.image = image
+                cell.configer(image: image)
             }
         }
         return cell

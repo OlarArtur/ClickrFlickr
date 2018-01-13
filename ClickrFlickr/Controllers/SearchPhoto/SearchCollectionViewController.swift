@@ -109,7 +109,7 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailVC = DetailPhotoViewController()
         detailVC.photo = self.photo[indexPath.item]
-        show(detailVC, sender: self)
+        self.show(detailVC, sender: self)
     }
     
 }

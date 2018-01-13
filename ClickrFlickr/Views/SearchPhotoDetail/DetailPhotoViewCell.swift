@@ -12,9 +12,8 @@ class DetailPhotoViewCell: UICollectionViewCell {
 
     @IBOutlet weak var photoImage: UIImageView!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-      
+    func configer(image: UIImage) {
+        self.photoImage.image = image
     }
     
     override func prepareForReuse() {
