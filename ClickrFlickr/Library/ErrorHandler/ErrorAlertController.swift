@@ -14,9 +14,11 @@ class ErrorAlertController: UIAlertController {
 
     func showErrorAlertController(title: String, message: String ) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let alertTryAgain = UIAlertAction(title: "Try again", style: .default, handler: nil)
+        let alertTryAgain = UIAlertAction(title: "Try again", style: .default, handler: { action in
+            FlickrUserAuthentication.authorize()
+        })
         alert.addAction(alertTryAgain)
-        present(alert, animated: true, completion: nil)
+        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
     }
     
 }

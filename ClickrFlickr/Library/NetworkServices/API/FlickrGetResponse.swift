@@ -28,6 +28,7 @@ class FlickrGetResponse {
                 completion(nil, nil)
                 return
             }
+            
             DispatchQueue.main.async {
                 completion(data, responseString)
             }

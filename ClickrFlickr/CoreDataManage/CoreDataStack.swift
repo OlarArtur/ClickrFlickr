@@ -20,9 +20,7 @@ class CoreDatastack: NSObject {
     }
     
     private let modelName = "ClickrFlickr"
-    
-    
-    
+
     private lazy var managedObjectModel: NSManagedObjectModel = {
         
         guard let modelURL = Bundle.main.url(forResource: modelName, withExtension: "momd") else {

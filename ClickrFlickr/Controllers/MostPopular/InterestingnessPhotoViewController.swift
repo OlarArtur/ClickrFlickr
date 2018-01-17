@@ -27,12 +27,11 @@ class InterestingnessPhotoViewController: UIViewController {
     }()
     
     private let spacingItem: CGFloat = 2
-    private let photoFrameSize: CGFloat = 8
+    private let photoInset: CGFloat = 8
     private let reuseIdentifier = "CellInterestingnessPhoto"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.automaticallyAdjustsScrollViewInsets = false
         
         guard let collectionView = collectionView else {return}
@@ -58,7 +57,7 @@ class InterestingnessPhotoViewController: UIViewController {
     
     @objc private func loadData() {
         
-        let activityIndicator = addActivityIndecator()
+        let activityIndicator = addActivityIndecator(to: view)
         view.addSubview(activityIndicator)
         
         InterestingnessPhotoNetworkservice.parseJsonForInterestingnessPhoto() {[weak self] success in
@@ -73,9 +72,10 @@ class InterestingnessPhotoViewController: UIViewController {
     
     }
     
-    private func addActivityIndecator() -> UIActivityIndicatorView {
+    private func addActivityIndecator(to view: UIView) -> UIActivityIndicatorView {
         let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
         activityIndicator.center = view.center
+        activityIndicator.autoresizingMask = [.flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin]
         activityIndicator.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         activityIndicator.hidesWhenStopped = true
         activityIndicator.startAnimating()
@@ -107,7 +107,6 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let sections = fetchedResultsController.sections else {return 0}
-        print(sections[section].numberOfObjects)
         return sections[section].numberOfObjects
     }
     
@@ -191,10 +190,14 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegate, UICollec
         collectionView.bounces = true
         navigationItem.rightBarButtonItem = nil
     }
-    
+
 }
 
 extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate {
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        blockOperations.removeAll()
+    }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
@@ -211,8 +214,7 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
         if type == .update {
             blockOperations.append(BlockOperation(block: {
                 if let indexPath = indexPath {
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath) as! InterstingnessPhotoCollectionViewCell
-                    self.configureCell(cell: cell, atIndexPath: indexPath)
+                    collectionView.reloadItems(at: [indexPath])
                 }
             }))
         }
@@ -231,7 +233,7 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
                     collectionView.deleteItems(at: [indexPath])
                 }
             }))
-            
+
             blockOperations.append(BlockOperation(block: {
                 if let newIndexPath = newIndexPath {
                     collectionView.insertItems(at: [newIndexPath])
@@ -245,19 +247,21 @@ extension InterestingnessPhotoViewController: NSFetchedResultsControllerDelegate
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         
          guard let collectionView = collectionView else {return}
-  
-        collectionView.performBatchUpdates({
-            guard let sections = fetchedResultsController.sections else {return}
-            print("controllerDidChangeContent: \(sections[0].numberOfObjects)")
-            
-            for operation in self.blockOperations {
+        
+        collectionView.performBatchUpdates({ [weak self] in
+            guard let stronSelf = self else {return}
+            for operation in stronSelf.blockOperations {
                 operation.start()
             }
-        }, completion: nil)
-        
+        }, completion: { [weak self] finished in
+            if finished {
+                self?.blockOperations.removeAll()
+            }
+        })
     }
 
 }
+
 
 extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout {
 
@@ -279,7 +283,7 @@ extension InterestingnessPhotoViewController: UICollectionViewDelegateFlowLayout
             return CGSize(width: 0, height: 0)
         }
         
-        let photoHeight = (width - 2 * photoFrameSize) * CGFloat(aspectSizeFloat)
+        let photoHeight = (width - 2 * photoInset) * CGFloat(aspectSizeFloat)
         
         let height = photoHeight
 

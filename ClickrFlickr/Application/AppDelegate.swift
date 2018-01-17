@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        _ = FlickrUserAuthentication.takeURLScheme(url: url)
+        FlickrUserAuthentication.takeURLScheme(url: url)
         return true
     }
 

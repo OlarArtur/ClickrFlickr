@@ -37,12 +37,12 @@ class FlickrUserAuthentication {
         self.oauthCallback = callback
     }
 
-    class func takeURLScheme(url: URL) -> Bool {
+    @discardableResult class func takeURLScheme(url: URL) -> Bool {
 
         if url.scheme == Constants.urlScheme {
 
             UIApplication.shared.keyWindow?.rootViewController?.dismiss(animated: true, completion: nil)
-
+            
             let callBackAfterUserAuthorization = url.absoluteString
 
             do {

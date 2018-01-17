@@ -56,6 +56,8 @@ class MainViewController: UIViewController {
         
         photoCameraLayer.frame = centerLayerFrame
         photoCameraLayer.fillColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0).cgColor
+        photoCameraLayer.lineJoin = kCALineJoinRound
+        photoCameraLayer.lineCap = kCALineCapSquare
         photoCameraLayer.strokeColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1).cgColor
         photoCameraLayer.lineWidth = 3
         photoCameraLayer.path = photoCameraPath().cgPath
