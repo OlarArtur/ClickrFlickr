@@ -36,7 +36,6 @@ class WaterfallLayout: UICollectionViewLayout {
         
         attributesCache = [UICollectionViewLayoutAttributes]()
         guard let collectionView = collectionView else {return}
-        
         oldBounds = collectionView.bounds
         
         let columWidth = contentWidth / numberOfColumns

@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-class UserViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SFSafariViewControllerDelegate {
+class UserViewController: UIViewController, SFSafariViewControllerDelegate {
     
     private let itemsPerRow: CGFloat = 2
     private let spacingItem: CGFloat = 2
@@ -56,6 +56,12 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        if #available(iOS 11.0, *) {
+            collectionView.dragDelegate = self
+            collectionView.dropDelegate = self
+            collectionView.dragInteractionEnabled = true
+        }
         
         collectionView.register(UserHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
     }
@@ -144,12 +150,10 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
             error.showErrorAlertController(title: "Error! LogOut URL", message: "Try again?")
             return
         }
-        let safariView = SFSafariViewController(url: url, entersReaderIfAvailable: true)
-        present(safariView, animated: true, completion: nil)
-        safariView.delegate = self
-        
+        let safariView = SFSafariViewController(url: url)
+        self.navigationController?.present(safariView, animated: true, completion: nil)
         navigationController?.navigationController?.popToRootViewController(animated: true)
-        
+    
     }
     
     private func fetchUserPhotos() {
@@ -164,16 +168,27 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "UserPhotoDetail" {
+            let detailVC = segue.destination as! UserPhotoDetailViewController
+            detailVC.photos = photo
+        }
+    }
+    
+}
+
+extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photo.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellUser", for: indexPath) as! UserCollectionViewCell
-    
+        
         ImageLoader.loadImageUsingUrlString(urlString: photo[indexPath.item].url) { image in
             guard let image = image else {return}
-                cell.photo.image = image
+            cell.photo.image = image
         }
         return cell
     }
@@ -218,12 +233,23 @@ class UserViewController: UIViewController, UICollectionViewDelegate, UICollecti
         performSegue(withIdentifier: "UserPhotoDetail", sender: nil)
     }
     
+}
+
+extension UserViewController: UICollectionViewDragDelegate, UICollectionViewDropDelegate {
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "UserPhotoDetail" {
-            let detailVC = segue.destination as! UserPhotoDetailViewController
-            detailVC.photos = photo
-        }
+    @available(iOS 11.0, *)
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        
+        let item = photo[indexPath.item]
+        let itemProvider = NSItemProvider(object: item.photoDescription as NSString)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        dragItem.localObject = item
+        return [dragItem]
+    }
+    
+    @available(iOS 11.0, *)
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+    
     }
     
 }

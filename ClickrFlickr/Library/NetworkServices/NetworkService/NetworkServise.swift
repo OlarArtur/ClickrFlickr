@@ -10,7 +10,7 @@ import Foundation
 
 
 class NetworkServise {
-
+    
     private init() {}
     
     static let shared = NetworkServise()
@@ -29,6 +29,7 @@ class NetworkServise {
             }
             
             }.resume()
+        
     }
     
 }

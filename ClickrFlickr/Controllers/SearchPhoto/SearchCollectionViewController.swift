@@ -114,6 +114,8 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
     
 }
 
+
+
 extension SearchCollectionViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
