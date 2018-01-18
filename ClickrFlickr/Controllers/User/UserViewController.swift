@@ -57,12 +57,6 @@ class UserViewController: UIViewController, SFSafariViewControllerDelegate {
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        if #available(iOS 11.0, *) {
-            collectionView.dragDelegate = self
-            collectionView.dropDelegate = self
-            collectionView.dragInteractionEnabled = true
-        }
-        
         collectionView.register(UserHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
     }
     
@@ -242,26 +236,6 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
 }
-
-extension UserViewController: UICollectionViewDragDelegate, UICollectionViewDropDelegate {
-    
-    @available(iOS 11.0, *)
-    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        
-        let item = photo[indexPath.item]
-        let itemProvider = NSItemProvider(object: item.photoDescription as NSString)
-        let dragItem = UIDragItem(itemProvider: itemProvider)
-        dragItem.localObject = item
-        return [dragItem]
-    }
-    
-    @available(iOS 11.0, *)
-    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-    
-    }
-    
-}
-
 
 extension UserViewController: UIScrollViewDelegate {
 
