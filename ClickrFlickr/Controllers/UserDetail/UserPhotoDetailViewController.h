@@ -10,8 +10,9 @@
 
 @interface UserPhotoDetailViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 {
-    NSArray *photos;
+    
 }
 @property (strong, nonatomic) NSArray *photos;
+@property (strong, nonatomic) NSIndexPath * indexPath;
 
 @end

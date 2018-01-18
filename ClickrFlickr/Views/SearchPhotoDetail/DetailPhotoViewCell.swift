@@ -9,7 +9,7 @@
 import UIKit
 
 class DetailPhotoViewCell: UICollectionViewCell {
-
+    
     @IBOutlet weak var photoImage: UIImageView!
     
     func configer(image: UIImage) {

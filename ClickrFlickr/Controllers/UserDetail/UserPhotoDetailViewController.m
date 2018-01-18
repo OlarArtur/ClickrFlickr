@@ -19,6 +19,7 @@
 @implementation UserPhotoDetailViewController
 
 @synthesize photos;
+@synthesize indexPath;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,6 +27,10 @@
     _collectionView.collectionViewLayout = layout;
     UIColor *color = [[UIColor alloc]initWithRed:0.1915385664 green:0.1915385664 blue:0.1915385664 alpha:1.0];
     _collectionView.backgroundColor = color;
+    self.navigationItem.leftBarButtonItem.tintColor = [[UIColor alloc]initWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+    
+    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:nil];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,8 +47,6 @@
     CGPoint newOffset = CGPointMake(index * newWidth, offset.y);
     _collectionView.contentOffset = newOffset;
 }
-
-#pragma UICollectionViewDataSource
 
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -62,8 +65,6 @@
     }];
     return cell;
 }
-
-#pragma UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {

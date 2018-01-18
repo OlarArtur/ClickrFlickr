@@ -168,13 +168,6 @@ class UserViewController: UIViewController, SFSafariViewControllerDelegate {
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "UserPhotoDetail" {
-            let detailVC = segue.destination as! UserPhotoDetailViewController
-            detailVC.photos = photo
-        }
-    }
-    
 }
 
 extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -230,7 +223,22 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let transition = CATransition()
+        transition.duration = 0.4
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionFade
+        self.navigationController?.view.layer.add(transition, forKey: nil)
         performSegue(withIdentifier: "UserPhotoDetail", sender: nil)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "UserPhotoDetail" {
+            let detailVC = segue.destination as! UserPhotoDetailViewController
+            detailVC.photos = photo
+            guard let indexPath = collectionView.indexPathsForSelectedItems?.first else {return}
+            detailVC.indexPath = indexPath
+        }
     }
     
 }

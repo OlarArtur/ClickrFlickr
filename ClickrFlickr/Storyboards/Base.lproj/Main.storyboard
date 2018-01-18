@@ -279,7 +279,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="th7-rc-eR9"/>
                     <connections>
-                        <segue destination="faj-s2-LBZ" kind="show" identifier="UserPhotoDetail" id="h8Z-Z9-cKD"/>
+                        <segue destination="faj-s2-LBZ" kind="show" identifier="UserPhotoDetail" animates="NO" id="h8Z-Z9-cKD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PU3-Gb-aPA" userLabel="First Responder" sceneMemberID="firstResponder"/>
