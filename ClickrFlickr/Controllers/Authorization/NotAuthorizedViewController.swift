@@ -80,9 +80,9 @@ extension UIButton {
     func pulsate() {
         
         let pulse = CABasicAnimation(keyPath: "transform.scale")
-        pulse.duration = 0.6
-        pulse.fromValue = 0.95
-        pulse.toValue = 1.0
+        pulse.duration = 0.3
+        pulse.fromValue = 1
+        pulse.toValue = 0.9
         self.layer.add(pulse, forKey: "pulse")
         
     }

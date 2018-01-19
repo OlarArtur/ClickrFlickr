@@ -20,8 +20,6 @@ class WaterfallLayout: UICollectionViewLayout {
 
     private var numberOfColumns: CGFloat = 2
     private var cellPadding: CGFloat = 2.5
-
-    private var oldBounds = CGRect.zero
     
     private var contentHeight: CGFloat = 0.0
     private var contentWidth: CGFloat {
@@ -36,7 +34,6 @@ class WaterfallLayout: UICollectionViewLayout {
         
         attributesCache = [UICollectionViewLayoutAttributes]()
         guard let collectionView = collectionView else {return}
-        oldBounds = collectionView.bounds
         
         let columWidth = contentWidth / numberOfColumns
         var xOffsets = [CGFloat]()

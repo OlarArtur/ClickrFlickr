@@ -245,16 +245,16 @@ extension UserViewController: UIScrollViewDelegate {
 
         let navBarY = navigationController.navigationBar.frame.origin.y
         let navBarHeight = navigationController.navigationBar.frame.height
-        
+
         let offsetY = scrollView.contentOffset.y + (navBarY + navBarHeight)
-        
+
         if offsetY > headerViewHeight {
             if isHeaderVisible {
                 self.navigationItem.titleView = self.userInfo
                 self.userInfo.topStackView.axis = .horizontal
                 self.userInfo.fullNameLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
                 self.userInfo.userNameLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-                
+
                 isHeaderVisible = false
             }
         } else {
@@ -263,9 +263,9 @@ extension UserViewController: UIScrollViewDelegate {
                 isHeaderVisible = true
             }
         }
-        
+
     }
-    
+
 }
 
 extension UserViewController: UICollectionViewDelegateFlowLayout {

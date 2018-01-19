@@ -42,11 +42,10 @@ class ScrollLineCollectionFlowLayout: UICollectionViewFlowLayout {
             visibleRect.size = collectionView.bounds.size
             if newItemAttributes.frame.intersects(rect) {
                 let distance = visibleRect.midX - newItemAttributes.center.x
-                let normalizedDistanse = distance / 200
-                if abs(distance) < 200 {
-                    let scale =  1 + 0.3 * (1 - abs(normalizedDistanse))
-                    newItemAttributes.transform3D = CATransform3DMakeScale(scale, scale, 1)
-                }
+                let normalizedDistanse = distance / newItemAttributes.frame.width
+                let scale =  1 + 0.3 * (1 - abs(normalizedDistanse))
+                newItemAttributes.transform = CGAffineTransform(scaleX: scale, y: scale)
+
             }
             newAttributes.append(newItemAttributes)
         }
