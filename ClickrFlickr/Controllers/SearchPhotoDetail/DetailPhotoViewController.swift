@@ -14,12 +14,10 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var photoImage: UIImageView! {
         didSet {
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-            tapGestureRecognizer.delegate = self
             photoImage.addGestureRecognizer(tapGestureRecognizer)
             photoImage.isUserInteractionEnabled = true
             
             let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch))
-            pinchGestureRecognizer.delegate = self
             photoImage.addGestureRecognizer(pinchGestureRecognizer)
         }
         
@@ -51,9 +49,9 @@ class DetailPhotoViewController: UIViewController, UIGestureRecognizerDelegate {
         
         if let view = recognizer.view {
             switch recognizer.state {
-            case .changed:
+            case .changed, .ended:
                 view.transform = CGAffineTransform(scaleX: recognizer.scale, y: recognizer.scale)
-                recognizer.scale = 1
+                recognizer.scale = 1.0
             default:
                 break
             }

@@ -26,11 +26,26 @@ class FetchJSON {
                 completion(nil)
                 return
             }
+//            let startDateOne = Date()
+//
+//            let decoder = JSONDecoder()
+//            do {
+//                let stat = try decoder.decode(Stat.self, from: data)
+//                let codableTime = Date().timeIntervalSince(startDateOne)
+//                print("codable: \(codableTime) sec")
+//            } catch {
+//                print(error)
+//            }
+//
+//            let startDateTwo = Date()
+            
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-                DispatchQueue.main.async {
-                    completion(json as AnyObject)
-                }
+                
+//                let jsonTime = Date().timeIntervalSince(startDateTwo)
+//                print("json: \(jsonTime) sec")
+                
+                completion(json as AnyObject)
             } catch let errorJson {
                 completion(nil)
                 print(errorJson)
@@ -40,6 +55,34 @@ class FetchJSON {
     }
     
 }
+
+
+//struct Stat: Codable {
+//
+//    struct Photos: Codable {
+//        struct Photo: Codable {
+//
+//            let title: String
+//            let farm: Int
+//            let server: String
+//            let id: String
+//            let secret: String
+//            let owner: String
+//            let width_s: String
+//            let height_s: String
+//
+//            struct Description: Codable  {
+//                let _content: String
+//            }
+//
+//            let description: Description
+//
+//        }
+//        let photo: [Photo]
+//    }
+//    let photos: Photos
+//
+//}
 
     
 

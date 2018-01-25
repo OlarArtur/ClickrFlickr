@@ -27,7 +27,7 @@ class NetworkServise {
             DispatchQueue.main.async {
                 completion(data, url)
             }
-            
+        
             }.resume()
         
     }

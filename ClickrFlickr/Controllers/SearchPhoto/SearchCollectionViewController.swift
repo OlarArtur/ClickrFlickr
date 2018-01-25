@@ -35,6 +35,28 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
             activityIndicator.removeFromSuperview()
         }
         
+        
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture))
+        collectionView?.addGestureRecognizer(longPressGesture)
+    }
+    
+    @objc private func handleLongPressGesture(gesture: UILongPressGestureRecognizer) {
+        
+        switch (gesture.state) {
+        case .began:
+            guard let selectedIndexPath = collectionView?.indexPathForItem(at: gesture.location(in: collectionView)) else {
+                break
+            }
+            collectionView?.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case .changed:
+            collectionView?.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view))
+        case .ended:
+            collectionView?.endInteractiveMovement()
+        default:
+            collectionView?.cancelInteractiveMovement()
+            
+        }
+        
     }
     
     private func addActivityIndecator() -> UIActivityIndicatorView {
@@ -110,6 +132,12 @@ class SearchCollectionViewController: UICollectionViewController, UISearchContro
         let detailVC = DetailPhotoViewController()
         detailVC.photo = self.photo[indexPath.item]
         self.show(detailVC, sender: self)
+    }
+    
+    
+    override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let temp = photo.remove(at: sourceIndexPath.item)
+        photo.insert(temp, at: destinationIndexPath.item)
     }
     
 }
